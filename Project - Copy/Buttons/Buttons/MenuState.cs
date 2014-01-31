@@ -32,17 +32,7 @@ namespace Buttons
 
         public MenuState(Game1 game)
         {
-            
-            game.Content.RootDirectory = "Content";
-            /*
-            this.graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            this.graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;*/
-            this.graphics.PreferredBackBufferWidth = 800;
-            this.graphics.PreferredBackBufferHeight = 460;
-            width = 800;
-            height = 460;
-
-           // this.graphics.IsFullScreen = true;
+            this.game = game;
         }
 
         /// <summary>
@@ -51,7 +41,7 @@ namespace Buttons
         /// related content.  Calling base.Initialize will enumerate through any components
         /// and initialize them as well.
         /// </summary>
-        protected override void Initialize()
+        public void Initialize()
         {
             // TODO: Add your initialization logic here
 
@@ -64,7 +54,7 @@ namespace Buttons
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
         /// </summary>
-        protected override void LoadContent()
+        public void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures. 
             
@@ -80,12 +70,12 @@ namespace Buttons
             gap = (int)font.MeasureString("L").Y;
             //menu general
             
-            continueButton = new TextButton(font, spriteBatch, "Continue Game", new Vector2(40, height/2 - gap/2));
+            continueButton = new TextButton(font, game, "Continue Game", new Vector2(40, height/2 - gap/2));
 
-            newGameButton = new TextButton(font, spriteBatch, "New Game", new Vector2(30, continueButton.top - gap));
-            optionsButton = new TextButton(font, spriteBatch, "Options", new Vector2(50, height/2 + gap/2));
-            exitButton = new TextButton(font, spriteBatch, "Exit", new Vector2(75, optionsButton.bottom + gap - (int) font.MeasureString("Exit").Y));
-            mainMenu = new InterfaceMenu(new TextButton[] { newGameButton, continueButton, optionsButton, exitButton }, new Text[] { }, background, spriteBatch, this.graphics);
+            newGameButton = new TextButton(font, game, "New Game", new Vector2(30, continueButton.top - gap));
+            optionsButton = new TextButton(font, game, "Options", new Vector2(50, height/2 + gap/2));
+            exitButton = new TextButton(font, game, "Exit", new Vector2(75, optionsButton.bottom + gap - (int) font.MeasureString("Exit").Y));
+            mainMenu = new InterfaceMenu(new TextButton[] { newGameButton, continueButton, optionsButton, exitButton }, new Text[] { }, background, game);
 
 
             mainMenu.menuOn = true;
@@ -105,45 +95,41 @@ namespace Buttons
                                                                                             + (int)font.MeasureString(languageText.textValue).Y);
             languageText.font = font;
 
-            TextButton backToMainMenuButton = new TextButton(font, spriteBatch, "Back", new Vector2(20, height - 80));
+            TextButton backToMainMenuButton = new TextButton(font, game, "Back", new Vector2(20, height - 80));
 
             Text fullScreenText = new Text("Full Screen : ", new Vector2(width/2 - (int)font.MeasureString("Full Screen :").X - 20, 10 + languageText.location.Y
                                                                                              + (int)font.MeasureString(languageText.textValue).Y), font);
 
-            TextButton englishButton = new TextButton(font, spriteBatch, "English", new Vector2(languageText.location.X + (int)font.MeasureString(languageText.textValue).X + font.MeasureString("English").X - 50, languageText.location.Y));
-            TextButton frenchButton = new TextButton(font, spriteBatch, "Francais", new Vector2(englishButton.right + 50, languageText.location.Y));
+            TextButton englishButton = new TextButton(font, game, "English", new Vector2(languageText.location.X + (int)font.MeasureString(languageText.textValue).X + font.MeasureString("English").X - 50, languageText.location.Y));
+            TextButton frenchButton = new TextButton(font, game, "Francais", new Vector2(englishButton.right + 50, languageText.location.Y));
 
-            TextButton toFS = new TextButton(font, spriteBatch, "On", new Vector2((englishButton.left + englishButton.right) / 2, fullScreenText.location.Y));
-            TextButton toNS = new TextButton(font, spriteBatch, "Off", new Vector2((frenchButton.left + frenchButton.right) / 2, fullScreenText.location.Y));
-
-
-            TextButton userNameButton = new TextButton(font, spriteBatch, "Username :", new Vector2(width/2 - font.MeasureString("Username :").X - 20, fullScreenText.location.Y + font.MeasureString(fullScreenText.textValue).Y + 10));
+            TextButton toFS = new TextButton(font, game, "On", new Vector2((englishButton.left + englishButton.right) / 2, fullScreenText.location.Y));
+            TextButton toNS = new TextButton(font, game, "Off", new Vector2((frenchButton.left + frenchButton.right) / 2, fullScreenText.location.Y));
 
 
-            TextButton decreaseSoundEffect = new TextButton(font, spriteBatch, "  -  ", new Vector2(soundEffectText.location.X + 200, soundEffectText.location.Y));
-            TextButton increaseSoundEffect = new TextButton(font, spriteBatch, "  +  ", new Vector2(soundEffectText.location.X + 500, soundEffectText.location.Y));
-            TextButton decreaseMusicVolume = new TextButton(font, spriteBatch, "  -  ", new Vector2(decreaseSoundEffect.textLocation.X, musicLevelText.location.Y));
-            TextButton increaseMusicVolume = new TextButton(font, spriteBatch, "  +  ", new Vector2(decreaseSoundEffect.textLocation.X + 300, musicLevelText.location.Y));
+            TextButton userNameButton = new TextButton(font, game, "Username :", new Vector2(width/2 - font.MeasureString("Username :").X - 20, fullScreenText.location.Y + font.MeasureString(fullScreenText.textValue).Y + 10));
+
+
+            TextButton decreaseSoundEffect = new TextButton(font, game, "  -  ", new Vector2(soundEffectText.location.X + 200, soundEffectText.location.Y));
+            TextButton increaseSoundEffect = new TextButton(font, game, "  +  ", new Vector2(soundEffectText.location.X + 500, soundEffectText.location.Y));
+            TextButton decreaseMusicVolume = new TextButton(font, game, "  -  ", new Vector2(decreaseSoundEffect.textLocation.X, musicLevelText.location.Y));
+            TextButton increaseMusicVolume = new TextButton(font, game, "  +  ", new Vector2(decreaseSoundEffect.textLocation.X + 300, musicLevelText.location.Y));
 
             optionsMenu = new InterfaceMenu(new TextButton[10] { backToMainMenuButton, decreaseSoundEffect, increaseSoundEffect, decreaseMusicVolume, increaseMusicVolume, englishButton, frenchButton, toFS, toNS, userNameButton },
-                new Text[4] { musicLevelText, soundEffectText, languageText, fullScreenText }, background, spriteBatch, this.graphics);
+                new Text[4] { musicLevelText, soundEffectText, languageText, fullScreenText }, background, game);
         }
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// all content.
         /// </summary>
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
-        }
 
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
@@ -164,7 +150,7 @@ namespace Buttons
                 loadingText.font = font;
                 loadingText.textValue = "Loading...";
                 loadingText.location = new Vector2(50, 50);
-                Screen loadingScreen = new Screen(background, new Text[1] { loadingText }, spriteBatch);
+                Screen loadingScreen = new Screen(background, new Text[1] { loadingText }, game.spriteBatch);
                 loadingScreen.IsOn = true;
                 loadingScreen.Draw();
             }
@@ -218,17 +204,15 @@ namespace Buttons
             }
 
             if (mainMenu.buttonWithIndexPressed(3)) // Exit
-                Exit();
-
-            Draw(gameTime);
-            base.Update(gameTime);
+                game.Exit();
+            
         }
 
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
             // TODO: Add your drawing code here
 
@@ -237,19 +221,18 @@ namespace Buttons
             optionsMenu.Draw();
             if (optionsMenu.MenuOn)
             {
-                spriteBatch.Begin();
-                spriteBatch.DrawString(font, LevelString((int)(music.Volume*10)), new Vector2(optionsMenu.buttons[3].textLocation.X + 60, optionsMenu.buttons[3].textLocation.Y), Color.White);
-                spriteBatch.DrawString(font, LevelString(soundEffectVolume), new Vector2(optionsMenu.buttons[1].textLocation.X + 60, optionsMenu.buttons[1].textLocation.Y), Color.White);
-                spriteBatch.End();
+                game.spriteBatch.Begin();
+                game.spriteBatch.DrawString(font, LevelString((int)(music.Volume*10)), new Vector2(optionsMenu.buttons[3].textLocation.X + 60, optionsMenu.buttons[3].textLocation.Y), Color.White);
+                game.spriteBatch.DrawString(font, LevelString(soundEffectVolume), new Vector2(optionsMenu.buttons[1].textLocation.X + 60, optionsMenu.buttons[1].textLocation.Y), Color.White);
+                game.spriteBatch.End();
 
             }
             String copyright = "Copyright GeekHub@Epita 2018";
-            spriteBatch.Begin();
+            game.spriteBatch.Begin();
             Vector2 vector = new Vector2(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - font.MeasureString(copyright).X - 10, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - font.MeasureString(copyright).Y);
-            spriteBatch.DrawString(font, copyright, vector, Color.White);
-            spriteBatch.End();
+            game.spriteBatch.DrawString(font, copyright, vector, Color.White);
+            game.spriteBatch.End();
 
-            base.Draw(gameTime);
         }
 
 

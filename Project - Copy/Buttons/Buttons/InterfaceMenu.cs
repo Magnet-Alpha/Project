@@ -17,19 +17,17 @@ namespace Buttons
 
     class InterfaceMenu
     {
-        private SpriteBatch spriteBatch;
         public TextButton[] buttons;
         Text[] texts;
         public Texture2D background;
         public bool menuOn;
-        GraphicsDeviceManager graphics;
+        private Game1 game;
 
-        public InterfaceMenu(TextButton[] buttonArray, Text[] t, Texture2D bg, SpriteBatch sBatch,GraphicsDeviceManager graphics)
+        public InterfaceMenu(TextButton[] buttonArray, Text[] t, Texture2D bg, Game1 game)
         {
-            this.graphics = graphics;
+            this.game = game;
             buttons = buttonArray;
             texts = t;
-            spriteBatch = sBatch;
             background = bg;
         }
 
@@ -64,21 +62,21 @@ namespace Buttons
                 return;
             }
 
-            spriteBatch.Begin();
-            spriteBatch.Draw(background, new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Color.White);
-            spriteBatch.End();
+            game.spriteBatch.Begin();
+            game.spriteBatch.Draw(background, new Rectangle(0, 0, game.graphics.PreferredBackBufferWidth, game.graphics.PreferredBackBufferHeight), Color.White);
+            game.spriteBatch.End();
 
             for ( int i = 0; i < buttons.Length; i++){
                 buttons[i].Clickable = true;
                 buttons[i].Update();
                 buttons[i].Draw();
             }
-            spriteBatch.Begin();
+            game.spriteBatch.Begin();
             for (int i = 0; i < texts.Length; i++)
             {
-                  spriteBatch.DrawString(texts[i].font, texts[i].textValue, texts[i].location, Color.White);
+                  game.spriteBatch.DrawString(texts[i].font, texts[i].textValue, texts[i].location, Color.White);
             }
-            spriteBatch.End();
+            game.spriteBatch.End();
         }
 
         public bool buttonWithIndexPressed(int n)

@@ -12,7 +12,7 @@ namespace Buttons
     {
         private SpriteFont font;
         private string text;
-        private SpriteBatch spriteBatch;
+        private Game1 game;
         private MouseState mouse;
         private MouseState oldMouse;
         public bool takingAction = false;
@@ -21,10 +21,10 @@ namespace Buttons
         public Vector2 textLocation;
         bool clickable = true;
 
-        public TextButton(SpriteFont font, SpriteBatch sBatch, string t, Vector2 textLoc)
+        public TextButton(SpriteFont font, Game1 game, string t, Vector2 textLoc)
         {
             this.font = font;
-            spriteBatch = sBatch;
+            this.game = game;
             text = t;
 
             textLocation = textLoc;
@@ -157,9 +157,9 @@ namespace Buttons
             {
                 color = Color.Chocolate;
             }
-            spriteBatch.Begin();
-            spriteBatch.DrawString(font, text, position, color, rotation, spriteOrigin, scale, spriteEffects, spriteLayer);
-            spriteBatch.End();
+            game.spriteBatch.Begin();
+            game.spriteBatch.DrawString(font, text, position, color, rotation, spriteOrigin, scale, spriteEffects, spriteLayer);
+            game.spriteBatch.End();
             
         }
     }
