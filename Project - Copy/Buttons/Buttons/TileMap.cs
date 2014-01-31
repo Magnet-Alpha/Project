@@ -14,11 +14,14 @@ namespace Buttons
     {
         public List<MapRow> Rows = new List<MapRow>();
         // Taille de la map
-        public int MapWidth = 30;
-        public int MapHeight = 60;
+        public int MapWidth;
+        public int MapHeight;
 
-        public TileMap()
+        public TileMap(int width, int height)
         {
+            MapWidth = width;
+            MapHeight = height;
+
             for (int y = 0; y < MapHeight; y++)
             {
                 MapRow thisRow = new MapRow();

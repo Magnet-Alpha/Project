@@ -17,5 +17,6 @@ namespace Buttons
         void Draw(GameTime gameTime);
         void Initialize();
         void LoadContent();
+        void ChangeGameState(IState state);
     }
 }
