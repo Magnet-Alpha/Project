@@ -11,11 +11,9 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Buttons
 {
-    public class GameLoop : Microsoft.Xna.Framework.Game
+    public class GameState : IState
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        
+        Game1 game;
         TileMap myMap = new TileMap();
         int squaresAcross = 17;        
         int squaresDown = 37;
@@ -24,33 +22,25 @@ namespace Buttons
         float heightRowDepthMod = 0.00001f;
 
 
-        public GameLoop()
+        public GameState(Game1 game)
         {
-            graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+            this.game = game;
+            Initialize();
+            LoadContent();
         }
 
 
-        protected override void Initialize()
+        public void Initialize()
         {
-            base.Initialize();
-            IsMouseVisible = true;
         }
 
 
-        protected override void LoadContent()
+        public void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            Tile.TileSetTexture = Content.Load<Texture2D>(@"texture1");
+            Tile.TileSetTexture = game.Content.Load<Texture2D>(@"texture1");
         }
 
-
-        protected override void UnloadContent()
-        {
-            //VIDE
-        }
-
-        protected override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
 
             //--------------------Gestion de la caméra-------------------
@@ -80,18 +70,15 @@ namespace Buttons
                     (myMap.MapHeight - squaresDown) * Tile.TileStepY);
             }
             //-----------------------------------------------------------------
-
-            base.Update(gameTime);
         }
 
       
-        protected override void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
             
             //--------------------Affichage des textures--------------------
 
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+            game.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
             Vector2 firstSquare = new Vector2(Camera.Location.X / Tile.TileStepX, Camera.Location.Y / Tile.TileStepY);
             int firstX = (int)firstSquare.X;
@@ -120,7 +107,7 @@ namespace Buttons
                     // Boucle de la 1ère couche de texture
                     foreach (int tileID in myMap.Rows[mapy].Columns[mapx].BaseTiles)
                     {
-                        spriteBatch.Draw(
+                        game.spriteBatch.Draw(
 
                             Tile.TileSetTexture,
                             new Rectangle(
@@ -140,7 +127,7 @@ namespace Buttons
                     // Boucle de la 2ème couche de texture
                     foreach (int tileID in myMap.Rows[mapy].Columns[mapx].HeightTiles)
                     {
-                        spriteBatch.Draw(
+                        game.spriteBatch.Draw(
                             Tile.TileSetTexture,
                             new Rectangle(
                                 (x * Tile.TileStepX) - offsetX + rowOffset + baseOffsetX,
@@ -158,7 +145,7 @@ namespace Buttons
                     // Boucle de la 3ème couche de texture
                     foreach (int tileID in myMap.Rows[y + firstY].Columns[x + firstX].TopperTiles)
                     {
-                        spriteBatch.Draw(
+                        game.spriteBatch.Draw(
                             Tile.TileSetTexture,
                             new Rectangle(
                                 (x * Tile.TileStepX) - offsetX + rowOffset + baseOffsetX,
@@ -174,11 +161,10 @@ namespace Buttons
                 }
             }
 
-            spriteBatch.End();
+            game.spriteBatch.End();
 
             //---------------------------------------------------------------------------------------
 
-            base.Draw(gameTime);
         }
     }
 }

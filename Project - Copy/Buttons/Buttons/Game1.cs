@@ -18,7 +18,7 @@ namespace Buttons
     {
         public GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
-        MenuState mainMenu;
+        public IState gameState;
         public int soundEffectVolume;
         public int musicVolume;
 
@@ -49,8 +49,8 @@ namespace Buttons
             IsMouseVisible = true;
             SoundEffect.MasterVolume = 1;
             this.Window.AllowUserResizing = true;
-            mainMenu = new MenuState(this);
-            mainMenu.Initialize();
+            gameState = new MenuState(this);
+            gameState.Initialize();
             base.Initialize();
         }
 
@@ -61,7 +61,7 @@ namespace Buttons
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures. 
-            mainMenu.LoadContent();
+            gameState.LoadContent();
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
         }
@@ -85,7 +85,7 @@ namespace Buttons
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            mainMenu.Update(gameTime);
+            gameState.Update(gameTime);
 
             Draw(gameTime);
             base.Update(gameTime);
@@ -97,7 +97,7 @@ namespace Buttons
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            mainMenu.Draw(gameTime);
+            gameState.Draw(gameTime);
 
             base.Draw(gameTime);
         }

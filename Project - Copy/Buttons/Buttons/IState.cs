@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Buttons
 {
-    interface IState
+    public interface IState
     {
         void Update(GameTime gameTime);
         void Draw(GameTime gameTime);

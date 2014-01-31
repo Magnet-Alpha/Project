@@ -13,6 +13,7 @@ namespace Buttons
 {
     class MenuState : IState
     {
+        public bool isActive = true;
         TextButton newGameButton;
         TextButton continueButton;
         TextButton optionsButton;
@@ -21,9 +22,6 @@ namespace Buttons
         Texture2D background;
         InterfaceMenu mainMenu;
         InterfaceMenu optionsMenu;
-        IState myState;
-        int soundEffectVolume;
-        int musicVolume;
         SoundEffectInstance music;
         int gap;
         float width;
@@ -33,6 +31,10 @@ namespace Buttons
         public MenuState(Game1 game)
         {
             this.game = game;
+            height = GraphicsDeviceManager.DefaultBackBufferHeight;
+            width = GraphicsDeviceManager.DefaultBackBufferWidth;
+            Initialize();
+            LoadContent();
         }
 
         /// <summary>
@@ -46,8 +48,7 @@ namespace Buttons
             // TODO: Add your initialization logic here
 
             background = game.Content.Load<Texture2D>("BG");
-            soundEffectVolume = 5;
-            musicVolume = 5;
+           
         }
 
         /// <summary>
@@ -145,14 +146,15 @@ namespace Buttons
             if (mainMenu.buttonWithIndexPressed(0)) // New Game
             {
                 mainMenu.menuOn = false;
-                
-                Text loadingText;
+                GameState newGame = new GameState(this.game);
+                game.gameState = newGame;
+                /*Text loadingText;
                 loadingText.font = font;
                 loadingText.textValue = "Loading...";
                 loadingText.location = new Vector2(50, 50);
                 Screen loadingScreen = new Screen(background, new Text[1] { loadingText }, game.spriteBatch);
                 loadingScreen.IsOn = true;
-                loadingScreen.Draw();
+                loadingScreen.Draw();*/
             }
 
             if (mainMenu.buttonWithIndexPressed(2)) // Options
@@ -165,15 +167,13 @@ namespace Buttons
 
 
             // Sound Buttons
-            if (optionsMenu.buttonWithIndexPressed(1) && soundEffectVolume > 0)
+            if (optionsMenu.buttonWithIndexPressed(1))
             {
-                soundEffectVolume--;
                 while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
             }
 
-            if (optionsMenu.buttonWithIndexPressed(2) && soundEffectVolume < 10)
+            if (optionsMenu.buttonWithIndexPressed(2))
             {
-                soundEffectVolume++;
                 while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
             }
 
@@ -223,7 +223,7 @@ namespace Buttons
             {
                 game.spriteBatch.Begin();
                 game.spriteBatch.DrawString(font, LevelString((int)(music.Volume*10)), new Vector2(optionsMenu.buttons[3].textLocation.X + 60, optionsMenu.buttons[3].textLocation.Y), Color.White);
-                game.spriteBatch.DrawString(font, LevelString(soundEffectVolume), new Vector2(optionsMenu.buttons[1].textLocation.X + 60, optionsMenu.buttons[1].textLocation.Y), Color.White);
+                //game.spriteBatch.DrawString(font, LevelString(soundEffectVolume), new Vector2(optionsMenu.buttons[1].textLocation.X + 60, optionsMenu.buttons[1].textLocation.Y), Color.White);
                 game.spriteBatch.End();
 
             }
