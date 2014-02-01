@@ -14,7 +14,7 @@ namespace Buttons
     public class GameState : IState
     {
         Game1 game;
-        TileMap myMap;
+        TileMap myMap = new TileMap();
         int squaresAcross = 17;        
         int squaresDown = 37;
         int baseOffsetX = -32;
@@ -38,7 +38,6 @@ namespace Buttons
         public void LoadContent()
         {
             Tile.TileSetTexture = game.Content.Load<Texture2D>(@"texture1");
-            myMap = new TileMap(game.width, game.height);
         }
 
         public void Update(GameTime gameTime)
@@ -70,14 +69,6 @@ namespace Buttons
                 Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y + 4, 0, 
                     (myMap.MapHeight - squaresDown) * Tile.TileStepY);
             }
-
-            // Gestion de redimentionnement
-            if (myMap.MapWidth != game.width || myMap.MapHeight != game.height)
-            {
-                myMap = new TileMap(game.width, game.height);
-                Draw(gameTime);
-            }
-
             //-----------------------------------------------------------------
         }
 
@@ -96,7 +87,7 @@ namespace Buttons
             Vector2 squareOffset = new Vector2(Camera.Location.X % Tile.TileStepX, Camera.Location.Y % Tile.TileStepY);
             int offsetX = (int)squareOffset.X;
             int offsetY = (int)squareOffset.Y;
-            
+
             float maxdepth = ((myMap.MapWidth + 1) * ((myMap.MapHeight + 1) * Tile.TileWidth)) / 10;
             float depthOffset;
 
@@ -175,11 +166,5 @@ namespace Buttons
             //---------------------------------------------------------------------------------------
 
         }
-        public void ChangeGameState(IState state)
-        {
-        }
     }
-    
-
-
 }

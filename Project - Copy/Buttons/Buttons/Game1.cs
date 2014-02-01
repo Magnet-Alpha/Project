@@ -21,14 +21,19 @@ namespace Buttons
         public IState gameState;
         public int soundEffectVolume;
         public int musicVolume;
-        public int width;
-        public int height;
+
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
+            /*
+            this.graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            this.graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;*/
+            this.graphics.PreferredBackBufferWidth = 800;
+            this.graphics.PreferredBackBufferHeight = 460;
+
+           // this.graphics.IsFullScreen = true;
         }
 
         /// <summary>
@@ -46,8 +51,6 @@ namespace Buttons
             this.Window.AllowUserResizing = true;
             gameState = new MenuState(this);
             gameState.Initialize();
-            width = GraphicsDevice.PresentationParameters.BackBufferWidth;
-            height = GraphicsDevice.PresentationParameters.BackBufferHeight;
             base.Initialize();
         }
 
@@ -97,13 +100,6 @@ namespace Buttons
             gameState.Draw(gameTime);
 
             base.Draw(gameTime);
-        }
-
-        void Window_ClientSizeChanged(object sender, EventArgs e)
-        {
-            width = GraphicsDevice.PresentationParameters.BackBufferWidth;
-            height = GraphicsDevice.PresentationParameters.BackBufferHeight;
-            gameState.Draw(new GameTime());
         }
 
     }

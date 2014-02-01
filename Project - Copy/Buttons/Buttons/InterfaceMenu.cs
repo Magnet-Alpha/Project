@@ -63,7 +63,7 @@ namespace Buttons
             }
 
             game.spriteBatch.Begin();
-            game.spriteBatch.Draw(background, new Rectangle(0, 0, game.width, game.height), Color.White);
+            game.spriteBatch.Draw(background, new Rectangle(0, 0, game.graphics.PreferredBackBufferWidth, game.graphics.PreferredBackBufferHeight), Color.White);
             game.spriteBatch.End();
 
             for ( int i = 0; i < buttons.Length; i++){
