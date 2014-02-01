@@ -21,15 +21,14 @@ namespace Buttons
         public IState gameState;
         public int soundEffectVolume;
         public int musicVolume;
+        public int width;
+        public int height;
 
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            /*
-            this.graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            this.graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;*/
             this.graphics.PreferredBackBufferWidth = 800;
             this.graphics.PreferredBackBufferHeight = 460;
 
@@ -49,8 +48,11 @@ namespace Buttons
             IsMouseVisible = true;
             SoundEffect.MasterVolume = 1;
             this.Window.AllowUserResizing = true;
+            height = GraphicsDevice.PresentationParameters.BackBufferHeight;
+            width = GraphicsDevice.PresentationParameters.BackBufferWidth;
             gameState = new MenuState(this);
             gameState.Initialize();
+            Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
             base.Initialize();
         }
 
@@ -63,7 +65,7 @@ namespace Buttons
             // Create a new SpriteBatch, which can be used to draw textures. 
             gameState.LoadContent();
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
         }
 
         /// <summary>
@@ -100,6 +102,13 @@ namespace Buttons
             gameState.Draw(gameTime);
 
             base.Draw(gameTime);
+        }
+
+        void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            height = GraphicsDevice.PresentationParameters.BackBufferHeight;
+            width = GraphicsDevice.PresentationParameters.BackBufferWidth;
+            Draw(new GameTime());
         }
 
     }

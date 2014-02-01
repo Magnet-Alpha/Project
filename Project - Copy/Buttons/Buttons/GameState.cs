@@ -46,25 +46,26 @@ namespace Buttons
             //--------------------Gestion de la caméra-------------------
             //Modifier la coordonnée "4" pour accélérer ou deccélérer la vitesse de déplacement de la caméra
             KeyboardState ks = Keyboard.GetState();
-            if (ks.IsKeyDown(Keys.Left))
+            MouseState mouse = Mouse.GetState();
+            if (ks.IsKeyDown(Keys.Left) || mouse.X < 50)
             {
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X - 4, 0, 
                     (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
             }
 
-            if (ks.IsKeyDown(Keys.Right))
+            if (ks.IsKeyDown(Keys.Right) || mouse.X > game.width - 50)
             {
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 4, 0, 
                     (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
             }
 
-            if (ks.IsKeyDown(Keys.Up))
+            if (ks.IsKeyDown(Keys.Up) || mouse.Y < 50)
             {
                 Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y - 4, 0, 
                     (myMap.MapHeight - squaresDown) * Tile.TileStepY);
             }
 
-            if (ks.IsKeyDown(Keys.Down))
+            if (ks.IsKeyDown(Keys.Down) || mouse.Y > game.height - 50)
             {
                 Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y + 4, 0, 
                     (myMap.MapHeight - squaresDown) * Tile.TileStepY);
