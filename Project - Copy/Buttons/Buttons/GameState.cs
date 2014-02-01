@@ -20,13 +20,14 @@ namespace Buttons
         int baseOffsetX = -32;
         int baseOffsetY = -64;
         float heightRowDepthMod = 0.00001f;
-
+        public GameStateStatus status;
 
         public GameState(Game1 game)
         {
             this.game = game;
             Initialize();
             LoadContent();
+            status = GameStateStatus.InGame;
         }
 
 
@@ -42,6 +43,8 @@ namespace Buttons
 
         public void Update(GameTime gameTime)
         {
+            if (status == GameStateStatus.Pause)
+                return;
 
             //--------------------Gestion de la caméra-------------------
             //Modifier la coordonnée "4" pour accélérer ou deccélérer la vitesse de déplacement de la caméra
@@ -71,11 +74,27 @@ namespace Buttons
                     (myMap.MapHeight - squaresDown) * Tile.TileStepY);
             }
             //-----------------------------------------------------------------
+
+            //--------------------Gestion Pause -------------------------------
+            if (ks.IsKeyDown(Keys.Escape)) 
+            {
+                //while (ks.GetPressedKeys().Contains<Keys>(Keys.Escape)) { }
+                status = GameStateStatus.Pause;
+                ChangeState(new PauseState(this, game));
+                
+            }
+            
+
+               
+
+
         }
 
       
         public void Draw(GameTime gameTime)
         {
+            if (status == GameStateStatus.Pause)
+                return;
             
             //--------------------Affichage des textures--------------------
 
@@ -166,6 +185,12 @@ namespace Buttons
 
             //---------------------------------------------------------------------------------------
 
+        }
+
+        public void ChangeState(IState state)
+        {
+            game.gameState = state;
+            
         }
     }
 }

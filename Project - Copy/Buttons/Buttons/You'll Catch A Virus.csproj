@@ -114,6 +114,7 @@
     <Compile Include="IState.cs" />
     <Compile Include="MapCell.cs" />
     <Compile Include="MenuState.cs" />
+    <Compile Include="PauseState.cs" />
     <Compile Include="TextButton.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Screen.cs" />

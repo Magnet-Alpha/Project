@@ -39,4 +39,10 @@ namespace Buttons
         }
     }
 
+    public enum GameStateStatus
+    {
+        Pause,
+        InGame
+    }
+
  }

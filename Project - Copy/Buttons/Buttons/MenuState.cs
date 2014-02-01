@@ -141,16 +141,7 @@ namespace Buttons
                 optionsMenu.Update();
             if (mainMenu.buttonWithIndexPressed(0)) // New Game
             {
-                mainMenu.menuOn = false;
-                GameState newGame = new GameState(this.game);
-                game.gameState = newGame;
-                /*Text loadingText;
-                loadingText.font = font;
-                loadingText.textValue = "Loading...";
-                loadingText.location = new Vector2(50, 50);
-                Screen loadingScreen = new Screen(background, new Text[1] { loadingText }, game.spriteBatch);
-                loadingScreen.IsOn = true;
-                loadingScreen.Draw();*/
+                ChangeState(new GameState(game));
             }
 
             if (mainMenu.buttonWithIndexPressed(2)) // Options
@@ -165,6 +156,7 @@ namespace Buttons
             // Sound Buttons
             if (optionsMenu.buttonWithIndexPressed(1))
             {
+                
                 while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
             }
 
@@ -231,6 +223,13 @@ namespace Buttons
 
         }
 
+        public void ChangeState(IState state)
+        {
+            mainMenu.menuOn = false;
+            GameState newGame = new GameState(this.game);
+            game.gameState = newGame;
+            Draw(new GameTime());
+        }
 
         private string LevelString(int n)
         {

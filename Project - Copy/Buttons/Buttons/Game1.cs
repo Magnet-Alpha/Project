@@ -35,6 +35,7 @@ namespace Buttons
            // this.graphics.IsFullScreen = true;
         }
 
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -97,6 +98,11 @@ namespace Buttons
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        public void draw()
+        {
+            Draw(new GameTime());
+        }
+        
         protected override void Draw(GameTime gameTime)
         {
             gameState.Draw(gameTime);
