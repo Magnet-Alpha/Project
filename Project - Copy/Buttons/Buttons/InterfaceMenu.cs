@@ -37,16 +37,20 @@ namespace Buttons
 
             set
             {
+                if(buttons != null){
                 for(int i = 0; i < buttons.Length; i++){
                  buttons[i].Clickable = value;
                  buttons[i].clicked = false;
-                }
+                }}
                 menuOn = value;
                 Draw();
         }
         }
         public void Update()
         {
+            if (buttons == null)
+                return;
+
             for (int i = 0; i < buttons.Length; i++)
             {
                 buttons[i].Update();
@@ -65,11 +69,14 @@ namespace Buttons
             game.spriteBatch.Begin();
             game.spriteBatch.Draw(background, new Rectangle(0, 0, game.width, game.height), Color.White);
             game.spriteBatch.End();
-
-            for ( int i = 0; i < buttons.Length; i++){
-                buttons[i].Clickable = true;
-                buttons[i].Update();
-                buttons[i].Draw();
+            if (buttons != null)
+            {
+                for (int i = 0; i < buttons.Length; i++)
+                {
+                    buttons[i].Clickable = true;
+                    buttons[i].Update();
+                    buttons[i].Draw();
+                }
             }
             game.spriteBatch.Begin();
             for (int i = 0; i < texts.Length; i++)
@@ -103,7 +110,7 @@ namespace Buttons
             }
             Draw();
         }
-
+        
 
     }
 

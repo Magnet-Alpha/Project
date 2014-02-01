@@ -21,9 +21,11 @@ namespace Buttons
         int baseOffsetY = -64;
         float heightRowDepthMod = 0.00001f;
         public GameStateStatus status;
+        SoundEffectInstance music;
 
-        public GameState(Game1 game)
+        public GameState(Game1 game, SoundEffectInstance music)
         {
+            this.music = music;
             this.game = game;
             Initialize();
             LoadContent();
@@ -78,9 +80,9 @@ namespace Buttons
             //--------------------Gestion Pause -------------------------------
             if (ks.IsKeyDown(Keys.Escape)) 
             {
-                //while (ks.GetPressedKeys().Contains<Keys>(Keys.Escape)) { }
+                //while (Keyboard.GetState().GetPressedKeys().Length > 0) { }
                 status = GameStateStatus.Pause;
-                ChangeState(new PauseState(this, game));
+                ChangeState(new PauseState(this, game, music));
                 
             }
             

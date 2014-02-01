@@ -21,7 +21,7 @@ namespace Buttons
         SpriteFont font;
         Texture2D background;
         InterfaceMenu mainMenu;
-        InterfaceMenu optionsMenu;
+        public InterfaceMenu optionsMenu;
         SoundEffectInstance music;
         int gap;
         Game1 game;
@@ -141,7 +141,7 @@ namespace Buttons
                 optionsMenu.Update();
             if (mainMenu.buttonWithIndexPressed(0)) // New Game
             {
-                ChangeState(new GameState(game));
+                ChangeState(new GameState(game, music));
             }
 
             if (mainMenu.buttonWithIndexPressed(2)) // Options
@@ -167,7 +167,11 @@ namespace Buttons
 
             if (optionsMenu.buttonWithIndexPressed(3) && music.Volume > 0)
             {
-                music.Volume -= 0.1f;
+                try
+                {
+                    music.Volume -= 0.1f;
+                }
+                catch { music.Volume = 0; }
                 while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
             }
 
@@ -226,12 +230,12 @@ namespace Buttons
         public void ChangeState(IState state)
         {
             mainMenu.menuOn = false;
-            GameState newGame = new GameState(this.game);
+            GameState newGame = new GameState(this.game, music);
             game.gameState = newGame;
             Draw(new GameTime());
         }
 
-        private string LevelString(int n)
+        static public string LevelString(int n)
         {
             string str = "";
             for (int i = 0; i < n; i++)
@@ -241,6 +245,7 @@ namespace Buttons
 
             return str;
         }
+       
 
     }
 }
