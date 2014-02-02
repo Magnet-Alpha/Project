@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Buttons
 {
-    class TextButton : Button
+    public class TextButton : Button
     {
         private SpriteFont font;
         private string text;

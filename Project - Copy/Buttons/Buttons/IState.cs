@@ -18,5 +18,6 @@ namespace Buttons
         void Initialize();
         void LoadContent();
         void ChangeState(IState state);
+        void Window_ClientSizeChanged(object sender, EventArgs e);
     }
 }

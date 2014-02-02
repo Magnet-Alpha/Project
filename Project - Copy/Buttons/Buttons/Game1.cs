@@ -28,6 +28,7 @@ namespace Buttons
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+       
             Content.RootDirectory = "Content";
             this.graphics.PreferredBackBufferWidth = 800;
             this.graphics.PreferredBackBufferHeight = 460;
@@ -51,8 +52,7 @@ namespace Buttons
             this.Window.AllowUserResizing = true;
             height = GraphicsDevice.PresentationParameters.BackBufferHeight;
             width = GraphicsDevice.PresentationParameters.BackBufferWidth;
-            gameState = new MenuState(this);
-            gameState.Initialize();
+            
             Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
             base.Initialize();
         }
@@ -64,9 +64,8 @@ namespace Buttons
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures. 
-            gameState.LoadContent();
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            gameState = new MenuState(this);
         }
 
         /// <summary>
@@ -114,6 +113,7 @@ namespace Buttons
         {
             height = GraphicsDevice.PresentationParameters.BackBufferHeight;
             width = GraphicsDevice.PresentationParameters.BackBufferWidth;
+            gameState.Window_ClientSizeChanged(sender, e);
             Draw(new GameTime());
         }
 

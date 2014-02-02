@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Buttons
 {
-    abstract class Button
+    public abstract class Button
     {
     } 
 }

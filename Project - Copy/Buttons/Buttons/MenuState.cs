@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Buttons
 {
-    class MenuState : IState
+    public class MenuState : IState
     {
         public bool isActive = true;
         TextButton newGameButton;
@@ -29,9 +29,8 @@ namespace Buttons
         public MenuState(Game1 game)
         {
             this.game = game;
-
-            Initialize();
             LoadContent();
+            Initialize();
             if(music == null)
                  music = game.Content.Load<SoundEffect>("music").CreateInstance();
             music.IsLooped = true;
@@ -51,8 +50,8 @@ namespace Buttons
         {
             // TODO: Add your initialization logic here
 
-            background = game.Content.Load<Texture2D>("BG");
-           
+            
+            mainMenu.MenuOn = true;
         }
 
         /// <summary>
@@ -62,12 +61,12 @@ namespace Buttons
         public void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures. 
-            
+            bool mainMenuOn;
+            try { mainMenuOn = mainMenu.MenuOn; }
+            catch { mainMenuOn = true; }
 
+            background = game.Content.Load<Texture2D>("BG");
 
-
-            Texture2D texture;
-            texture = game.Content.Load<Texture2D>("SmileyWalk");
             font = game.Content.Load<SpriteFont>("Font");
             gap = (int)font.MeasureString("L").Y;
             //menu general
@@ -77,10 +76,9 @@ namespace Buttons
             newGameButton = new TextButton(font, game, "New Game", new Vector2(30, continueButton.top - gap));
             optionsButton = new TextButton(font, game, "Options", new Vector2(50, game.height/2 + gap/2));
             exitButton = new TextButton(font, game, "Exit", new Vector2(75, optionsButton.bottom + gap - (int) font.MeasureString("Exit").Y));
+            
             mainMenu = new InterfaceMenu(new TextButton[] { newGameButton, continueButton, optionsButton, exitButton }, new Text[] { }, background, game);
-
-
-            mainMenu.menuOn = true;
+            mainMenu.MenuOn = mainMenuOn;
             // menu options
             Text musicLevelText;
             musicLevelText.textValue = "Music :";
@@ -119,6 +117,7 @@ namespace Buttons
 
             optionsMenu = new InterfaceMenu(new TextButton[10] { backToMainMenuButton, decreaseSoundEffect, increaseSoundEffect, decreaseMusicVolume, increaseMusicVolume, englishButton, frenchButton, toFS, toNS, userNameButton },
                 new Text[4] { musicLevelText, soundEffectText, languageText, fullScreenText }, background, game);
+            optionsMenu.menuOn = !mainMenuOn;
         }
 
         /// <summary>
@@ -237,6 +236,12 @@ namespace Buttons
             GameState newGame = new GameState(this.game, music);
             game.gameState = newGame;
             Draw(new GameTime());
+        }
+
+
+        public void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            LoadContent();
         }
 
         static public string LevelString(int n)

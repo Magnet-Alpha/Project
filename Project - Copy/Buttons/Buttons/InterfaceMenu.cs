@@ -12,10 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Buttons
 {
-
-
-
-    class InterfaceMenu
+    public class InterfaceMenu
     {
         public TextButton[] buttons;
         Text[] texts;
