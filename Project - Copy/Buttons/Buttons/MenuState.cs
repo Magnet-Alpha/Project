@@ -32,9 +32,11 @@ namespace Buttons
 
             Initialize();
             LoadContent();
-            music = game.Content.Load<SoundEffect>("music").CreateInstance();
+            if(music == null)
+                 music = game.Content.Load<SoundEffect>("music").CreateInstance();
             music.IsLooped = true;
-            music.Play();
+            if(music.State != SoundState.Playing)
+                music.Play();
             music.Volume = 0.5f;
             
         }
@@ -182,10 +184,12 @@ namespace Buttons
             }
 
             // full screen on
-            /*if (optionsMenu.buttonWithIndexPressed(7))
+            if (optionsMenu.buttonWithIndexPressed(7))
             {
-                this.graphics.IsFullScreen = true;
-            }*/
+                game.graphics.PreferredBackBufferWidth = 480;
+                game.graphics.PreferredBackBufferHeight = 800;
+                game.graphics.IsFullScreen = true;
+            }
 
             // Back
             if (optionsMenu.buttonWithIndexPressed(0))

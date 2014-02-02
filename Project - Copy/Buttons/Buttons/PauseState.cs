@@ -20,6 +20,7 @@ namespace Buttons
         SpriteFont font;
         InterfaceMenu optionsMenu;
         SoundEffectInstance music;
+        KeyboardState oldKs;
 
         public PauseState(GameState gameState, Game1 game, SoundEffectInstance music)
         {
@@ -29,11 +30,12 @@ namespace Buttons
             font = game.Content.Load<SpriteFont>("Font");
             Initialize();
             LoadContent();
+            oldKs = Keyboard.GetState();
         }
         public void Update(GameTime gameTime)
         {
             KeyboardState ks = Keyboard.GetState();
-            if (ks.IsKeyDown(Keys.Escape) || pauseMenu.buttonWithIndexPressed(0))
+            if ((ks.IsKeyDown(Keys.Escape) && !oldKs.IsKeyDown(Keys.Escape) || pauseMenu.buttonWithIndexPressed(0)))
             {
                 ChangeState(gameState);
                 gameState.status = GameStateStatus.InGame;
@@ -42,6 +44,11 @@ namespace Buttons
             {
                 pauseMenu.MenuOn = false;
                 optionsMenu.MenuOn = true;
+            }
+            if (pauseMenu.buttonWithIndexPressed(2))
+            {
+                pauseMenu.MenuOn = false;
+                ChangeState(new MenuState(game));
             }
             if (optionsMenu.buttonWithIndexPressed(0))
             {
@@ -78,7 +85,7 @@ namespace Buttons
                 catch { music.Volume = 1; }
                 while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
             }
-
+            oldKs = ks;
             pauseMenu.Update();
             optionsMenu.Update();
         }
@@ -142,8 +149,9 @@ namespace Buttons
         {
             
             TextButton returnGameButton = new TextButton(font, game, "Resume game", new Vector2(game.width / 2 - font.MeasureString("Resume game").X/2, 200));
-            TextButton optionsButton = new TextButton(font, game, "Options", new Vector2(game.width / 2 - font.MeasureString("Options").X / 2, 100));
-            pauseMenu = new InterfaceMenu(new TextButton[2]{returnGameButton, optionsButton}, new Text[1]{ new Text("Pause Menu", new Vector2(game.width/2 - font.MeasureString("Pause Menu").X/2, 50), font)}, background, game);
+            TextButton optionsButton = new TextButton(font, game, "Options", new Vector2(game.width / 2 - font.MeasureString("Options").X / 2, returnGameButton.textLocation.Y + font.MeasureString("Options").Y + 20));
+            TextButton returnMainMenuButton = new TextButton(font, game, "Return to main menu", new Vector2(game.width / 2 - font.MeasureString("Return to main menu").X / 2, optionsButton.textLocation.Y + font.MeasureString("Return to main menu").Y + 20));
+            pauseMenu = new InterfaceMenu(new TextButton[3]{returnGameButton, optionsButton, returnMainMenuButton}, new Text[1]{ new Text("Pause Menu", new Vector2(game.width/2 - font.MeasureString("Pause Menu").X/2, 50), font)}, background, game);
             pauseMenu.MenuOn = true;
         }
         public void ChangeState(IState state) {
