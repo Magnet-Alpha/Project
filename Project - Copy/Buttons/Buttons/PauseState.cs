@@ -154,6 +154,9 @@ namespace Buttons
             pauseMenu = new InterfaceMenu(new TextButton[3]{returnGameButton, optionsButton, returnMainMenuButton}, new Text[1]{ new Text("Pause Menu", new Vector2(game.width/2 - font.MeasureString("Pause Menu").X/2, 50), font)}, background, game);
             pauseMenu.MenuOn = true;
         }
+
+        public void Window_ClientSizeChanged(Object sender, EventArgs e) { }
+
         public void ChangeState(IState state) {
             
             game.gameState = state;    
