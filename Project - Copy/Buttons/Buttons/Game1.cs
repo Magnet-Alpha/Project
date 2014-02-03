@@ -28,12 +28,12 @@ namespace Buttons
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-       
+
             Content.RootDirectory = "Content";
             this.graphics.PreferredBackBufferWidth = 800;
             this.graphics.PreferredBackBufferHeight = 460;
-
-           // this.graphics.IsFullScreen = true;
+            this.Window.Title = "You'll Catch A Virus";
+            // this.graphics.IsFullScreen = true;
         }
 
 
@@ -52,7 +52,7 @@ namespace Buttons
             this.Window.AllowUserResizing = true;
             height = GraphicsDevice.PresentationParameters.BackBufferHeight;
             width = GraphicsDevice.PresentationParameters.BackBufferWidth;
-            
+
             Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
             base.Initialize();
         }
@@ -101,7 +101,7 @@ namespace Buttons
         {
             Draw(new GameTime());
         }
-        
+
         protected override void Draw(GameTime gameTime)
         {
             gameState.Draw(gameTime);
@@ -111,6 +111,7 @@ namespace Buttons
 
         void Window_ClientSizeChanged(object sender, EventArgs e)
         {
+
             height = GraphicsDevice.PresentationParameters.BackBufferHeight;
             width = GraphicsDevice.PresentationParameters.BackBufferWidth;
             gameState.Window_ClientSizeChanged(sender, e);
