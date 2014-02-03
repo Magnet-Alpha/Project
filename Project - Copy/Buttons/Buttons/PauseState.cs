@@ -173,8 +173,6 @@ namespace Buttons
             Initialize();
         }
 
-        public void Window_ClientSizeChanged(Object sender, EventArgs e) { }
-
         public void ChangeState(IState state) {
             
             game.gameState = state;    
