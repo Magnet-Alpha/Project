@@ -71,7 +71,7 @@ namespace Buttons
             gap = (int)font.MeasureString("L").Y;
             //menu general
             
-            continueButton = new TextButton(font, game, "Continue Game", new Vector2(40, game.height/2 - gap/2));
+            continueButton = new TextButton(font, game, "Multiplayer", new Vector2(40, game.height/2 - gap/2));
 
             newGameButton = new TextButton(font, game, "New Game", new Vector2(30, continueButton.top - gap));
             optionsButton = new TextButton(font, game, "Options", new Vector2(50, game.height/2 + gap/2));
@@ -144,6 +144,10 @@ namespace Buttons
             {
                 ChangeState(new GameState(game, music));
             }
+
+            if (mainMenu.buttonWithIndexPressed(1))
+                game.gameState = new MultiplayerState(game);
+
 
             if (mainMenu.buttonWithIndexPressed(2)) // Options
             {

@@ -34,6 +34,7 @@ namespace Buttons
             this.graphics.PreferredBackBufferHeight = 460;
             this.Window.Title = "You'll Catch A Virus";
             // this.graphics.IsFullScreen = true;
+
         }
 
 
