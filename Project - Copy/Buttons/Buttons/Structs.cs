@@ -37,6 +37,10 @@ namespace Buttons
             this.vers_g = vers_g;
             this.objectif = objectif;
         }
+        public void TheCamera(Vector2 L)
+        {
+            this.position = this.position - L;
+        }
     }
 
     public enum GameStateStatus

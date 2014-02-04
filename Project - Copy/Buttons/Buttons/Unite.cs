@@ -83,5 +83,9 @@ namespace Buttons
         {
             unitbatch.Draw(imgs[img], this.Position, Color.White);
         }
+        public void fuckingcamera(Vector2 L)
+        {
+            this.Position = this.Position - L;
+        }
     }
 }

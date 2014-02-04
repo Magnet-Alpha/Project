@@ -33,7 +33,10 @@ namespace Buttons
         Keypoint test5;
         Vector2 v = new Vector2(0, 0);
         Vector2 v2 = new Vector2(200, 100);
+        Vector2 ancientL;
+        Vector2 difL;
         List<int> indexs = new List<int>();
+
 
         public GameState(Game1 game, SoundEffectInstance music)
         {
@@ -75,28 +78,33 @@ namespace Buttons
             //Modifier la coordonnée "4" pour accélérer ou deccélérer la vitesse de déplacement de la caméra
             KeyboardState ks = Keyboard.GetState();
             MouseState mouse = Mouse.GetState();
+            ancientL = Camera.Location;
             if (ks.IsKeyDown(Keys.Left) || mouse.X < 50)
             {
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X - 4, 0, 
                     (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
+                difL = Camera.Location - ancientL;
             }
 
             if (ks.IsKeyDown(Keys.Right) || mouse.X > game.width - 50)
             {
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 4, 0, 
                     (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
+                difL = Camera.Location - ancientL;
             }
 
             if (ks.IsKeyDown(Keys.Up) || mouse.Y < 50)
             {
                 Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y - 4, 0, 
                     (myMap.MapHeight - squaresDown) * Tile.TileStepY);
+                difL = Camera.Location - ancientL;
             }
 
             if (ks.IsKeyDown(Keys.Down) || mouse.Y > game.height - 50)
             {
                 Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y + 4, 0, 
                     (myMap.MapHeight - squaresDown) * Tile.TileStepY);
+                difL = Camera.Location - ancientL;
             }
             //-----------------------------------------------------------------
 
@@ -109,8 +117,13 @@ namespace Buttons
                 
             }
             oldKs = ks;
+            foreach (Keypoint k in keypoints)
+            {
+                k.TheCamera(difL);
+            }
             foreach (Virus v in virus)
             {
+                v.fuckingcamera(difL);
                 v.NewPosition();
                 v.Turn(keypoints, virus, ref indexs);
             }
@@ -122,8 +135,10 @@ namespace Buttons
             // TODO: Add your update logic here
             foreach (Tower t in tower)
             {
+                t.fuckingcamera(difL);
                 t.Stating(virus);
             }
+            difL = new Vector2(0,0);
                
 
 
