@@ -189,11 +189,14 @@ namespace Buttons
             // full screen on
             if (optionsMenu.buttonWithIndexPressed(7))
             {
-                game.graphics.PreferredBackBufferWidth = 480;
-                game.graphics.PreferredBackBufferHeight = 800;
                 game.graphics.IsFullScreen = true;
+                game.graphics.ApplyChanges();
             }
-
+            if (optionsMenu.buttonWithIndexPressed(8))
+            {
+                game.graphics.IsFullScreen = false;
+                game.graphics.ApplyChanges();
+            }
             // Back
             if (optionsMenu.buttonWithIndexPressed(0))
             {

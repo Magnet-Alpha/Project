@@ -149,7 +149,26 @@ namespace Buttons
         {
             if (status == GameStateStatus.Pause)
                 return;
+
+            DrawMap();
             
+            foreach (Virus v in virus)
+            {
+                v.StateDraw();
+            }
+            foreach (Tower t in tower)
+            {
+                t.StateDraw();
+            }
+
+            game.spriteBatch.End();
+
+            //---------------------------------------------------------------------------------------
+
+        }
+
+        void DrawMap()
+        {
             //--------------------Affichage des textures--------------------
 
             game.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
@@ -234,19 +253,6 @@ namespace Buttons
                     }
                 }
             }
-            foreach (Virus v in virus)
-            {
-                v.StateDraw();
-            }
-            foreach (Tower t in tower)
-            {
-                t.StateDraw();
-            }
-
-            game.spriteBatch.End();
-
-            //---------------------------------------------------------------------------------------
-
         }
 
         public void Window_ClientSizeChanged(object sender, EventArgs e) { }
