@@ -23,6 +23,17 @@ namespace Buttons
         public GameStateStatus status;
         SoundEffectInstance music;
         KeyboardState oldKs;
+        List<Unite> virus = new List<Unite>();
+        List<Unite> tower = new List<Unite>();
+        List<Keypoint> keypoints = new List<Keypoint>();
+        Virus test;
+        Tower test2;
+        Keypoint test3;
+        Keypoint test4;
+        Keypoint test5;
+        Vector2 v = new Vector2(0, 0);
+        Vector2 v2 = new Vector2(200, 100);
+        List<int> indexs = new List<int>();
 
         public GameState(Game1 game, SoundEffectInstance music)
         {
@@ -43,6 +54,16 @@ namespace Buttons
         public void LoadContent()
         {
             Tile.TileSetTexture = game.Content.Load<Texture2D>(@"texture1");
+            test = new Virus("b", 10, 10, 5, v, 1, game.Content, game.spriteBatch, Etat.Alive);
+            test2 = new Tower("a", 10, 10, 5, v2, 100, game.Content, game.spriteBatch, Etat.Alive);
+            test3 = new Keypoint(new Vector2(200, 0), false, false);
+            test4 = new Keypoint(new Vector2(200, 400), true, false);
+            test5 = new Keypoint(new Vector2(500, 400), true, true);
+            virus.Add(test);
+            tower.Add(test2);
+            keypoints.Add(test3);
+            keypoints.Add(test4);
+            keypoints.Add(test5);
         }
 
         public void Update(GameTime gameTime)
@@ -88,7 +109,21 @@ namespace Buttons
                 
             }
             oldKs = ks;
-
+            foreach (Virus v in virus)
+            {
+                v.NewPosition();
+                v.Turn(keypoints, virus, ref indexs);
+            }
+            foreach (int i in indexs)
+            {
+                virus.RemoveAt(i);
+            }
+            indexs.Clear();
+            // TODO: Add your update logic here
+            foreach (Tower t in tower)
+            {
+                t.Stating(virus);
+            }
                
 
 
@@ -183,6 +218,14 @@ namespace Buttons
                             depthOffset - ((float)heightRow * heightRowDepthMod));
                     }
                 }
+            }
+            foreach (Virus v in virus)
+            {
+                v.StateDraw();
+            }
+            foreach (Tower t in tower)
+            {
+                t.StateDraw();
             }
 
             game.spriteBatch.End();

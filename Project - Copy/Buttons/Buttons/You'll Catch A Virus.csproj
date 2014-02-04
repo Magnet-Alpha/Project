@@ -141,6 +141,7 @@
     <Compile Include="Structs.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TileMap.cs" />
+    <Compile Include="Tower.cs" />
     <Compile Include="Unite.cs" />
     <Compile Include="Virus.cs" />
   </ItemGroup>
