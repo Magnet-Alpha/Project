@@ -19,11 +19,9 @@ namespace Buttons
         public GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
         public IState gameState;
-        public int soundEffectVolume;
-        public int musicVolume;
-        public int width;
+        public SoundEffectInstance music;
         public int height;
-
+        public int width;
 
         public Game1()
         {
@@ -33,7 +31,8 @@ namespace Buttons
             this.graphics.PreferredBackBufferWidth = 800;
             this.graphics.PreferredBackBufferHeight = 460;
             this.Window.Title = "You'll Catch A Virus";
-            // this.graphics.IsFullScreen = true;
+            music = Content.Load<SoundEffect>("music").CreateInstance();
+
 
         }
 
@@ -53,7 +52,7 @@ namespace Buttons
             this.Window.AllowUserResizing = true;
             height = GraphicsDevice.PresentationParameters.BackBufferHeight;
             width = GraphicsDevice.PresentationParameters.BackBufferWidth;
-
+            music.Play();
             Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
             base.Initialize();
         }
