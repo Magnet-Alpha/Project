@@ -23,18 +23,18 @@ namespace Buttons
         public GameStateStatus status;
         SoundEffectInstance music;
         KeyboardState oldKs;
-        List<Unite> virus = new List<Unite>();
-        List<Unite> tower = new List<Unite>();
-        List<Keypoint> keypoints = new List<Keypoint>();
-        Virus test;
+        List<Unite> virus = new List<Unite>();                                              //List of viruses on the map
+        List<Unite> tower = new List<Unite>();                                              //List of towers on the map
+        List<Keypoint> keypoints = new List<Keypoint>();                                    //List of keypoints on the map
+        Virus test;                                                                         //All those are tests
         Tower test2;
         Keypoint test3;
         Keypoint test4;
         Keypoint test5;
         Vector2 v = new Vector2(0, 0);
         Vector2 v2 = new Vector2(200, 100);
-        Vector2 ancientL;
-        Vector2 difL;
+        Vector2 ancientL;                                                                   //Memorizing Camera position before moving it
+        Vector2 difL;                                                                       //Memorizing difference between camera position when moving it
         List<int> indexs = new List<int>();
 
 
@@ -119,24 +119,24 @@ namespace Buttons
             oldKs = ks;
             foreach (Keypoint k in keypoints)
             {
-                k.TheCamera(difL);
+                k.TheCamera(difL);                                                              //Correcting Camera location problems
             }
             foreach (Virus v in virus)
             {
-                v.fuckingcamera(difL);
-                v.NewPosition();
-                v.Turn(keypoints, virus, ref indexs);
+                v.fuckingcamera(difL);                                                          //Correcting Camera location problems
+                v.NewPosition();                                                                //Virus moving
+                v.Turn(keypoints, virus, ref indexs);                                           //Virus turning and dying at objective
             }
             foreach (int i in indexs)
             {
-                virus.RemoveAt(i);
+                virus.RemoveAt(i);                                                              //Delete dead viruses
             }
             indexs.Clear();
             // TODO: Add your update logic here
             foreach (Tower t in tower)
             {
-                t.fuckingcamera(difL);
-                t.Stating(virus);
+                t.fuckingcamera(difL);                                                          //Correcting Camera location problems
+                t.Stating(virus);                                                               //Detecting viruses
             }
             difL = new Vector2(0,0);
                
@@ -154,11 +154,11 @@ namespace Buttons
             
             foreach (Virus v in virus)
             {
-                v.StateDraw();
+                v.StateDraw();                                                                  //Draw all active viruses
             }
             foreach (Tower t in tower)
             {
-                t.StateDraw();
+                t.StateDraw();                                                                  //Draw all active towers
             }
 
             game.spriteBatch.End();

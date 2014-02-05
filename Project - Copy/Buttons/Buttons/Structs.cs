@@ -26,7 +26,7 @@ namespace Buttons
 
     }
 
-    struct Keypoint
+    class Keypoint                                                                      //Had to convert it in a class, to move if you want
     {
         public Vector2 position;
         public bool vers_g;
