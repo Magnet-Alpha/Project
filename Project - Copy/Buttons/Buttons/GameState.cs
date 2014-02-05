@@ -21,7 +21,6 @@ namespace Buttons
         int baseOffsetY = -64;
         float heightRowDepthMod = 0.00001f;
         public GameStateStatus status;
-        SoundEffectInstance music;
         KeyboardState oldKs;
         List<Unite> virus = new List<Unite>();                                              //List of viruses on the map
         List<Unite> tower = new List<Unite>();                                              //List of towers on the map
@@ -38,9 +37,9 @@ namespace Buttons
         List<int> indexs = new List<int>();
 
 
-        public GameState(Game1 game, SoundEffectInstance music)
+        public GameState(Game1 game)
         {
-            this.music = music;
+          
             this.game = game;
             Initialize();
             LoadContent();

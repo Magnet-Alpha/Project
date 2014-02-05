@@ -23,18 +23,18 @@ namespace Buttons
         Game1 game;
         Socket sck;
         EndPoint epLocal, epRemote;
-        IPAddress localAddress, friendAddress;
+        IPAddress localIP, remoteIP;
         int localPort = 80;
         int friendPort = 81;
 
         public MultiplayerState(Game1 game)
         {
             this.game = game;
-            localAddress = GetLocalIP();
+            localIP = GetLocalIP();
             try
             {
-                friendAddress = GetFriendIP();
-                Console.WriteLine("Connected to " + friendAddress.ToString());
+                remoteIP = IPAddress.Parse("192.168.137.1");
+                Console.WriteLine("Connected to " + remoteIP.ToString());
             }
             catch
             {
@@ -42,10 +42,10 @@ namespace Buttons
             }
 
 
-            epLocal = new IPEndPoint(localAddress, localPort);
-            epRemote = new IPEndPoint(friendAddress, friendPort);
+            epLocal = new IPEndPoint(localIP, localPort);
+            epRemote = new IPEndPoint(remoteIP, friendPort);
 
-            epRemote = epLocal;
+            
             
             sck = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             sck.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
@@ -59,7 +59,7 @@ namespace Buttons
 
             byte[] buffer = new byte[1500];
             sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(MessageCallBack), buffer);
-            SendMessage("Connected");
+            SendMessage("Connection received");
 
         }
 
@@ -115,7 +115,7 @@ namespace Buttons
 
                     ASCIIEncoding eEncpding = new ASCIIEncoding();
                     string receivedMessage = eEncpding.GetString(receivedData);
-                    Console.WriteLine(ByteArrayToObject(receivedData).ToString());
+                    Console.WriteLine("From " + remoteIP.Address.ToString() +" : " + ByteArrayToObject(receivedData).ToString());
                 }
 
                 byte[] buffer = new byte[1500];

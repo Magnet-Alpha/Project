@@ -21,7 +21,6 @@ namespace Buttons
         SpriteFont font;
         Texture2D background;
         InterfaceMenu mainMenu;
-        SoundEffectInstance music;
         int gap;
         Game1 game;
 
@@ -30,12 +29,6 @@ namespace Buttons
             this.game = game;
             LoadContent();
             Initialize();
-            if(music == null)
-                 music = game.Content.Load<SoundEffect>("music").CreateInstance();
-            music.IsLooped = true;
-            if(music.State != SoundState.Playing)
-                music.Play();
-            music.Volume = 0.5f;
             
         }
 
@@ -98,7 +91,7 @@ namespace Buttons
 
             if (mainMenu.buttonWithIndexPressed(0)) // New Game
             {
-                ChangeState(new GameState(game, music));
+                ChangeState(new GameState(game));
             }
 
             if (mainMenu.buttonWithIndexPressed(1))

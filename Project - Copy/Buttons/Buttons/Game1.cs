@@ -32,7 +32,7 @@ namespace Buttons
             this.graphics.PreferredBackBufferHeight = 460;
             this.Window.Title = "You'll Catch A Virus";
             music = Content.Load<SoundEffect>("music").CreateInstance();
-
+            music.IsLooped = true;
 
         }
 
