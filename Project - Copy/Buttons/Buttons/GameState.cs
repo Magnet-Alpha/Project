@@ -113,7 +113,7 @@ namespace Buttons
             {
                 //while (Keyboard.GetState().GetPressedKeys().Length > 0) { }
                 status = GameStateStatus.Pause;
-                ChangeState(new PauseState(this, game, music));
+                ChangeState(new PauseState(this, game));
                 
             }
             oldKs = ks;

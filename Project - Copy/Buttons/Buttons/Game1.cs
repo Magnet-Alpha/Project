@@ -111,7 +111,8 @@ namespace Buttons
 
         void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-
+            
+            graphics.ApplyChanges();
             height = GraphicsDevice.PresentationParameters.BackBufferHeight;
             width = GraphicsDevice.PresentationParameters.BackBufferWidth;
             gameState.Window_ClientSizeChanged(sender, e);

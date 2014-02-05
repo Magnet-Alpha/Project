@@ -18,14 +18,12 @@ namespace Buttons
         Texture2D background;
         InterfaceMenu pauseMenu;
         SpriteFont font;
-        SoundEffectInstance music;
         KeyboardState oldKs;
         
 
 
-        public PauseState(GameState gameState, Game1 game, SoundEffectInstance music)
+        public PauseState(GameState gameState, Game1 game)
         {
-            this.music = music;
             this.game = game;
             this.gameState = gameState;
             font = game.Content.Load<SpriteFont>("Font");
