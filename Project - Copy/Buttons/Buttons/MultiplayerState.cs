@@ -25,7 +25,7 @@ namespace Buttons
         EndPoint epLocal, epRemote;
         IPAddress localIP, remoteIP;
         int localPort = 80;
-        int friendPort = 81;
+        int friendPort = 80;
 
         public MultiplayerState(Game1 game)
         {
@@ -33,8 +33,8 @@ namespace Buttons
             localIP = GetLocalIP();
             try
             {
-                remoteIP = IPAddress.Parse("192.168.137.1");
-                Console.WriteLine("Connected to " + remoteIP.ToString());
+                remoteIP = GetLocalIP();
+                //Console.WriteLine("Connected to " + remoteIP.ToString());
             }
             catch
             {
@@ -63,7 +63,15 @@ namespace Buttons
 
         }
 
-        public void Update(GameTime gameTime) { }
+        public void Update(GameTime gameTime) {
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            {
+                SendMessage("lol");
+                Console.WriteLine("Message sent");
+            }
+        
+        }
         public void Draw(GameTime gameTime) { }
         public void Initialize() { }
         public void LoadContent() { }
@@ -105,17 +113,21 @@ namespace Buttons
 
         void MessageCallBack(IAsyncResult aResult)
         {
+           
             try
             {
+                Console.WriteLine("Message received");
                 int size = sck.EndReceiveFrom(aResult, ref epRemote);
                 if (size > 0)
                 {
-                    byte[] receivedData = new Byte[1464];
-                    receivedData = (byte[])aResult.AsyncState;
+                    byte[] receivedData = (byte[])aResult.AsyncState;
 
-                    ASCIIEncoding eEncpding = new ASCIIEncoding();
-                    string receivedMessage = eEncpding.GetString(receivedData);
-                    Console.WriteLine("From " + remoteIP.Address.ToString() +" : " + ByteArrayToObject(receivedData).ToString());
+                    Message message = new Message(receivedData);
+                    object data = message.Deserialize();
+                    if (data is TestClass)
+                    {
+                        Console.WriteLine("From " + remoteIP.Address.ToString() + " : " + ((TestClass) data).text);
+                    }
                 }
 
                 byte[] buffer = new byte[1500];
@@ -126,7 +138,7 @@ namespace Buttons
             }
             catch (Exception e)
             {
-               
+                Console.WriteLine(e.ToString());
             }
         }
 
@@ -134,17 +146,17 @@ namespace Buttons
         {
             try
             {
-                System.Text.ASCIIEncoding enc = new ASCIIEncoding();
                 byte[] msg = new byte[1500];
-                msg = ObjectToByteArray(obj);
+                Message m = new Message();
+                m.Serialize(obj);
 
-                sck.Send(msg);
+                sck.Send(m.data);
                 
 
             }
             catch (Exception ex)
             {
-                
+                Console.WriteLine(ex.ToString());
             }
         }
 
@@ -159,7 +171,7 @@ namespace Buttons
             }
             catch (Exception ex)
             {
-                // Machine not found...
+                Console.WriteLine(ex.ToString());
             }
             return machineName;
         }
