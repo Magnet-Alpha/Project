@@ -111,11 +111,12 @@ namespace Buttons
             }
 
             // full screen on
-            if (optionsMenu.buttonWithIndexPressed(7))
+            if (optionsMenu.buttonWithIndexPressed(7) && !game.graphics.IsFullScreen)
             {
                 game.graphics.IsFullScreen = true;
                 game.graphics.ApplyChanges();
             }
+            //fullscreen off
             if (optionsMenu.buttonWithIndexPressed(8))
             {
                 game.graphics.IsFullScreen = false;
@@ -148,6 +149,7 @@ namespace Buttons
         public void ChangeState(IState state)
         {
             optionsMenu.MenuOn = false;
+            state.LoadContent();
             game.gameState = state;
         }
         public void Window_ClientSizeChanged(object sender, EventArgs e)
