@@ -41,6 +41,7 @@ namespace Buttons
                 target.Hp = target.Hp - this.Attack;
             }
         }
+
         public void Stating(List<Unite> virus)
         {
             if (this.Hp <= 0)

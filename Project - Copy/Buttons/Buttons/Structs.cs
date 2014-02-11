@@ -26,23 +26,6 @@ namespace Buttons
 
     }
 
-    class Keypoint                                                                      //Had to convert it in a class, to move if you want
-    {
-        public Vector2 position;
-        public bool vers_g;
-        public bool objectif;
-        public Keypoint(Vector2 position, bool vers_g, bool objectif)
-        {
-            this.position = position;
-            this.vers_g = vers_g;
-            this.objectif = objectif;
-        }
-        public void TheCamera(Vector2 L)
-        {
-            this.position = this.position - L;
-        }
-    }
-
     public enum GameStateStatus
     {
         Pause,
