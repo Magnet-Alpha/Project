@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Buttons
 {
-    class Virus : Unite
+    class Virus : Unit
     {
         protected double Speed { get; set; }
         public override Etat State
@@ -38,7 +38,7 @@ namespace Buttons
         {
             this.Speed = this.Speed - 10 * (float)gametime.ElapsedGameTime.TotalMinutes;
         }
-        public void Turn(List<Keypoint> keypoints, List<Unite> virus, ref List<int>indexs)
+        public void Turn(List<Keypoint> keypoints, List<Unit> virus, ref List<int>indexs)
         {
             foreach (Keypoint k in keypoints)
             {

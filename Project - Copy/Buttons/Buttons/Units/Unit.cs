@@ -21,7 +21,7 @@ namespace Buttons
         Moving
     }
 
-    class Unite                                             //In development, DO NOT EDIT WITHOUT PERMISSION
+    class Unit                                             //In development, DO NOT EDIT WITHOUT PERMISSION
     {
        
         protected SpriteBatch unitbatch;                    //The SpriteBatch
@@ -52,7 +52,7 @@ namespace Buttons
             }
         
         }
-        public Unite(string name, int hp, int attack, int cooldown, Vector2 position, ContentManager content, SpriteBatch sb, Etat e)       //Creation of an unit, taking his name, his max hp and his attack. Unit initial position will be his spawn point
+        public Unit(string name, int hp, int attack, int cooldown, Vector2 position, ContentManager content, SpriteBatch sb, Etat e)       //Creation of an unit, taking his name, his max hp and his attack. Unit initial position will be his spawn point
         {
             this.Name = name;
             this.maxhp = hp;
@@ -65,9 +65,9 @@ namespace Buttons
             this.moving = new Vector2(1,0);
             this.unitbatch = sb;
             this.etat = e;
-            imgs.Add(content.Load<Texture2D>("test wait 1" + this.Name));
-            imgs.Add(content.Load<Texture2D>("test attack 1" + this.Name));
-            imgs.Add(content.Load<Texture2D>("test dead 1" + this.Name));
+            imgs.Add(content.Load<Texture2D>("Sprites\\tower\\tower"));
+            imgs.Add(content.Load<Texture2D>("TestSprites\\test attack 1" + this.Name));
+            imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
         }
         public void StateDraw()
         {

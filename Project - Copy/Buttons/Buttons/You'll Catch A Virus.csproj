@@ -123,33 +123,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Button.cs" />
-    <Compile Include="Camera.cs" />
-    <Compile Include="GameState.cs" />
-    <Compile Include="ImageButton.cs" />
-    <Compile Include="IState.cs" />
-    <Compile Include="Keypoint.cs" />
-    <Compile Include="MapCell.cs" />
-    <Compile Include="MenuState.cs" />
-    <Compile Include="Message.cs" />
-    <Compile Include="MultiplayerState.cs" />
-    <Compile Include="OptionsState.cs" />
-    <Compile Include="PauseState.cs" />
-    <Compile Include="Projectile.cs" />
-    <Compile Include="TestClass.cs" />
-    <Compile Include="TextButton.cs" />
-    <Compile Include="Menu.cs" />
-    <Compile Include="Screen.cs" />
-    <Compile Include="InterfaceMenu.cs" />
+    <Compile Include="Menus-Buttons\Button.cs" />
+    <Compile Include="Map\Camera.cs" />
+    <Compile Include="IStates\GameState.cs" />
+    <Compile Include="Menus-Buttons\ImageButton.cs" />
+    <Compile Include="IStates\IState.cs" />
+    <Compile Include="Units\Keypoint.cs" />
+    <Compile Include="Map\MapCell.cs" />
+    <Compile Include="IStates\MenuState.cs" />
+    <Compile Include="Networking\Message.cs" />
+    <Compile Include="IStates\MultiplayerState.cs" />
+    <Compile Include="IStates\OptionsState.cs" />
+    <Compile Include="IStates\PauseState.cs" />
+    <Compile Include="Units\Projectile.cs" />
+    <Compile Include="Networking\TestClass.cs" />
+    <Compile Include="Menus-Buttons\TextButton.cs" />
+    <Compile Include="Menus-Buttons\Menu.cs" />
+    <Compile Include="Menus-Buttons\Screen.cs" />
+    <Compile Include="Menus-Buttons\InterfaceMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Structs.cs" />
-    <Compile Include="Tile.cs" />
-    <Compile Include="TileMap.cs" />
-    <Compile Include="Tower.cs" />
-    <Compile Include="Unite.cs" />
-    <Compile Include="Virus.cs" />
+    <Compile Include="Map\Tile.cs" />
+    <Compile Include="Map\TileMap.cs" />
+    <Compile Include="Units\Tower.cs" />
+    <Compile Include="Units\Unit.cs" />
+    <Compile Include="Units\Virus.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

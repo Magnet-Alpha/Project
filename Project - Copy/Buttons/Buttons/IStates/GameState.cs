@@ -15,15 +15,15 @@ namespace Buttons
     {
         Game1 game;
         TileMap myMap = new TileMap();
-        int squaresAcross = 17;        
-        int squaresDown = 37;
+        int squaresAcross = 30; //17        
+        int squaresDown = 60; //original : 37 max : 60
         int baseOffsetX = -32;
         int baseOffsetY = -64;
         float heightRowDepthMod = 0.00001f;
         public GameStateStatus status;
         KeyboardState oldKs;
-        List<Unite> virus = new List<Unite>();                                              //List of viruses on the map
-        List<Unite> tower = new List<Unite>();                                              //List of towers on the map
+        List<Unit> virus = new List<Unit>();                                              //List of viruses on the map
+        List<Unit> tower = new List<Unit>();                                              //List of towers on the map
         List<Keypoint> keypoints = new List<Keypoint>();                                    //List of keypoints on the map
         Virus test;                                                                         //All those are tests
         Tower test2;
@@ -55,7 +55,7 @@ namespace Buttons
 
         public void LoadContent()
         {
-            Tile.TileSetTexture = game.Content.Load<Texture2D>(@"texture1");
+            Tile.TileSetTexture = game.Content.Load<Texture2D>(@"TestSprites\\texture1");
             test = new Virus("b", 10, 10, 5, v, 1, game.Content, game.spriteBatch, Etat.Alive);
             test2 = new Tower("a", 10, 10, 5, v2, 100, game.Content, game.spriteBatch, Etat.Alive);
             test3 = new Keypoint(new Vector2(200, 0), false, false);

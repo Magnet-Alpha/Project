@@ -12,9 +12,9 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Buttons
 {
-    class Tower : Unite
+    class Tower : Unit
     {
-        protected Unite target;                                //Target of the tower
+        protected Unit target;                                 //Target of the tower
         protected double Range { get; set; }                    //Range of attack of the tower
         private double p2;
         public override Etat State
@@ -42,11 +42,11 @@ namespace Buttons
             }
         }
 
-        public void Stating(List<Unite> virus)
+        public void Stating(List<Unit> virus)
         {
             if (this.Hp <= 0)
                 this.etat = Etat.Dead;
-            foreach (Unite unite in virus)
+            foreach (Unit unite in virus)
             {
                 if (Math.Pow((unite.Position.X - this.Position.X), 2) + 4 * Math.Pow((-(unite.Position.Y - this.Position.Y)), 2) <= p2 && (this.State == Etat.Alive || this.State == Etat.Attack) && unite.State != Etat.Dead)
                 {
