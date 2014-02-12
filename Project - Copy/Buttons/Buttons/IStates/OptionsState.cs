@@ -132,17 +132,13 @@ namespace Buttons
         {
             optionsMenu.Draw();
 
-            game.spriteBatch.Begin();
             game.spriteBatch.DrawString(font, LevelString((int)(game.music.Volume * 10)), new Vector2(optionsMenu.buttons[3].textLocation.X + 60, optionsMenu.buttons[3].textLocation.Y), Color.White);
             //game.spriteBatch.DrawString(font, LevelString(soundEffectVolume), new Vector2(optionsMenu.buttons[1].textLocation.X + 60, optionsMenu.buttons[1].textLocation.Y), Color.White);
-            game.spriteBatch.End();
 
 
             String copyright = "Copyright GeekHub@Epita 2018";
-            game.spriteBatch.Begin();
             Vector2 vector = new Vector2(game.width - font.MeasureString(copyright).X - 10, game.height - font.MeasureString(copyright).Y);
             game.spriteBatch.DrawString(font, copyright, vector, Color.White);
-            game.spriteBatch.End();
         }
         public void Initialize() { }
 

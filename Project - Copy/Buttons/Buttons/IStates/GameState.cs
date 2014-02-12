@@ -14,7 +14,7 @@ namespace Buttons
     public class GameState : IState
     {
         Game1 game;
-        TileMap myMap = new TileMap();
+        TileMap myMap;
         int squaresAcross = 100; //17        
         int squaresDown = 100; //original : 37 max : 60
         int baseOffsetX = -32;
@@ -39,7 +39,9 @@ namespace Buttons
 
         public GameState(Game1 game)
         {
-          
+            myMap = new TileMap(game.width / 64, game.height / 32);
+            squaresAcross = myMap.MapWidth;
+            squaresDown = myMap.MapHeight;
             this.game = game;
             Initialize();
             LoadContent();
@@ -168,7 +170,6 @@ namespace Buttons
                 t.StateDraw();                                                                  //Draw all active towers
             }
 
-            game.spriteBatch.End();
 
             //---------------------------------------------------------------------------------------
 
@@ -178,7 +179,6 @@ namespace Buttons
         {
             //--------------------Affichage des textures--------------------
 
-            game.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
             Vector2 firstSquare = new Vector2(Camera.Location.X / Tile.TileStepX, Camera.Location.Y / Tile.TileStepY);
             int firstX = (int)firstSquare.X;
@@ -262,7 +262,13 @@ namespace Buttons
             }
         }
 
-        public void Window_ClientSizeChanged(object sender, EventArgs e) { }
+        public void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            myMap.MapWidth = game.width / 64;
+            myMap.MapHeight = game.height / 32;
+            squaresAcross = myMap.MapWidth;
+            squaresDown = myMap.MapHeight;
+        }
 
         public void ChangeState(IState state)
         {

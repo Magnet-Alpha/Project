@@ -24,7 +24,7 @@ namespace Buttons
     class Unit                                             //In development, DO NOT EDIT WITHOUT PERMISSION
     {
        
-        protected SpriteBatch unitbatch;                    //The SpriteBatch
+        protected CustomSpriteBatch unitbatch;                    //The SpriteBatch
         public string Name { get; set; }                    //Name of the unit (type of unit)
         protected int maxhp;                                //Maximum hp, initialized at the creation of the object, cannot be changed
         public int Hp { get; set; }                         //Actual hp
@@ -52,7 +52,7 @@ namespace Buttons
             }
         
         }
-        public Unit(string name, int hp, int attack, int cooldown, Vector2 position, ContentManager content, SpriteBatch sb, Etat e)       //Creation of an unit, taking his name, his max hp and his attack. Unit initial position will be his spawn point
+        public Unit(string name, int hp, int attack, int cooldown, Vector2 position, ContentManager content, CustomSpriteBatch sb, Etat e)       //Creation of an unit, taking his name, his max hp and his attack. Unit initial position will be his spawn point
         {
             this.Name = name;
             this.maxhp = hp;

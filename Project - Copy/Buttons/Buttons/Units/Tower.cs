@@ -28,7 +28,7 @@ namespace Buttons
                 this.etat = value;
             }
         }
-        public Tower(string name, int hp, int attack, int cooldown, Vector2 position, double range, ContentManager content, SpriteBatch sb, Etat e) : base(name, hp, attack, cooldown, position, content, sb, e)
+        public Tower(string name, int hp, int attack, int cooldown, Vector2 position, double range, ContentManager content, CustomSpriteBatch sb, Etat e) : base(name, hp, attack, cooldown, position, content, sb, e)
         {
             this.Range = range;
             this.p2 = Math.Pow(range, 2);

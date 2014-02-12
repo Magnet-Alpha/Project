@@ -47,7 +47,6 @@ namespace Buttons
             set
             {
                 clickable = value;
-                Draw();
             }
         }
         public bool TakingAction()
@@ -98,7 +97,6 @@ namespace Buttons
                     clicked = true;
                     //Console.WriteLine("Clicked "+text);
                     takingAction = true;
-                    DrawButton(textRectangle);
                 } 
                 else
                 {
@@ -140,10 +138,7 @@ namespace Buttons
             position.Y = (((boundaries.Height - strHeight) / 2) + boundaries.Y);
 
             // A bunch of settings where we just want to use reasonable defaults.
-            float rotation = 0.0f;
             Vector2 spriteOrigin = new Vector2(0, 0);
-            float spriteLayer = 0.0f; // all the way in the front
-            SpriteEffects spriteEffects = new SpriteEffects();
 
             // Draw the string to the sprite batch!
 
@@ -157,9 +152,7 @@ namespace Buttons
             {
                 color = Color.Chocolate;
             }
-            game.spriteBatch.Begin();
-            game.spriteBatch.DrawString(font, text, position, color, rotation, spriteOrigin, scale, spriteEffects, spriteLayer);
-            game.spriteBatch.End();
+            game.spriteBatch.DrawString(font, text, position, color);
             
         }
     }

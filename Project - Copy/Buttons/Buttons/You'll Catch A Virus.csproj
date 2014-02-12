@@ -126,6 +126,7 @@
     <Compile Include="Menus-Buttons\Button.cs" />
     <Compile Include="Map\Camera.cs" />
     <Compile Include="IStates\GameState.cs" />
+    <Compile Include="Menus-Buttons\CustomSpriteBatch.cs" />
     <Compile Include="Menus-Buttons\ImageButton.cs" />
     <Compile Include="IStates\IState.cs" />
     <Compile Include="Units\Keypoint.cs" />

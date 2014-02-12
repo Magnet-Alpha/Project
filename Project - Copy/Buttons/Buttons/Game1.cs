@@ -17,7 +17,7 @@ namespace Buttons
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         public GraphicsDeviceManager graphics;
-        public SpriteBatch spriteBatch;
+        public CustomSpriteBatch spriteBatch;
         public IState gameState;
         public SoundEffectInstance music;
         public int height;
@@ -54,6 +54,7 @@ namespace Buttons
             width = GraphicsDevice.PresentationParameters.BackBufferWidth;
             //music.Play();
             Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
+            
             base.Initialize();
         }
 
@@ -64,7 +65,8 @@ namespace Buttons
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures. 
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            spriteBatch = new CustomSpriteBatch(GraphicsDevice);
+
             gameState = new MenuState(this);
         }
 

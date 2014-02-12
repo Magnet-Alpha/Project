@@ -26,7 +26,7 @@ namespace Buttons
                 this.etat = value;
             }
         }
-        public Virus(string name, int hp, int attack, int cooldown, Vector2 position, double speed, ContentManager content, SpriteBatch sb, Etat e) : base(name, hp, attack, cooldown, position, content, sb, e)
+        public Virus(string name, int hp, int attack, int cooldown, Vector2 position, double speed, ContentManager content, CustomSpriteBatch sb, Etat e) : base(name, hp, attack, cooldown, position, content, sb, e)
         {
             this.Speed = speed;
         }

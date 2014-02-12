@@ -40,7 +40,6 @@ namespace Buttons
                  buttons[i].clicked = false;
                 }}
                 menuOn = value;
-                Draw();
         }
         }
         public void Update()
@@ -62,10 +61,8 @@ namespace Buttons
             {
                 return;
             }
-
-            game.spriteBatch.Begin();
+            
             game.spriteBatch.Draw(background, new Rectangle(0, 0, game.width, game.height), Color.White);
-            game.spriteBatch.End();
             if (buttons != null)
             {
                 for (int i = 0; i < buttons.Length; i++)
@@ -75,12 +72,11 @@ namespace Buttons
                     buttons[i].Draw();
                 }
             }
-            game.spriteBatch.Begin();
             for (int i = 0; i < texts.Length; i++)
             {
                   game.spriteBatch.DrawString(texts[i].font, texts[i].textValue, texts[i].location, Color.White);
             }
-            game.spriteBatch.End();
+            
         }
 
         public bool buttonWithIndexPressed(int n)
@@ -105,7 +101,6 @@ namespace Buttons
             {
                 buttons[i].Clickable = false;
             }
-            Draw();
         }
         
 
