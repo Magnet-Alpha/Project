@@ -81,7 +81,7 @@ namespace Buttons
         }
         public void StateDrawing()
         {
-            unitbatch.Draw(imgs[img], this.Position, Color.White);
+            unitbatch.Draw(imgs[img], new Rectangle((int)this.Position.X, (int)this.Position.Y, 32, 64), Color.White);
         }
         public void fuckingcamera(Vector2 L)
         {

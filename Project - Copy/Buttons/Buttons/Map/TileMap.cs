@@ -14,8 +14,8 @@ namespace Buttons
     {
         public List<MapRow> Rows = new List<MapRow>();
         // Taille de la map
-        public int MapWidth = 30;
-        public int MapHeight = 60;
+        public int MapWidth = 100;//30
+        public int MapHeight = 100;//60
 
         public TileMap()
         {

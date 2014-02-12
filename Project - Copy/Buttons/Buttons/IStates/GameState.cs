@@ -15,8 +15,8 @@ namespace Buttons
     {
         Game1 game;
         TileMap myMap = new TileMap();
-        int squaresAcross = 30; //17        
-        int squaresDown = 60; //original : 37 max : 60
+        int squaresAcross = 100; //17        
+        int squaresDown = 100; //original : 37 max : 60
         int baseOffsetX = -32;
         int baseOffsetY = -64;
         float heightRowDepthMod = 0.00001f;
@@ -68,6 +68,14 @@ namespace Buttons
             keypoints.Add(test5);
         }
 
+
+        int abs(int a)
+        {
+            if (a < 0)
+                return -a;
+            return a; 
+        }
+
         public void Update(GameTime gameTime)
         {
             if (status == GameStateStatus.Pause)
@@ -88,7 +96,7 @@ namespace Buttons
             if (ks.IsKeyDown(Keys.Right) || mouse.X > game.width - 50)
             {
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 4, 0, 
-                    (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
+                     (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
                 difL = Camera.Location - ancientL;
             }
 

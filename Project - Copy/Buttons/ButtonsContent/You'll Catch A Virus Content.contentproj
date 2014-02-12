@@ -168,31 +168,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="sprites\pige\1100367216-15074.jpg">
-      <Name>1100367216-15074</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="sprites\pige\carte-de-circuit-imprime-323420.jpg">
-      <Name>carte-de-circuit-imprime-323420</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="sprites\pige\ibm-s-est-inspire-de-la-nano-technologie.jpg">
-      <Name>ibm-s-est-inspire-de-la-nano-technologie</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="sprites\pige\k2634.jpg">
-      <Name>k2634</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="sprites\pige\soluce-knack-coffres-aux-tresors-chapitre-5-001.jpg">
-      <Name>soluce-knack-coffres-aux-tresors-chapitre-5-001</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="sprites\tower\projectile.png">
       <Name>projectile</Name>
       <Importer>TextureImporter</Importer>
