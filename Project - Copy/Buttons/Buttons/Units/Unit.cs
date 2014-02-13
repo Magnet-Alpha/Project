@@ -65,9 +65,6 @@ namespace Buttons
             this.moving = new Vector2(1,0);
             this.unitbatch = sb;
             this.etat = e;
-            imgs.Add(content.Load<Texture2D>("Sprites\\tower\\tower"));
-            imgs.Add(content.Load<Texture2D>("TestSprites\\test attack 1" + this.Name));
-            imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
         }
         public void StateDraw()
         {

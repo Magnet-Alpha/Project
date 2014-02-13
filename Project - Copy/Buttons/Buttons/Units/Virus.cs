@@ -29,6 +29,9 @@ namespace Buttons
         public Virus(string name, int hp, int attack, int cooldown, Vector2 position, double speed, ContentManager content, CustomSpriteBatch sb, Etat e) : base(name, hp, attack, cooldown, position, content, sb, e)
         {
             this.Speed = speed;
+            imgs.Add(content.Load<Texture2D>("Sprites\\virus\\virus"));
+            imgs.Add(content.Load<Texture2D>("TestSprites\\test attack 1" + this.Name));
+            imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
         }
         public void NewPosition()
         {
