@@ -19,8 +19,8 @@ namespace Buttons
 
         public TileMap(int width, int height)
         {
-            MapWidth = width;
-            MapHeight = height;
+            MapWidth = 100;
+            MapHeight = 130;
             for (int y = 0; y < MapHeight; y++)
             {
                 MapRow thisRow = new MapRow();

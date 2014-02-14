@@ -15,8 +15,8 @@ namespace Buttons
     {
         Game1 game;
         TileMap myMap;
-        int squaresAcross = 100; //17        
-        int squaresDown = 100; //original : 37 max : 60
+        int squaresAcross = 17; //17        
+        int squaresDown = 37; //original : 37 max : 60
         int baseOffsetX = -32;
         int baseOffsetY = -64;
         float heightRowDepthMod = 0.00001f;
@@ -120,7 +120,6 @@ namespace Buttons
             //--------------------Gestion Pause -------------------------------
             if (ks.IsKeyDown(Keys.Escape) && !oldKs.IsKeyDown(Keys.Escape)) 
             {
-                //while (Keyboard.GetState().GetPressedKeys().Length > 0) { }
                 status = GameStateStatus.Pause;
                 ChangeState(new PauseState(this, game));
                 
@@ -264,10 +263,12 @@ namespace Buttons
 
         public void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-            myMap.MapWidth = game.width / 64;
-            myMap.MapHeight = game.height / 32;
+            /*
+            myMap.MapWidth = game.width;
+            myMap.MapHeight = game.height;
             squaresAcross = myMap.MapWidth;
             squaresDown = myMap.MapHeight;
+             */
         }
 
         public void ChangeState(IState state)

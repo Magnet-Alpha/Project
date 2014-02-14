@@ -16,7 +16,7 @@
     <XnaProfile>Reach</XnaProfile>
     <XnaCrossPlatformGroupID>462f5b9b-8c25-4cc5-b4c0-62d238ef1910</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
-    <ApplicationIcon>Game.ico</ApplicationIcon>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>C:\Users\Moray\Desktop\New folder\</PublishUrl>
@@ -153,7 +153,8 @@
     <Compile Include="Units\Virus.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Game.ico" />
+    <Content Include="logo.ico" />
+    <Content Include="lol.ico" />
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>

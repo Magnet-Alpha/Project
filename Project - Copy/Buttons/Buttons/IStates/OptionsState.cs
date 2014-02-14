@@ -66,9 +66,9 @@ namespace Buttons
 
 
             TextButton decreaseSoundEffect = new TextButton(font, game, "  -  ", new Vector2(soundEffectText.location.X + 200, soundEffectText.location.Y));
-            TextButton increaseSoundEffect = new TextButton(font, game, "  +  ", new Vector2(soundEffectText.location.X + 500, soundEffectText.location.Y));
+            TextButton increaseSoundEffect = new TextButton(font, game, "  +  ", new Vector2(font.MeasureString(" | | | | | | | | | | ").X + decreaseSoundEffect.textLocation.X + 50, soundEffectText.location.Y));
             TextButton decreaseMusicVolume = new TextButton(font, game, "  -  ", new Vector2(decreaseSoundEffect.textLocation.X, musicLevelText.location.Y));
-            TextButton increaseMusicVolume = new TextButton(font, game, "  +  ", new Vector2(decreaseSoundEffect.textLocation.X + 300, musicLevelText.location.Y));
+            TextButton increaseMusicVolume = new TextButton(font, game, "  +  ", new Vector2(font.MeasureString(" | | | | | | | | | | ").X + decreaseSoundEffect.textLocation.X + 50, musicLevelText.location.Y));
 
             optionsMenu = new InterfaceMenu(new TextButton[10] { backToMainMenuButton, decreaseSoundEffect, increaseSoundEffect, decreaseMusicVolume, increaseMusicVolume, englishButton, frenchButton, toFS, toNS, userNameButton },
                 new Text[4] { musicLevelText, soundEffectText, languageText, fullScreenText }, background, game);
