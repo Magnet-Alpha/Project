@@ -19,7 +19,7 @@
     <ApplicationIcon>logo.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\Moray\Desktop\New folder\</PublishUrl>
+    <PublishUrl>C:\Users\Moray\Desktop\Youll catch a virus\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -31,7 +31,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ProductName>You%27ll Catch A Virus</ProductName>
     <PublisherName>Geek Hub</PublisherName>
-    <AutorunEnabled>true</AutorunEnabled>
     <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.0.3</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
@@ -151,6 +150,7 @@
     <Compile Include="Units\Tower.cs" />
     <Compile Include="Units\Unit.cs" />
     <Compile Include="Units\Virus.cs" />
+    <Compile Include="UserSetting.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo.ico" />
@@ -193,6 +193,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="You%27ll Catch A Virus_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="preferences.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

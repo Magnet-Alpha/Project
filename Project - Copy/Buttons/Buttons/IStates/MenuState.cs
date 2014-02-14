@@ -131,7 +131,7 @@ namespace Buttons
         }
 
 
-        public void Window_ClientSizeChanged(object sender, EventArgs e)
+        public void Window_ClientSizeChanged()
         {
             LoadContent();
         }

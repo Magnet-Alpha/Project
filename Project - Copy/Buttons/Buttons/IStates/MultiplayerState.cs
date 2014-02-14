@@ -76,7 +76,7 @@ namespace Buttons
         public void Initialize() { }
         public void LoadContent() { }
         public void ChangeState(IState state) { }
-        public void Window_ClientSizeChanged(object sender, EventArgs e) { }
+        public void Window_ClientSizeChanged() { }
 
 
         private IPAddress GetLocalIP()

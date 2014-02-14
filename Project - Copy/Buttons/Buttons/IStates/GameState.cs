@@ -98,7 +98,7 @@ namespace Buttons
             if (ks.IsKeyDown(Keys.Right) || mouse.X > game.width - 50)
             {
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 4, 0, 
-                     (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
+                     (myMap.MapWidth - squaresAcross + game.width*64) * Tile.TileStepX);
                 difL = Camera.Location - ancientL;
             }
 
@@ -261,7 +261,7 @@ namespace Buttons
             }
         }
 
-        public void Window_ClientSizeChanged(object sender, EventArgs e)
+        public void Window_ClientSizeChanged()
         {
             /*
             myMap.MapWidth = game.width;

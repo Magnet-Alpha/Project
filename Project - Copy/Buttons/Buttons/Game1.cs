@@ -22,7 +22,7 @@ namespace Buttons
         public SoundEffectInstance music;
         public int height;
         public int width;
-
+        public UserSetting settings;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -33,7 +33,9 @@ namespace Buttons
             this.Window.Title = "You'll Catch A Virus";
             music = Content.Load<SoundEffect>("music").CreateInstance();
             music.IsLooped = true;
-
+            settings = new UserSetting();
+            graphics.IsFullScreen = settings.fullScreen;
+            graphics.ApplyChanges();
         }
 
 
@@ -54,7 +56,14 @@ namespace Buttons
             width = GraphicsDevice.PresentationParameters.BackBufferWidth;
             //music.Play();
             Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
+
+            music.Volume = settings.musicVolume;
+            gameState = new MenuState(this);
+
             
+
+            
+
             base.Initialize();
         }
 
@@ -67,7 +76,7 @@ namespace Buttons
             // Create a new SpriteBatch, which can be used to draw textures. 
             spriteBatch = new CustomSpriteBatch(GraphicsDevice);
 
-            gameState = new MenuState(this);
+            ;
         }
 
         /// <summary>
@@ -117,7 +126,7 @@ namespace Buttons
             graphics.ApplyChanges();
             height = GraphicsDevice.PresentationParameters.BackBufferHeight;
             width = GraphicsDevice.PresentationParameters.BackBufferWidth;
-            gameState.Window_ClientSizeChanged(sender, e);
+            gameState.Window_ClientSizeChanged();
             Draw(new GameTime());
         }
 

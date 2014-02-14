@@ -82,7 +82,7 @@ namespace Buttons
             pauseMenu.MenuOn = true;
 
         }
-        public void Window_ClientSizeChanged(object sender, EventArgs e)
+        public void Window_ClientSizeChanged()
         {
             Initialize();
         }

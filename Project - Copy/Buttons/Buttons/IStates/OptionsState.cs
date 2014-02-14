@@ -101,24 +101,28 @@ namespace Buttons
                     game.music.Volume -= 0.1f;
                 }
                 catch { game.music.Volume = 0; }
+                game.settings.musicVolume = game.music.Volume;
                 while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
             }
 
             if (optionsMenu.buttonWithIndexPressed(4) && game.music.Volume + 0.1 <= 1)
             {
                 game.music.Volume += 0.1f;
+                game.settings.musicVolume = game.music.Volume;
                 while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
             }
 
             // full screen on
             if (optionsMenu.buttonWithIndexPressed(7) && !game.graphics.IsFullScreen)
             {
+                game.settings.fullScreen = true;
                 game.graphics.IsFullScreen = true;
                 game.graphics.ApplyChanges();
             }
             //fullscreen off
             if (optionsMenu.buttonWithIndexPressed(8))
             {
+                game.settings.fullScreen = false;
                 game.graphics.IsFullScreen = false;
                 game.graphics.ApplyChanges();
             }
@@ -127,6 +131,7 @@ namespace Buttons
             {
                 ChangeState(previousState);
             }
+            game.settings.writeSettings();
         }
         public void Draw(GameTime gameTime)
         {
@@ -148,7 +153,7 @@ namespace Buttons
             state.LoadContent();
             game.gameState = state;
         }
-        public void Window_ClientSizeChanged(object sender, EventArgs e)
+        public void Window_ClientSizeChanged()
         {
             LoadContent();
         }
