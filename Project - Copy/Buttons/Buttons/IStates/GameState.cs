@@ -89,28 +89,28 @@ namespace Buttons
             KeyboardState ks = Keyboard.GetState();
             MouseState mouse = Mouse.GetState();
             ancientL = Camera.Location;
-            if ((ks.IsKeyDown(Keys.Left) || mouse.X < 50)) ;
+            if (ks.IsKeyDown(Keys.Left) || mouse.X < 50)
             {
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X - 4, 0, 
                     (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
                 difL = Camera.Location - ancientL;
             }
 
-            if ((ks.IsKeyDown(Keys.Right) || mouse.X > game.width - 50))
+            if (ks.IsKeyDown(Keys.Right) || mouse.X > game.width - 50)
             {
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 4, 0, 
                      (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
                 difL = Camera.Location - ancientL;
             }
 
-            if ((ks.IsKeyDown(Keys.Up) || mouse.Y < 50))
+            if (ks.IsKeyDown(Keys.Up) || mouse.Y < 50)
             {
                 Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y - 4, 0, 
                     (myMap.MapHeight - squaresDown) * Tile.TileStepY);
                 difL = Camera.Location - ancientL;
             }
 
-            if ((ks.IsKeyDown(Keys.Down) || mouse.Y > game.height - 50))
+            if (ks.IsKeyDown(Keys.Down) || mouse.Y > game.height - 50)
             {
                 Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y + 4, 0, 
                     (myMap.MapHeight - squaresDown) * Tile.TileStepY);
