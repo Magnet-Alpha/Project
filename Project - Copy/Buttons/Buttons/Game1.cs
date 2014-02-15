@@ -54,7 +54,7 @@ namespace Buttons
             this.Window.AllowUserResizing = true;
             height = GraphicsDevice.PresentationParameters.BackBufferHeight;
             width = GraphicsDevice.PresentationParameters.BackBufferWidth;
-            //music.Play();
+            music.Play();
             Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
 
             music.Volume = settings.musicVolume;
