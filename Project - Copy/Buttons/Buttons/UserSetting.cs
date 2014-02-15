@@ -69,7 +69,7 @@ namespace Buttons
                     volume += c;
             }
 
-            musicVolume = (float)Convert.ToDouble(volume);
+            //musicVolume = (float)Convert.ToDouble(volume);
             reader.Close();
         }
 
@@ -93,7 +93,7 @@ namespace Buttons
                     volume += c;
             }
 
-            soundEffectVolume = (float)Convert.ToDouble(volume);
+            //soundEffectVolume = (float)Convert.ToDouble(volume);
             reader.Close();
         }
 

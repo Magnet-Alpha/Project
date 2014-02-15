@@ -11,21 +11,22 @@ namespace Buttons
     class ImageButton
     {
         private Texture2D img;
-        private SpriteBatch spriteBatch;
+        private CustomSpriteBatch spriteBatch;
         private MouseState mouse;
         private MouseState oldMouse;
         public bool takingAction = false;
         public bool clicked = false;
         Rectangle ImgRectangle;
         Vector2 ImgLocation;
+        private Game1 game;
         bool clickable = true;
 
-        public ImageButton(SpriteBatch sBatch, Texture2D image, Vector2 textLoc)
+        public ImageButton(CustomSpriteBatch sBatch, Texture2D image, Vector2 imgLoc, Game1 game)
         {
             spriteBatch = sBatch;
             img = image;
-
-            ImgLocation = textLoc;
+            this.game = game;
+            ImgLocation = imgLoc;
             ImgRectangle = new Rectangle((int)ImgLocation.X, (int)ImgLocation.Y, (int)img.Height, (int)img.Width);
         }
 
@@ -149,12 +150,8 @@ namespace Buttons
             {
                 color = Color.White;
             }
-            spriteBatch.Begin();
 
-            spriteBatch.Draw(img, ImgRectangle, null, color, rotation, spriteOrigin, spriteEffects, spriteLayer);
-
-            spriteBatch.End();
-
+            game.spriteBatch.Draw(img, ImgRectangle, null, color, rotation, spriteOrigin, spriteEffects, spriteLayer);
         }
     }
 }

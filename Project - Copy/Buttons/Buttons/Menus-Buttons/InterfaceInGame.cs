@@ -10,21 +10,22 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-
-namespace ButtonImage
+namespace Buttons
 {
     class InterfaceInGame
     {
-        private SpriteBatch spriteBatch;
+        private CustomSpriteBatch spriteBatch;
         ImageButton[] buttons;
-        //Texture2D[] imgs;
+        private Game1 game;
+        Text[] texts;
         public Texture2D background;
         public bool menuOn;
 
-        public InterfaceInGame(ImageButton[] buttonArray,/* Texture2D[] im,*/ Texture2D bg, SpriteBatch sBatch)
+        public InterfaceInGame(ImageButton[] buttonArray, Game1 game, Text[] t, Texture2D bg, CustomSpriteBatch sBatch)
         {
+            this.game = game;
             buttons = buttonArray;
-            //imgs = im;
+            texts = t;
             spriteBatch = sBatch;
             background = bg;
         }
@@ -42,7 +43,7 @@ namespace ButtonImage
                     buttons[i].clicked = false;
                 }
                 menuOn = value;
-                Draw(100, 100);
+                Draw();
             }
         }
         public void Update()
@@ -54,30 +55,28 @@ namespace ButtonImage
 
         }
 
-        public void Draw(int screenwidth, int screenheight)
+        public void Draw()
         {
 
             if (!menuOn)
             {
                 return;
             }
-
-            spriteBatch.Begin();
-            spriteBatch.Draw(background, new Rectangle(13 * screenwidth / 16, 0, 2 * screenwidth / 8, screenheight), Color.White);
-            spriteBatch.End();
-
+            else
+            {
+                game.spriteBatch.Draw(background, new Rectangle(game.width - 150, 0, game.width, game.height), Color.White);
+                game.spriteBatch.Draw(background, new Rectangle(0, 0, game.width - 150, 30), Color.White);
+            }
             for (int i = 0; i < buttons.Length; i++)
             {
                 buttons[i].Clickable = true;
                 buttons[i].Update();
                 buttons[i].Draw();
             }
-            /*spriteBatch.Begin();
-            for (int i = 0; i < imgs.Length; i++)
+            for (int i = 0; i < texts.Length; i++)
             {
-                  spriteBatch.Draw(imgs[i], new Rectangle(imgs[i]., imgs[i].Width, Color.White);
+                game.spriteBatch.DrawString(texts[i].font, texts[i].textValue, texts[i].location, Color.White);
             }
-            spriteBatch.End();*/
         }
 
         public bool buttonWithIndexPressed(int n)
@@ -96,4 +95,3 @@ namespace ButtonImage
         }
     }
 }
-
