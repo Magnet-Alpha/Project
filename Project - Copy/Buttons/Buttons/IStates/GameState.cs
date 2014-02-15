@@ -37,6 +37,7 @@ namespace Buttons
         List<int> indexs = new List<int>();
         ImageButton firstbut;
         ImageButton secondbut;
+        ImageButton backmenu;
         InterfaceInGame Interface;
         private int screenHeight;
         private int screenWidth;
@@ -91,13 +92,16 @@ namespace Buttons
             textureimg2 = game.Content.Load<Texture2D>("DrainYellow");
             Texture2D background;
             background = game.Content.Load<Texture2D>("testbackground");
+            Texture2D menu;
+            menu = game.Content.Load<Texture2D>("menu");
             firstbut = new ImageButton(game.spriteBatch, textureimg, new Vector2((13 * game.width / 16) + 7, 1), game);
             secondbut = new ImageButton(game.spriteBatch, textureimg2, new Vector2(7 + firstbut.right, 1), game);
-            Interface = new InterfaceInGame(new ImageButton[] { firstbut, secondbut }, game, new Text[3] { goldText, incomeText, lifeText }, background, game.spriteBatch);
+            backmenu = new ImageButton(game.spriteBatch, menu, new Vector2((13 * game.width / 16) + 7, game.height - menu.Height*3), game);
+            Interface = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu}, game, new Text[3] { goldText, incomeText, lifeText }, background, game.spriteBatch);
             Interface.menuOn = true;
             //Interface.Draw();
 
-            //things about the map ^^
+            //things about the map ^^   
             Tile.TileSetTexture = game.Content.Load<Texture2D>(@"TestSprites\\texture1");
             test = new Virus("b", 10, 10, 5, v, 1, game.Content, game.spriteBatch, Etat.Alive);
             test2 = new Tower("a", 10, 10, 5, v2, 100, game.Content, game.spriteBatch, Etat.Alive);
@@ -157,10 +161,25 @@ namespace Buttons
                     (myMap.MapHeight - squaresDown) * Tile.TileStepY);
                 difL = Camera.Location - ancientL;
             }
+
+
+
+            //-----------------------------------------------------------------
+
+            //-------------------- Gestion Boutons InGame ---------------------
+            if (Interface.buttonWithIndexPressed(0))
+            {
+                //mettre ce que vous voulez
+            }
+            if (Interface.buttonWithIndexPressed(1))
+            {
+                //mettre ce que vous voulez
+            }
+            
             //-----------------------------------------------------------------
 
             //--------------------Gestion Pause -------------------------------
-            if (ks.IsKeyDown(Keys.Escape) && !oldKs.IsKeyDown(Keys.Escape)) 
+            if (ks.IsKeyDown(Keys.Escape) && !oldKs.IsKeyDown(Keys.Escape) || Interface.buttonWithIndexPressed(2)) 
             {
                 status = GameStateStatus.Pause;
                 ChangeState(new PauseState(this, game));
@@ -224,7 +243,7 @@ namespace Buttons
         void DrawMap()
         {
             //--------------------Affichage des textures--------------------
-            Interface.Draw();
+            //Interface.Draw();
 
             Vector2 firstSquare = new Vector2(Camera.Location.X / Tile.TileStepX, Camera.Location.Y / Tile.TileStepY);
             int firstX = (int)firstSquare.X;
@@ -241,6 +260,7 @@ namespace Buttons
             for (int y = 0; y < squaresDown; y++)
             {
                 Interface.Draw();
+
                 int rowOffset = 0;
                 if ((firstY + y) % 2 == 1)
                     rowOffset = Tile.OddRowXOffset;
