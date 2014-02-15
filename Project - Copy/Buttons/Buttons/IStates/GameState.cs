@@ -39,9 +39,9 @@ namespace Buttons
 
         public GameState(Game1 game)
         {
-            myMap = new TileMap(game.width / 64, game.height / 32);
-            squaresAcross = myMap.MapWidth;
-            squaresDown = myMap.MapHeight;
+            myMap = new TileMap(100,100);
+            squaresAcross = game.width / 64 + 1;
+            squaresDown = game.height / 16 + 3;
             this.game = game;
             Initialize();
             LoadContent();
@@ -89,28 +89,28 @@ namespace Buttons
             KeyboardState ks = Keyboard.GetState();
             MouseState mouse = Mouse.GetState();
             ancientL = Camera.Location;
-            if (ks.IsKeyDown(Keys.Left) || mouse.X < 50)
+            if ((ks.IsKeyDown(Keys.Left) || mouse.X < 50)) ;
             {
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X - 4, 0, 
                     (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
                 difL = Camera.Location - ancientL;
             }
 
-            if (ks.IsKeyDown(Keys.Right) || mouse.X > game.width - 50)
+            if ((ks.IsKeyDown(Keys.Right) || mouse.X > game.width - 50))
             {
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 4, 0, 
-                     (myMap.MapWidth - squaresAcross + game.width*64) * Tile.TileStepX);
+                     (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
                 difL = Camera.Location - ancientL;
             }
 
-            if (ks.IsKeyDown(Keys.Up) || mouse.Y < 50)
+            if ((ks.IsKeyDown(Keys.Up) || mouse.Y < 50))
             {
                 Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y - 4, 0, 
                     (myMap.MapHeight - squaresDown) * Tile.TileStepY);
                 difL = Camera.Location - ancientL;
             }
 
-            if (ks.IsKeyDown(Keys.Down) || mouse.Y > game.height - 50)
+            if ((ks.IsKeyDown(Keys.Down) || mouse.Y > game.height - 50))
             {
                 Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y + 4, 0, 
                     (myMap.MapHeight - squaresDown) * Tile.TileStepY);
@@ -264,12 +264,9 @@ namespace Buttons
 
         public void Window_ClientSizeChanged()
         {
-            /*
-            myMap.MapWidth = game.width;
-            myMap.MapHeight = game.height;
-            squaresAcross = myMap.MapWidth;
-            squaresDown = myMap.MapHeight;
-             */
+            squaresAcross = game.width /64 + 3;
+            squaresDown = game.height / 16 + 3;
+            
         }
 
         public void ChangeState(IState state)
