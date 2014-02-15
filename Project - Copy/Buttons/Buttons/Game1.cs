@@ -76,7 +76,7 @@ namespace Buttons
             // Create a new SpriteBatch, which can be used to draw textures. 
             spriteBatch = new CustomSpriteBatch(GraphicsDevice);
 
-            ;
+            
         }
 
         /// <summary>

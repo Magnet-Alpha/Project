@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace Buttons
 {
@@ -20,6 +23,9 @@ namespace Buttons
         Rectangle textRectangle;
         public Vector2 textLocation;
         bool clickable = true;
+        SoundEffectInstance click;
+        SoundEffectInstance mouseOver;
+
 
         public TextButton(SpriteFont font, Game1 game, string t, Vector2 textLoc)
         {
@@ -29,6 +35,10 @@ namespace Buttons
 
             textLocation = textLoc;
             textRectangle = new Rectangle((int)textLocation.X,(int) textLocation.Y, (int) font.MeasureString(text).X, (int) font.MeasureString(text).Y);
+            click = game.Content.Load<SoundEffect>("Sounds\\click").CreateInstance();
+            mouseOver = game.Content.Load<SoundEffect>("Sounds\\mouseover").CreateInstance();
+            click.Volume = game.settings.SoundEffectVolume;
+            mouseOver.Volume = game.settings.SoundEffectVolume;
         }
 
         public string Text
@@ -87,6 +97,9 @@ namespace Buttons
             if (!clickable)
                 return;
 
+            click.Volume = game.settings.SoundEffectVolume;
+            mouseOver.Volume = game.settings.SoundEffectVolume;
+
             mouse = Mouse.GetState();
 
             takingAction = false;
@@ -97,6 +110,8 @@ namespace Buttons
                     clicked = true;
                     //Console.WriteLine("Clicked "+text);
                     takingAction = true;
+
+                    click.Play();
                 } 
                 else
                 {
@@ -109,6 +124,7 @@ namespace Buttons
             {
                 //Console.WriteLine("Action!");
                 takingAction = true;
+                
             }
             
 
@@ -151,6 +167,8 @@ namespace Buttons
             else
             {
                 color = Color.Chocolate;
+                if(!textRectangle.Contains(new Point(oldMouse.X, oldMouse.Y)))
+                     mouseOver.Play();
             }
             game.spriteBatch.DrawString(font, text, position, color);
             
