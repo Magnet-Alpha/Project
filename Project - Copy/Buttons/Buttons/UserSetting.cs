@@ -10,7 +10,7 @@ namespace Buttons
     {
         public bool fullScreen;
         public float musicVolume;
-        public float soundEffectVolume;
+        float soundEffectVolume;
 
         public UserSetting()
         {
@@ -20,6 +20,16 @@ namespace Buttons
             readSoundEffectVolume();
         }
 
+        public float SoundEffectVolume
+        { 
+         get{return soundEffectVolume; }
+         set { 
+            if (value > 1 || value < 0)
+                throw new Exception();
+    
+            soundEffectVolume = value;
+            }
+        }
 
         void readFullScreen()
         {
@@ -87,7 +97,7 @@ namespace Buttons
             reader.Close();
         }
 
-        public void writeSettings()
+        public void saveSettings()
         {
             string fs = "fullScreen = \"" + fullScreen + "\"";
             string musicV = "musicVolume = \"" + musicVolume + "\"";
@@ -96,6 +106,16 @@ namespace Buttons
             System.IO.File.WriteAllLines(@"preferences.txt", new string[3]{fs, musicV, effectV});
 
         }
+
+        public void resetSettings()
+        {
+            musicVolume = 0.5f;
+            soundEffectVolume = 0.5f;
+            fullScreen = false;
+            saveSettings();
+        }
+    
+
 
     }
 }

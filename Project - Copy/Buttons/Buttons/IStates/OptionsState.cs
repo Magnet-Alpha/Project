@@ -85,12 +85,23 @@ namespace Buttons
             // Sound Buttons
             if (optionsMenu.buttonWithIndexPressed(1))
             {
+                try
+                {
+                    game.settings.SoundEffectVolume -= 0.1f;
+                }
+                catch { game.settings.SoundEffectVolume = 0; }
 
                 while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
             }
 
             if (optionsMenu.buttonWithIndexPressed(2))
             {
+                try
+                {
+                    game.settings.SoundEffectVolume += 0.1f;
+                }
+                catch { game.settings.SoundEffectVolume = 1; }
+
                 while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
             }
 
@@ -131,15 +142,15 @@ namespace Buttons
             {
                 ChangeState(previousState);
             }
-            game.settings.writeSettings();
+            game.settings.saveSettings();
         }
         public void Draw(GameTime gameTime)
         {
             optionsMenu.Draw();
 
             game.spriteBatch.DrawString(font, LevelString((int)(game.music.Volume * 10)), new Vector2(optionsMenu.buttons[3].textLocation.X + 60, optionsMenu.buttons[3].textLocation.Y), Color.White);
-            //game.spriteBatch.DrawString(font, LevelString(soundEffectVolume), new Vector2(optionsMenu.buttons[1].textLocation.X + 60, optionsMenu.buttons[1].textLocation.Y), Color.White);
-
+            game.spriteBatch.DrawString(font, LevelString((int)(game.settings.SoundEffectVolume * 10)), new Vector2(optionsMenu.buttons[1].textLocation.X + 60, optionsMenu.buttons[1].textLocation.Y), Color.White);
+            Console.WriteLine(game.settings.SoundEffectVolume);
 
             String copyright = "Copyright GeekHub@Epita 2018";
             Vector2 vector = new Vector2(game.width - font.MeasureString(copyright).X - 10, game.height - font.MeasureString(copyright).Y);

@@ -68,6 +68,7 @@ namespace Buttons
             keypoints.Add(test3);
             keypoints.Add(test4);
             keypoints.Add(test5);
+            DrawMap();
         }
 
 
