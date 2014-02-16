@@ -15,7 +15,7 @@ namespace Buttons
     class InterfaceInGame
     {
         private CustomSpriteBatch spriteBatch;
-        ImageButton[] buttons;
+        public ImageButton[] buttons;
         private Game1 game;
         Text[] texts;
         public Texture2D background;

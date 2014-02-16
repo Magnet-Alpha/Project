@@ -46,8 +46,9 @@ namespace Buttons
         public GameState(Game1 game)
         {
             myMap = new TileMap(100,100);
-            squaresAcross = game.width / 64 + 1;
-            squaresDown = game.height / 16 + 3;
+            squaresAcross = game.width / 256 + 12;
+            squaresDown = game.height / 32 + 20;
+            
             this.game = game;
             Initialize();
             LoadContent();
@@ -113,7 +114,6 @@ namespace Buttons
             keypoints.Add(test3);
             keypoints.Add(test4);
             keypoints.Add(test5);
-            DrawMap();
         }
 
 
@@ -172,7 +172,8 @@ namespace Buttons
             
             if (Interface.buttonWithIndexPressed(0))
             {
-                //mettre ce que vous voulez
+                test = new Virus("b", 10, 10, 5, new Vector2(-Camera.Location.X, -Camera.Location.Y), 1, game.Content, game.spriteBatch, Etat.Alive);
+                virus.Add(test);
             }
             if (Interface.buttonWithIndexPressed(1))
             {
@@ -217,12 +218,16 @@ namespace Buttons
       
         public void Draw(GameTime gameTime)
         {
-            //Interface.Draw();
             if (status == GameStateStatus.Pause)
                 return;
-
-            DrawMap();
-            
+            try
+            {
+                DrawMap();
+            }
+            catch {
+                squaresAcross = myMap.MapWidth;
+                squaresDown = myMap.MapHeight;
+            }
             foreach (Virus v in virus)
             {
                 v.StateDraw();                                                                  //Draw all active viruses
@@ -231,7 +236,7 @@ namespace Buttons
             {
                 t.StateDraw();                                                                  //Draw all active towers
             }
-
+            Interface.Draw();
 
             //---------------------------------------------------------------------------------------
 
@@ -240,7 +245,6 @@ namespace Buttons
         void DrawMap()
         {
             //--------------------Affichage des textures--------------------
-            //Interface.Draw();
 
             Vector2 firstSquare = new Vector2(Camera.Location.X / Tile.TileStepX, Camera.Location.Y / Tile.TileStepY);
             int firstX = (int)firstSquare.X;
@@ -254,6 +258,7 @@ namespace Buttons
             float depthOffset;
 
             // Début de la boucle de boucle pour récupérer les coordonnées
+            int i = 0;
             for (int y = 0; y < squaresDown; y++)
             {
                 Interface.Draw(); //Affichage de l'interface par dessus la map
@@ -261,7 +266,7 @@ namespace Buttons
                 int rowOffset = 0;
                 if ((firstY + y) % 2 == 1)
                     rowOffset = Tile.OddRowXOffset;
-
+                
                 for (int x = 0; x < squaresAcross; x++)
                 {
                     int mapx = (firstX + x);
@@ -269,6 +274,7 @@ namespace Buttons
                     depthOffset = 0.7f - ((mapx + (mapy * Tile.TileWidth)) / maxdepth);
 
                     // Boucle de la 1ère couche de texture
+                    
                     foreach (int tileID in myMap.Rows[mapy].Columns[mapx].BaseTiles)
                     {
                         //Interface.Draw();
@@ -276,19 +282,20 @@ namespace Buttons
 
                             Tile.TileSetTexture,
                             new Rectangle(
-                                (x * Tile.TileStepX) - offsetX + rowOffset + baseOffsetX,
-                                (y * Tile.TileStepY) - offsetY + baseOffsetY,
-                                Tile.TileWidth, Tile.TileHeight),
+                                ((int)((x * Tile.TileStepX - offsetX + rowOffset + baseOffsetX) * game.widthFactor)),
+                                ((int)((y * Tile.TileStepY - offsetY + baseOffsetY) * game.heightFactor)),
+                                (int) (Tile.TileWidth * game.widthFactor), (int)(Tile.TileHeight * game.heightFactor)),
                             Tile.GetSourceRectangle(tileID),
                             Color.White,
                             0.0f,
                             Vector2.Zero,
                             SpriteEffects.None,
                             1.0f);
+                        i++;
                     }
-
+                    
                     int heightRow = 0;
-
+                    /*
                     // Boucle de la 2ème couche de texture
                     foreach (int tileID in myMap.Rows[mapy].Columns[mapx].HeightTiles)
                     {
@@ -324,15 +331,22 @@ namespace Buttons
                             Vector2.Zero,
                             SpriteEffects.None,
                             depthOffset - ((float)heightRow * heightRowDepthMod));
-                    }
+                    }*/
                 }
             }
+            Console.WriteLine(i);
         }
 
         public void Window_ClientSizeChanged()
         {
-            squaresAcross = game.width /64 + 3;
-            squaresDown = game.height / 16 + 3;
+
+            /*squaresAcross = (int)(17 * game.widthFactor);
+            squaresDown = (int)(37 * game.heightFactor);*/
+
+            Interface.buttons[0].Location(game.width - 2 * Interface.buttons[0].Img.Width - 10, 1);
+            Interface.buttons[1].Location(7 + Interface.buttons[1].Img.Width, 1);
+            Interface.buttons[2].Location((13 * game.width / 16) + 7, game.height - Interface.buttons[2].Img.Height * 3);
+
             
         }
 

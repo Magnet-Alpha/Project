@@ -23,6 +23,9 @@ namespace Buttons
         public int height;
         public int width;
         public UserSetting settings;
+        public float widthFactor;
+        public float heightFactor;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -36,6 +39,8 @@ namespace Buttons
             settings = new UserSetting();
             graphics.IsFullScreen = settings.fullScreen;
             graphics.ApplyChanges();
+            widthFactor = GraphicsDevice.PresentationParameters.BackBufferWidth/800;
+            heightFactor = GraphicsDevice.PresentationParameters.BackBufferHeight/460;
         }
 
 
@@ -122,12 +127,14 @@ namespace Buttons
 
         void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-            
-            graphics.ApplyChanges();
+           
+
             height = GraphicsDevice.PresentationParameters.BackBufferHeight;
             width = GraphicsDevice.PresentationParameters.BackBufferWidth;
+            widthFactor = width / 800f;
+            heightFactor = height / 460f;
             gameState.Window_ClientSizeChanged();
-            Draw(new GameTime());
+            Console.WriteLine(widthFactor.ToString() + "x" + heightFactor.ToString() + "   " + width + "x" + height);
         }
 
     }
