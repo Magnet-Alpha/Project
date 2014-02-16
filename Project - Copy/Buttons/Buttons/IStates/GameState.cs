@@ -134,28 +134,28 @@ namespace Buttons
             KeyboardState ks = Keyboard.GetState();
             MouseState mouse = Mouse.GetState();
             ancientL = Camera.Location;
-            if (ks.IsKeyDown(Keys.Left) || mouse.X < 50)
+            if (ks.IsKeyDown(Keys.Left) || mouse.X < 20)
             {
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X - 4, 0, 
                     (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
                 difL = Camera.Location - ancientL;
             }
 
-            if (ks.IsKeyDown(Keys.Right) || mouse.X > game.width - 50)
+            if (ks.IsKeyDown(Keys.Right) || mouse.X > game.width - 20)
             {
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 4, 0, 
                      (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
                 difL = Camera.Location - ancientL;
             }
 
-            if (ks.IsKeyDown(Keys.Up) || mouse.Y < 50)
+            if (ks.IsKeyDown(Keys.Up) || mouse.Y < 30)
             {
                 Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y - 4, 0, 
                     (myMap.MapHeight - squaresDown) * Tile.TileStepY);
                 difL = Camera.Location - ancientL;
             }
 
-            if (ks.IsKeyDown(Keys.Down) || mouse.Y > game.height - 50)
+            if (ks.IsKeyDown(Keys.Down) || mouse.Y > game.height - 20)
             {
                 Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y + 4, 0, 
                     (myMap.MapHeight - squaresDown) * Tile.TileStepY);
@@ -167,6 +167,9 @@ namespace Buttons
             //-----------------------------------------------------------------
 
             //-------------------- Gestion Boutons InGame ---------------------
+
+            Interface.Update();
+            
             if (Interface.buttonWithIndexPressed(0))
             {
                 //mettre ce que vous voulez
@@ -208,12 +211,6 @@ namespace Buttons
                 t.Stating(virus);                                                               //Detecting viruses
             }
             difL = new Vector2(0,0);
-            
-            
-            
-            
-            Interface.Update();
-
 
         }
 
@@ -259,7 +256,7 @@ namespace Buttons
             // Début de la boucle de boucle pour récupérer les coordonnées
             for (int y = 0; y < squaresDown; y++)
             {
-                Interface.Draw();
+                Interface.Draw(); //Affichage de l'interface par dessus la map
 
                 int rowOffset = 0;
                 if ((firstY + y) % 2 == 1)
