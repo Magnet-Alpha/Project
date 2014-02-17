@@ -42,6 +42,7 @@ namespace Buttons
         private int screenHeight;
         private int screenWidth;
         SpriteFont font;
+        MouseState oldMouse = Mouse.GetState();
 
         public GameState(Game1 game)
         {
@@ -134,14 +135,14 @@ namespace Buttons
             KeyboardState ks = Keyboard.GetState();
             MouseState mouse = Mouse.GetState();
             ancientL = Camera.Location;
-            if (ks.IsKeyDown(Keys.Left) || mouse.X < 20)
+            if (ks.IsKeyDown(Keys.Left) || mouse.X < 20 )
             {
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X - 4, 0, 
                     (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
                 difL = Camera.Location - ancientL;
             }
 
-            if (ks.IsKeyDown(Keys.Right) || mouse.X > game.width - 20)
+            if (ks.IsKeyDown(Keys.Right) || (mouse.X > game.width - 150 - 20 && mouse.X < game.width - 150))
             {
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 4, 0, 
                      (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
@@ -169,8 +170,8 @@ namespace Buttons
             //-------------------- Gestion Boutons InGame ---------------------
 
             Interface.Update();
-            
-            if (Interface.buttonWithIndexPressed(0))
+
+            if (Interface.buttonWithIndexPressed(0) && oldMouse.LeftButton != mouse.LeftButton)
             {
                 test = new Virus("b", 10, 10, 5, new Vector2(-Camera.Location.X, -Camera.Location.Y), 1, game.Content, game.spriteBatch, Etat.Alive);
                 virus.Add(test);
@@ -213,6 +214,7 @@ namespace Buttons
             }
             difL = new Vector2(0,0);
 
+            oldMouse = mouse;
         }
 
       
