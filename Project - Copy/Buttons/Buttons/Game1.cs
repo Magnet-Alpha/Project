@@ -134,7 +134,7 @@ namespace Buttons
             widthFactor = width / 800f;
             heightFactor = height / 460f;
             gameState.Window_ClientSizeChanged();
-            Console.WriteLine(widthFactor.ToString() + "x" + heightFactor.ToString() + "   " + width + "x" + height);
+            //Console.WriteLine(widthFactor.ToString() + "x" + heightFactor.ToString() + "   " + width + "x" + height);
         }
 
     }

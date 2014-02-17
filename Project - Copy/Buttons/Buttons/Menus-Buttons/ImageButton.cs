@@ -16,8 +16,8 @@ namespace Buttons
         private MouseState oldMouse;
         public bool takingAction = false;
         public bool clicked = false;
-        Rectangle ImgRectangle;
-        Vector2 ImgLocation;
+        public Rectangle ImgRectangle;
+        public Vector2 ImgLocation;
         private Game1 game;
         bool clickable = true;
 
@@ -77,8 +77,8 @@ namespace Buttons
 
         public void Location(int x, int y)
         {
-            ImgLocation.X = x;
-            ImgLocation.Y = y;
+            ImgRectangle.X = x;
+            ImgRectangle.Y = y;
         }
 
         public void Update()

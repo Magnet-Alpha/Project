@@ -334,19 +334,14 @@ namespace Buttons
                     }*/
                 }
             }
-            Console.WriteLine(i);
+            //Console.WriteLine(i);
         }
 
         public void Window_ClientSizeChanged()
         {
-
-            /*squaresAcross = (int)(17 * game.widthFactor);
-            squaresDown = (int)(37 * game.heightFactor);*/
-
             Interface.buttons[0].Location(game.width - 2 * Interface.buttons[0].Img.Width - 10, 1);
-            Interface.buttons[1].Location(7 + Interface.buttons[1].Img.Width, 1);
+            Interface.buttons[1].Location(Interface.buttons[0].ImgRectangle.X + 7 + Interface.buttons[0].Img.Width, 1);
             Interface.buttons[2].Location((13 * game.width / 16) + 7, game.height - Interface.buttons[2].Img.Height * 3);
-
             
         }
 
