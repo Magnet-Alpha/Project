@@ -83,6 +83,7 @@ namespace Buttons
         public void Update(GameTime gameTime)
         {
             // Sound Buttons
+            // effects -
             if (optionsMenu.buttonWithIndexPressed(1))
             {
                 try
@@ -93,7 +94,7 @@ namespace Buttons
 
                 while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
             }
-
+            //effects +
             if (optionsMenu.buttonWithIndexPressed(2))
             {
                 try
@@ -104,7 +105,7 @@ namespace Buttons
 
                 while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
             }
-
+            // music -
             if (optionsMenu.buttonWithIndexPressed(3) && game.music.Volume > 0)
             {
                 try
@@ -115,7 +116,7 @@ namespace Buttons
                 game.settings.musicVolume = game.music.Volume;
                 while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
             }
-
+            // music +
             if (optionsMenu.buttonWithIndexPressed(4) && game.music.Volume + 0.1 <= 1)
             {
                 game.music.Volume += 0.1f;
@@ -136,6 +137,8 @@ namespace Buttons
                 game.settings.fullScreen = false;
                 game.graphics.IsFullScreen = false;
                 game.graphics.ApplyChanges();
+                previousState.Window_ClientSizeChanged();
+                game.Window_ClientSizeChanged(null, null);
             }
             // Back
             if (optionsMenu.buttonWithIndexPressed(0))
@@ -164,12 +167,11 @@ namespace Buttons
             state.LoadContent();
             game.gameState = state;
         }
+
         public void Window_ClientSizeChanged()
         {
             LoadContent();
         }
-
-
 
         static public string LevelString(int n)
         {

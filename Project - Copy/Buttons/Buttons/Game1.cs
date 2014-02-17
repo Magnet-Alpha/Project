@@ -37,6 +37,7 @@ namespace Buttons
             music = Content.Load<SoundEffect>("music").CreateInstance();
             music.IsLooped = true;
             settings = new UserSetting();
+            Console.WriteLine(settings.musicVolume + " " + settings.SoundEffectVolume);
             graphics.IsFullScreen = settings.fullScreen;
             graphics.ApplyChanges();
             widthFactor = GraphicsDevice.PresentationParameters.BackBufferWidth/800;
@@ -125,7 +126,7 @@ namespace Buttons
             base.Draw(gameTime);
         }
 
-        void Window_ClientSizeChanged(object sender, EventArgs e)
+        public void Window_ClientSizeChanged(object sender, EventArgs e)
         {
            
 
