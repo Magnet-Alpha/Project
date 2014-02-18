@@ -23,9 +23,9 @@ namespace Buttons
             this.vers_g = vers_g;
             this.objectif = objectif;
         }
-        public void TheCamera(Vector2 L)
+        public void TheCamera(Vector2 L, Vector2 E)
         {
-            this.position = this.position - L;
+            this.position = this.position - L*E;
         }
     }
 }

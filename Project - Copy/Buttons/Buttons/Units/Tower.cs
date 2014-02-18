@@ -28,7 +28,8 @@ namespace Buttons
                 this.etat = value;
             }
         }
-        public Tower(string name, int hp, int attack, int cooldown, Vector2 position, double range, ContentManager content, CustomSpriteBatch sb, Etat e) : base(name, hp, attack, cooldown, position, content, sb, e)
+        public Tower(string name, int hp, int attack, int cooldown, Vector2 position, double range, ContentManager content, CustomSpriteBatch sb, Etat e) 
+            : base(name, hp, attack, cooldown, position, content, sb, e)
         {
             this.Range = range;
             this.p2 = Math.Pow(range, 2);
@@ -36,6 +37,7 @@ namespace Buttons
             imgs.Add(content.Load<Texture2D>("Sprites\\tower\\tower"));
             imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
         }
+
         public void Attacking()
         {
             if (this.State == Etat.Attack & this.Cooldown <= 0)

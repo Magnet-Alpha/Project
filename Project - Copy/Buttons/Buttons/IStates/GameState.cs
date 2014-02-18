@@ -43,6 +43,8 @@ namespace Buttons
         private int screenWidth;
         SpriteFont font;
         MouseState oldMouse = Mouse.GetState();
+        bool choosing;
+        TType choice;
 
         public GameState(Game1 game)
         {
@@ -115,6 +117,7 @@ namespace Buttons
             keypoints.Add(test3);
             keypoints.Add(test4);
             keypoints.Add(test5);
+            choosing = false;
         }
 
 
@@ -178,9 +181,22 @@ namespace Buttons
             }
             if (Interface.buttonWithIndexPressed(1))
             {
-                //mettre ce que vous voulez
+                choosing = true;
+                choice.name = "b";
+                choice.attack = 10;
+                choice.cooldown = 10;
+                choice.range = 100;
             }
-            
+
+            if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released && choosing)
+            {
+                Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, new Vector2(mouse.X / (64 * game.widthFactor) * (64 * game.widthFactor), mouse.Y / (32 * game.heightFactor) * (32 * game.heightFactor)), choice.range, game.Content, game.spriteBatch, Etat.Alive);
+                tower.Add(create);
+            }
+
+            if (mouse.RightButton == ButtonState.Pressed)
+                choosing = false;
+
             //-----------------------------------------------------------------
 
             //--------------------Gestion Pause -------------------------------
@@ -193,12 +209,12 @@ namespace Buttons
             oldKs = ks;
             foreach (Keypoint k in keypoints)
             {
-                k.TheCamera(difL);                                                              //Correcting Camera location problems
+                k.TheCamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                              //Correcting Camera location problems
             }
             foreach (Virus v in virus)
             {
-                v.fuckingcamera(difL);                                                          //Correcting Camera location problems
-                v.NewPosition();                                                                //Virus moving
+                v.fuckingcamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                          //Correcting Camera location problems
+                v.NewPosition(new Vector2(game.widthFactor, game.heightFactor));                                                                //Virus moving
                 v.Turn(keypoints, virus, ref indexs);                                           //Virus turning and dying at objective
             }
             foreach (int i in indexs)
@@ -209,12 +225,13 @@ namespace Buttons
             // TODO: Add your update logic here
             foreach (Tower t in tower)
             {
-                t.fuckingcamera(difL);                                                          //Correcting Camera location problems
+                t.fuckingcamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                          //Correcting Camera location problems
                 t.Stating(virus);                                                               //Detecting viruses
             }
             difL = new Vector2(0,0);
 
             oldMouse = mouse;
+
         }
 
       

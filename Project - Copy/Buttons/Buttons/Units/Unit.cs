@@ -80,9 +80,9 @@ namespace Buttons
         {
             unitbatch.Draw(imgs[img], new Rectangle((int)this.Position.X, (int)this.Position.Y, 32 * (int)w, 64 * (int)h), Color.White);
         }
-        public void fuckingcamera(Vector2 L)
+        public void fuckingcamera(Vector2 L, Vector2 E)
         {
-            this.Position = this.Position - L;
+            this.Position = this.Position - L * E;
         }
     }
 }

@@ -32,4 +32,11 @@ namespace Buttons
         InGame
     }
 
+    public struct TType
+    {
+        public string name;
+        public int attack;
+        public int cooldown;
+        public double range;
+    }
  }

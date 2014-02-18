@@ -33,9 +33,9 @@ namespace Buttons
             imgs.Add(content.Load<Texture2D>("TestSprites\\test attack 1" + this.Name));
             imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
         }
-        public void NewPosition()
+        public void NewPosition(Vector2 E)
         {
-            this.Position = this.Position + this.moving * (float)this.Speed;
+            this.Position = this.Position + this.moving * (float)this.Speed * E;
         }
         public void NewSpeed(GameTime gametime)
         {
