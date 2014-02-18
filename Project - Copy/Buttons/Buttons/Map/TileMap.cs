@@ -26,7 +26,7 @@ namespace Buttons
                 MapRow thisRow = new MapRow();
                 for (int x = 0; x < MapWidth; x++)
                 {
-                    thisRow.Columns.Add(new MapCell(1)); //Texture générale
+                    thisRow.Columns.Add(new MapCell(0)); //Texture générale
                 }
                 Rows.Add(thisRow);
             }
@@ -35,7 +35,8 @@ namespace Buttons
               Ajoutez la texture voulu ici en indiquant les coordonnées et la texture voulu.
               Le PNG de la texture est un tableau commençant par 0 !
             */
-            
+
+            Rows[13].Columns[5].AddBaseTile(1);
             /*Rows[14].Columns[5].AddHeightTile(80);
             Rows[16].Columns[5].AddHeightTile(54);
             Rows[18].Columns[5].AddHeightTile(54);

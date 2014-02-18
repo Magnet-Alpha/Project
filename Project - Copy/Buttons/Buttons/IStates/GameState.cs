@@ -104,7 +104,7 @@ namespace Buttons
             //Interface.Draw();
 
             //things about the map ^^   
-            Tile.TileSetTexture = game.Content.Load<Texture2D>(@"TestSprites\\texture1");
+            Tile.TileSetTexture = game.Content.Load<Texture2D>(@"sprites//map//maptexture");
             test = new Virus("b", 10, 10, 5, v, 1, game.Content, game.spriteBatch, Etat.Alive);
             test2 = new Tower("a", 10, 10, 5, v2, 100, game.Content, game.spriteBatch, Etat.Alive);
             test3 = new Keypoint(new Vector2(200, 0), false, false);    
