@@ -54,7 +54,7 @@ namespace Buttons
         {
             // Create a new SpriteBatch, which can be used to draw textures. 
 
-            background = game.Content.Load<Texture2D>("background");
+            background = game.Content.Load<Texture2D>("ecran-accueil");
 
             font = game.Content.Load<SpriteFont>("Font");
             gap = (int)font.MeasureString("L").Y;
