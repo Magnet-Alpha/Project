@@ -60,11 +60,11 @@ namespace Buttons
             gap = (int)font.MeasureString("L").Y;
             //menu general
             
-            continueButton = new TextButton(font, game, "Multiplayer", new Vector2(40, game.height/2 - gap/2));
+            continueButton = new TextButton(font, game, "Multiplayer", new Vector2(game.width /20 , game.height/2 - gap/2));
 
-            newGameButton = new TextButton(font, game, "New Game", new Vector2(30, continueButton.top - gap));
-            optionsButton = new TextButton(font, game, "Options", new Vector2(50, game.height/2 + gap/2));
-            exitButton = new TextButton(font, game, "Exit", new Vector2(75, optionsButton.bottom + gap - (int) font.MeasureString("Exit").Y));
+            newGameButton = new TextButton(font, game, "New Game", new Vector2(game.width / 27, continueButton.top - gap));
+            optionsButton = new TextButton(font, game, "Options", new Vector2(game.width /16 , game.height/2 + gap/2));
+            exitButton = new TextButton(font, game, "Exit", new Vector2(game.width / 12, optionsButton.bottom + gap - (int) font.MeasureString("Exit").Y));
             
             mainMenu = new InterfaceMenu(new TextButton[] { newGameButton, continueButton, optionsButton, exitButton }, new Text[] { }, background, game);
             mainMenu.MenuOn = true;
@@ -134,6 +134,10 @@ namespace Buttons
         public void Window_ClientSizeChanged()
         {
             LoadContent();
+            mainMenu.buttons[0].Location(game.width / 27, mainMenu.buttons[1].top - gap);
+            mainMenu.buttons[1].Location(game.width / 20, game.height / 2 - gap / 2);
+            mainMenu.buttons[2].Location(game.width / 16, game.height / 2 + gap / 2);
+            mainMenu.buttons[3].Location(game.width / 11, mainMenu.buttons[2].bottom + gap - (int)font.MeasureString("Exit").Y);
         }
 
        

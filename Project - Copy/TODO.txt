@@ -1,6 +1,6 @@
 
 
-- Fix fullscreen bug with interface buttons
+- Fix fullscreen bug with interface buttons        CHECK but not for the TextButtons on the Main Menu
 - Fix slow fps when window gets bigger
 - Fix slow fps when a button is clicked continuously
 - Enable user to add tower											almost CHECK

@@ -17,7 +17,7 @@ namespace Buttons
         private CustomSpriteBatch spriteBatch;
         public ImageButton[] buttons;
         private Game1 game;
-        Text[] texts;
+        public Text[] texts;
         public Texture2D background;
         public bool menuOn;
 

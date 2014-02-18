@@ -45,7 +45,7 @@ namespace Buttons
         MouseState oldMouse = Mouse.GetState();
         bool choosing;
         TType choice;
-
+        
         public GameState(Game1 game)
         {
             myMap = new TileMap(100,100);
@@ -100,10 +100,9 @@ namespace Buttons
             menu = game.Content.Load<Texture2D>("menu");
             firstbut = new ImageButton(game.spriteBatch, textureimg, new Vector2((13 * game.width / 16) + 7, 1), game);
             secondbut = new ImageButton(game.spriteBatch, textureimg2, new Vector2(7 + firstbut.right, 1), game);
-            backmenu = new ImageButton(game.spriteBatch, menu, new Vector2((13 * game.width / 16) + 7, game.height - menu.Height*3), game);
+            backmenu = new ImageButton(game.spriteBatch, menu, new Vector2(game.width - menu.Width, game.height - menu.Height*3), game);
             Interface = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu}, game, new Text[3] { goldText, incomeText, lifeText }, background, game.spriteBatch);
             Interface.menuOn = true;
-            //Interface.Draw();
 
             //things about the map ^^   
             Tile.TileSetTexture = game.Content.Load<Texture2D>(@"sprites//map//maptexture");
@@ -360,8 +359,10 @@ namespace Buttons
         {
             Interface.buttons[0].Location(game.width - 2 * Interface.buttons[0].Img.Width - 10, 1);
             Interface.buttons[1].Location(Interface.buttons[0].ImgRectangle.X + 7 + Interface.buttons[0].Img.Width, 1);
-            Interface.buttons[2].Location((13 * game.width / 16) + 7, game.height - Interface.buttons[2].Img.Height * 3);
-            
+            Interface.buttons[2].Location(game.width - Interface.buttons[2].Img.Width, game.height - Interface.buttons[2].Img.Height * 3);
+            Interface.texts[0].location = new Vector2 (3 * game.width / 32, 1);
+            Interface.texts[1].location = new Vector2 (13 * game.width / 32, 1);
+            Interface.texts[2].location = new Vector2(24 * game.width / 32, 1);
         }
 
         public void ChangeState(IState state)
