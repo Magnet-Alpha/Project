@@ -171,7 +171,7 @@ namespace Buttons
 
             Interface.Update();
 
-            if (Interface.buttonWithIndexPressed(0) && oldMouse.LeftButton != mouse.LeftButton)
+            if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0))
             {
                 test = new Virus("b", 10, 10, 5, new Vector2(-Camera.Location.X, -Camera.Location.Y), 1, game.Content, game.spriteBatch, Etat.Alive);
                 virus.Add(test);
@@ -232,11 +232,11 @@ namespace Buttons
             }
             foreach (Virus v in virus)
             {
-                v.StateDraw();                                                                  //Draw all active viruses
+                v.StateDraw(game.widthFactor, game.heightFactor);                                                                  //Draw all active viruses
             }
             foreach (Tower t in tower)
             {
-                t.StateDraw();                                                                  //Draw all active towers
+                t.StateDraw(game.widthFactor, game.heightFactor);                                                                  //Draw all active towers
             }
             Interface.Draw();
 

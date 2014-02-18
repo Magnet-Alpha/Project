@@ -33,7 +33,7 @@ namespace Buttons
             this.Range = range;
             this.p2 = Math.Pow(range, 2);
             imgs.Add(content.Load<Texture2D>("Sprites\\tower\\tower"));
-            imgs.Add(content.Load<Texture2D>("TestSprites\\test attack 1" + this.Name));
+            imgs.Add(content.Load<Texture2D>("Sprites\\tower\\tower"));
             imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
         }
         public void Attacking()

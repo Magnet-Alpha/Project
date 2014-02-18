@@ -66,7 +66,7 @@ namespace Buttons
             this.unitbatch = sb;
             this.etat = e;
         }
-        public void StateDraw()
+        public void StateDraw(float w, float h)
         {
             if (this.State == Etat.Alive)
                 img = 0;
@@ -74,11 +74,11 @@ namespace Buttons
                 img = 1;
             else if (this.State == Etat.Dead)
                 img = 2;
-            StateDrawing();
+            StateDrawing(w, h);
         }
-        public void StateDrawing()
+        public virtual void StateDrawing(float w, float h)
         {
-            unitbatch.Draw(imgs[img], new Rectangle((int)this.Position.X, (int)this.Position.Y, 32, 64), Color.White);
+            unitbatch.Draw(imgs[img], new Rectangle((int)this.Position.X, (int)this.Position.Y, 32 * (int)w, 64 * (int)h), Color.White);
         }
         public void fuckingcamera(Vector2 L)
         {

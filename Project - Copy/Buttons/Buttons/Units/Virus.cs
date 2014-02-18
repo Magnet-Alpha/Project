@@ -68,5 +68,10 @@ namespace Buttons
                 }
             }
         }
+
+        public override void StateDrawing(float w, float h)
+        {
+            unitbatch.Draw(imgs[img], new Rectangle((int)this.Position.X, (int)this.Position.Y, 32 * (int)w , 32 * (int)h), new Rectangle(0, 0, 132, 133), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0);
+        }
     }
 }
