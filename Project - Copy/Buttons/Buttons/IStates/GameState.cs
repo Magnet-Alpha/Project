@@ -75,19 +75,19 @@ namespace Buttons
             int gold = 0;
             Text goldText;
             goldText.textValue = "Gold : " + gold;
-            goldText.location = new Vector2(1 * game.width / 16, 1);
+            goldText.location = new Vector2(1 * game.width / 32, 1);
             goldText.font = font;
 
             int income = 0;
             Text incomeText;
             incomeText.textValue = "Income : " + income;
-            incomeText.location = new Vector2(5 * game.width / 16, 1);
+            incomeText.location = new Vector2(10 * game.width / 32, 1);
             incomeText.font = font;
 
             int life = 0;
             Text lifeText;
             lifeText.textValue = "Life : " + life;
-            lifeText.location = new Vector2(10 * game.width / 16, 1);
+            lifeText.location = new Vector2(20 * game.width / 32, 1);
             lifeText.font = font;
 
             Texture2D textureimg;
@@ -99,8 +99,8 @@ namespace Buttons
             Texture2D menu;
             menu = game.Content.Load<Texture2D>("menu");
             firstbut = new ImageButton(game.spriteBatch, textureimg, new Vector2((13 * game.width / 16) + 7, 1), game);
-            secondbut = new ImageButton(game.spriteBatch, textureimg2, new Vector2(7 + firstbut.right, 1), game);
-            backmenu = new ImageButton(game.spriteBatch, menu, new Vector2(game.width - menu.Width, game.height - menu.Height*3), game);
+            secondbut = new ImageButton(game.spriteBatch, textureimg2, new Vector2(7+firstbut.right, 1), game);
+            backmenu = new ImageButton(game.spriteBatch, menu, new Vector2(firstbut.left, game.height - menu.Height), game);
             Interface = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu}, game, new Text[3] { goldText, incomeText, lifeText }, background, game.spriteBatch);
             Interface.menuOn = true;
 
@@ -186,9 +186,6 @@ namespace Buttons
                 choice.cooldown = 10;
                 choice.range = 100;
             }
-
-            
-
             //-----------------------------------------------------------------
 
             //--------------------Gestion Pause -------------------------------
@@ -261,7 +258,9 @@ namespace Buttons
             {
                 t.StateDraw(game.widthFactor, game.heightFactor);                                                                  //Draw all active towers
             }
-            Interface.Draw();
+            
+            
+            Interface.Draw();                  // Affichage de l'interface par dessus la map et les virus et les tours
 
             //---------------------------------------------------------------------------------------
 
@@ -286,8 +285,6 @@ namespace Buttons
             int i = 0;
             for (int y = 0; y < squaresDown; y++)
             {
-                Interface.Draw(); //Affichage de l'interface par dessus la map
-
                 int rowOffset = 0;
                 if ((firstY + y) % 2 == 1)
                     rowOffset = Tile.OddRowXOffset;
@@ -302,7 +299,6 @@ namespace Buttons
                     
                     foreach (int tileID in myMap.Rows[mapy].Columns[mapx].BaseTiles)
                     {
-                        //Interface.Draw();
                         game.spriteBatch.Draw(
 
                             Tile.TileSetTexture,
@@ -319,8 +315,8 @@ namespace Buttons
                         i++;
                     }
                     
-                    int heightRow = 0;
-                    /*
+                    /*int heightRow = 0;
+                    
                     // Boucle de la 2ème couche de texture
                     foreach (int tileID in myMap.Rows[mapy].Columns[mapx].HeightTiles)
                     {
@@ -364,12 +360,17 @@ namespace Buttons
 
         public void Window_ClientSizeChanged()
         {
-            Interface.buttons[0].Location(game.width - 2 * Interface.buttons[0].Img.Width - 10, 1);
+            Interface.buttons[0].Location((13 * game.width / 16) + 7, 1);
             Interface.buttons[1].Location(Interface.buttons[0].ImgRectangle.X + 7 + Interface.buttons[0].Img.Width, 1);
             Interface.buttons[2].Location(game.width - Interface.buttons[2].Img.Width, game.height - Interface.buttons[2].Img.Height * 3);
             Interface.texts[0].location = new Vector2 (3 * game.width / 32, 1);
             Interface.texts[1].location = new Vector2 (13 * game.width / 32, 1);
             Interface.texts[2].location = new Vector2(24 * game.width / 32, 1);
+
+            foreach (ImageButton ib in Interface.buttons) 
+            {
+                ib.TheFullscreen(game.widthFactor, game.heightFactor);
+            }
 
             foreach (Virus v in virus)
             {

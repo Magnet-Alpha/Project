@@ -32,7 +32,7 @@ namespace Buttons
 
             font = game.Content.Load<SpriteFont>("Font");
 
-            background = game.Content.Load<Texture2D>("BG");
+            background = game.Content.Load<Texture2D>("ecran-accueil");
 
             // menu options
             Text musicLevelText;
@@ -132,6 +132,7 @@ namespace Buttons
                 game.graphics.PreferredBackBufferWidth = game.graphics.GraphicsDevice.DisplayMode.Width;
                 game.graphics.PreferredBackBufferHeight = game.graphics.GraphicsDevice.DisplayMode.Height; 
                 game.graphics.ApplyChanges();
+                Interface.Update();
             }
             //fullscreen off
             if (optionsMenu.buttonWithIndexPressed(8))

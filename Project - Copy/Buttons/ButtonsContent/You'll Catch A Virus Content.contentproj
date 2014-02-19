@@ -225,13 +225,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="menu.jpg">
-      <Name>menu</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="sprites\map\maptexture.png">
       <Name>maptexture</Name>
       <Importer>TextureImporter</Importer>
@@ -276,6 +269,13 @@
   <ItemGroup>
     <Compile Include="sprites\virus\virus-sprite1.png">
       <Name>virus-sprite1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="menu.png">
+      <Name>menu</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

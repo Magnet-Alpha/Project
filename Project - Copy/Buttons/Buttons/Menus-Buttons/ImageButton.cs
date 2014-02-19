@@ -147,8 +147,12 @@ namespace Buttons
             {
                 color = Color.White;
             }
-
+            
             game.spriteBatch.Draw(img, ImgRectangle, null, color, rotation, spriteOrigin, spriteEffects, spriteLayer);
+        }
+        public void TheFullscreen(float w, float h)
+        {
+            this.ImgLocation = this.ImgLocation * new Vector2(w, h);
         }
     }
 }
