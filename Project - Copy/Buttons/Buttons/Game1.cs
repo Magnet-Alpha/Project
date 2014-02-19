@@ -31,10 +31,11 @@ namespace Buttons
             graphics = new GraphicsDeviceManager(this);
 
             Content.RootDirectory = "Content";
-            this.graphics.PreferredBackBufferWidth = 800;
-            this.graphics.PreferredBackBufferHeight = 460;
+            
             this.Window.Title = "You'll Catch A Virus";
             music = Content.Load<SoundEffect>("music").CreateInstance();
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 460; 
             music.IsLooped = true;
             settings = new UserSetting();
             Console.WriteLine(settings.musicVolume + " " + settings.SoundEffectVolume);
@@ -57,7 +58,7 @@ namespace Buttons
 
             IsMouseVisible = true;
             SoundEffect.MasterVolume = 1;
-            this.Window.AllowUserResizing = true;
+            
             height = GraphicsDevice.PresentationParameters.BackBufferHeight;
             width = GraphicsDevice.PresentationParameters.BackBufferWidth;
             music.Play();

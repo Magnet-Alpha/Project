@@ -129,6 +129,8 @@ namespace Buttons
             {
                 game.settings.fullScreen = true;
                 game.graphics.IsFullScreen = true;
+                game.graphics.PreferredBackBufferWidth = game.graphics.GraphicsDevice.DisplayMode.Width;
+                game.graphics.PreferredBackBufferHeight = game.graphics.GraphicsDevice.DisplayMode.Height; 
                 game.graphics.ApplyChanges();
             }
             //fullscreen off
@@ -136,6 +138,8 @@ namespace Buttons
             {
                 game.settings.fullScreen = false;
                 game.graphics.IsFullScreen = false;
+                game.graphics.PreferredBackBufferWidth = 800;
+                game.graphics.PreferredBackBufferHeight = 460;
                 game.graphics.ApplyChanges();
                 previousState.Window_ClientSizeChanged();
                 game.Window_ClientSizeChanged(null, null);
