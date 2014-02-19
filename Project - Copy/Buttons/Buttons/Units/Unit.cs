@@ -84,5 +84,10 @@ namespace Buttons
         {
             this.Position = this.Position - L * E;
         }
+
+        public void TheFullscreen(float w, float h)
+        {
+            this.Position = this.Position * new Vector2(w, h);
+        }
     }
 }

@@ -23,9 +23,15 @@ namespace Buttons
             this.vers_g = vers_g;
             this.objectif = objectif;
         }
+
         public void TheCamera(Vector2 L, Vector2 E)
         {
             this.position = this.position - L*E;
+        }
+
+        public void TheFullscreen(float w, float h)
+        {
+            this.position = this.position * new Vector2(w, h);
         }
     }
 }

@@ -187,14 +187,7 @@ namespace Buttons
                 choice.range = 100;
             }
 
-            if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released && choosing)
-            {
-                Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, new Vector2((int)(mouse.X / (32 * game.widthFactor)) * (32 * game.widthFactor), (int)(mouse.Y / (32 * game.heightFactor)) * (32 * game.heightFactor) - 30 * game.heightFactor), choice.range, game.Content, game.spriteBatch, Etat.Alive);
-                tower.Add(create);
-            }
-
-            if (mouse.RightButton == ButtonState.Pressed)
-                choosing = false;
+            
 
             //-----------------------------------------------------------------
 
@@ -202,6 +195,7 @@ namespace Buttons
             if (ks.IsKeyDown(Keys.Escape) && !oldKs.IsKeyDown(Keys.Escape) || Interface.buttonWithIndexPressed(2)) 
             {
                 status = GameStateStatus.Pause;
+                choosing = false;
                 ChangeState(new PauseState(this, game));
                 
             }
@@ -228,6 +222,19 @@ namespace Buttons
                 t.Stating(virus);                                                               //Detecting viruses
             }
             difL = new Vector2(0,0);
+
+
+
+            if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released && choosing)
+            {
+                Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, new Vector2((int)(mouse.X / (32 * game.widthFactor)) * (32 * game.widthFactor), (int)(mouse.Y / (32 * game.heightFactor)) * (32 * game.heightFactor) - 30 * game.heightFactor), choice.range, game.Content, game.spriteBatch, Etat.Alive);
+                tower.Add(create);
+            }
+
+            if (mouse.RightButton == ButtonState.Pressed)
+                choosing = false;
+
+
 
             oldMouse = mouse;
 
@@ -363,6 +370,20 @@ namespace Buttons
             Interface.texts[0].location = new Vector2 (3 * game.width / 32, 1);
             Interface.texts[1].location = new Vector2 (13 * game.width / 32, 1);
             Interface.texts[2].location = new Vector2(24 * game.width / 32, 1);
+
+            foreach (Virus v in virus)
+            {
+                v.TheFullscreen(game.widthFactor, game.heightFactor);                                                                  //Adapt Fullscreen
+            }
+            foreach (Tower t in tower)
+            {
+                t.TheFullscreen(game.widthFactor, game.heightFactor);                                                                  //Adapt Fullscreen
+            }
+            foreach (Keypoint k in keypoints)
+            {
+                k.TheFullscreen(game.widthFactor, game.heightFactor);
+            }
+
         }
 
         public void ChangeState(IState state)
