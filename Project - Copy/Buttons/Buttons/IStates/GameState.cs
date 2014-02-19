@@ -189,7 +189,7 @@ namespace Buttons
 
             if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released && choosing)
             {
-                Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, new Vector2(mouse.X / (64 * game.widthFactor) * (64 * game.widthFactor), mouse.Y / (32 * game.heightFactor) * (32 * game.heightFactor)), choice.range, game.Content, game.spriteBatch, Etat.Alive);
+                Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, new Vector2((int)(mouse.X / (32 * game.widthFactor)) * (32 * game.widthFactor), (int)(mouse.Y / (32 * game.heightFactor)) * (32 * game.heightFactor) - 30 * game.heightFactor), choice.range, game.Content, game.spriteBatch, Etat.Alive);
                 tower.Add(create);
             }
 

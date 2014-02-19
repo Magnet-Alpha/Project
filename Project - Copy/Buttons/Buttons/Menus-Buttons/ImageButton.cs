@@ -95,9 +95,7 @@ namespace Buttons
                 if (ImgRectangle.Contains(new Point(mouse.X, mouse.Y)))
                 {
                     clicked = true;
-                    Console.WriteLine("Clicked ");
                     takingAction = true;
-                    DrawButton(ImgRectangle);
                 }
                 else
                 {
@@ -108,7 +106,6 @@ namespace Buttons
 
             if (mouse.LeftButton == ButtonState.Released && oldMouse.LeftButton == ButtonState.Pressed && clicked)
             {
-                Console.WriteLine("Action!");
                 takingAction = true;
             }
 
