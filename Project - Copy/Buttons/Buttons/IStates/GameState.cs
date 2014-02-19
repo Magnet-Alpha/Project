@@ -144,7 +144,7 @@ namespace Buttons
                 difL = Camera.Location - ancientL;
             }
 
-            if (ks.IsKeyDown(Keys.Right) || (mouse.X > game.width - 20))
+            if (ks.IsKeyDown(Keys.Right) || (mouse.X > game.width - 150 - 20 && mouse.X < game.width - 150))
             {
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 4, 0, 
                      (myMap.MapWidth - squaresAcross) * Tile.TileStepX);

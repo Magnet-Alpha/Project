@@ -68,7 +68,7 @@ namespace Buttons
         {
              get
              {
-                return textRectangle.Height + textRectangle.Y;
+                return textRectangle.Height /*+ textRectangle.Y*/;
              }
         }
 
