@@ -4,7 +4,7 @@
 - Fix slow fps when window gets bigger
 - Fix slow fps when a button is clicked continuously
 - Enable user to add tower											almost CHECK
-- Fix ungly white lines when on map when window gets bigger			CHECK
-- Fix virus sprite with correct cropping							CHECK
-- Fix tower attack sprite											CHECK
-- Add real background without ungly texts (thank you Nicolas)
+- Put a new sprite when tower attacks
+- Add a looping virus on homescreen
+- Fix virus tajectory on fullscreen
+- Fix virus spawn point

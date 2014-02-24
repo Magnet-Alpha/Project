@@ -360,18 +360,19 @@ namespace Buttons
 
         public void Window_ClientSizeChanged()
         {
+            
             Interface.buttons[0].Location((13 * game.width / 16) + 7, 1);
             Interface.buttons[1].Location(Interface.buttons[0].ImgRectangle.X + 7 + Interface.buttons[0].Img.Width, 1);
             Interface.buttons[2].Location(game.width - Interface.buttons[2].Img.Width, game.height - Interface.buttons[2].Img.Height * 3);
             Interface.texts[0].location = new Vector2 (3 * game.width / 32, 1);
             Interface.texts[1].location = new Vector2 (13 * game.width / 32, 1);
             Interface.texts[2].location = new Vector2(24 * game.width / 32, 1);
-
+            
             foreach (ImageButton ib in Interface.buttons) 
             {
                 ib.TheFullscreen(game.widthFactor, game.heightFactor);
             }
-
+            
             foreach (Virus v in virus)
             {
                 v.TheFullscreen(game.widthFactor, game.heightFactor);                                                                  //Adapt Fullscreen
