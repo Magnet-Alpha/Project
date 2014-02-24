@@ -65,6 +65,7 @@ namespace Buttons
             Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
 
             music.Volume = settings.musicVolume;
+            Textures.Load(Content);
             gameState = new MenuState(this);
 
             

@@ -19,7 +19,7 @@ namespace Buttons
         TextButton optionsButton;
         TextButton exitButton;
         SpriteFont font;
-        Texture2D background;
+        Texture2D background = Textures.background;
         InterfaceMenu mainMenu;
         int gap;
         Game1 game;
@@ -54,7 +54,7 @@ namespace Buttons
         {
             // Create a new SpriteBatch, which can be used to draw textures. 
 
-            background = game.Content.Load<Texture2D>("ecran-accueil");
+            background = Textures.background;
 
             font = game.Content.Load<SpriteFont>("Font");
             gap = (int)font.MeasureString("L").Y;

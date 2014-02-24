@@ -129,6 +129,7 @@
     <Compile Include="Menus-Buttons\CustomSpriteBatch.cs" />
     <Compile Include="Menus-Buttons\ImageButton.cs" />
     <Compile Include="IStates\IState.cs" />
+    <Compile Include="Menus-Buttons\Textures.cs" />
     <Compile Include="Units\Keypoint.cs" />
     <Compile Include="Map\MapCell.cs" />
     <Compile Include="IStates\MenuState.cs" />

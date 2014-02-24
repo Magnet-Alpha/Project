@@ -17,7 +17,7 @@ namespace Buttons
         InterfaceMenu optionsMenu;
         Game1 game;
         SpriteFont font;
-        Texture2D background;
+        Texture2D background = Textures.background;
         IState previousState;
 
         public OptionsState(Game1 game, IState backState)
@@ -31,8 +31,6 @@ namespace Buttons
         {
 
             font = game.Content.Load<SpriteFont>("Font");
-
-            background = game.Content.Load<Texture2D>("ecran-accueil");
 
             // menu options
             Text musicLevelText;
