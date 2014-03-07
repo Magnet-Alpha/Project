@@ -26,7 +26,6 @@ namespace Buttons
         List<Unit> tower = new List<Unit>();                                              //List of towers on the map
         List<Keypoint> keypoints = new List<Keypoint>();                                    //List of keypoints on the map
         Virus test;                                                                         //All those are tests
-        Tower test2;
         Keypoint test3;
         Keypoint test4;
         Keypoint test5;
@@ -106,13 +105,9 @@ namespace Buttons
 
             //things about the map ^^
             Tile.TileSetTexture = game.Content.Load<Texture2D>(@"sprites//map//maptexture");
-            test = new Virus("b", 10, 10, 5, v, 1, game.Content, game.spriteBatch, Etat.Alive);
-            test2 = new Tower("a", 10, 10, 5, v2, 100, game.Content, game.spriteBatch, Etat.Alive);
-            test3 = new Keypoint(new Vector2(200, 0), false, false);    
+            test3 = new Keypoint(new Vector2(200, 40), false, false);    
             test4 = new Keypoint(new Vector2(200, 400), true, false);
             test5 = new Keypoint(new Vector2(500, 400), true, true);
-            virus.Add(test);
-            tower.Add(test2);
             keypoints.Add(test3);
             keypoints.Add(test4);
             keypoints.Add(test5);
@@ -175,7 +170,7 @@ namespace Buttons
 
             if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0))
             {
-                test = new Virus("b", 10, 10, 5, new Vector2(-Camera.Location.X, -Camera.Location.Y), 1, game.Content, game.spriteBatch, Etat.Alive);
+                test = new Virus("b", 10, 10, 5, new Vector2(-Camera.Location.X * game.widthFactor + difL.X, 40 -Camera.Location.Y * game.heightFactor + difL.Y), 1, game.Content, game.spriteBatch, Etat.Alive);
                 virus.Add(test);
             }
             if (Interface.buttonWithIndexPressed(1))
@@ -224,7 +219,7 @@ namespace Buttons
 
             if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released && choosing)
             {
-                Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, new Vector2((int)(mouse.X / (32 * game.widthFactor)) * (32 * game.widthFactor), (int)(mouse.Y / (32 * game.heightFactor)) * (32 * game.heightFactor) - 30 * game.heightFactor), choice.range, game.Content, game.spriteBatch, Etat.Alive);
+                Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, new Vector2((int)(mouse.X / (64 * game.widthFactor)) * (64 * game.widthFactor) + 64, (int)(mouse.Y / (32 * game.heightFactor)) * (32 * game.heightFactor) - 30 * game.heightFactor), choice.range, game.Content, game.spriteBatch, Etat.Alive);
                 tower.Add(create);
             }
 

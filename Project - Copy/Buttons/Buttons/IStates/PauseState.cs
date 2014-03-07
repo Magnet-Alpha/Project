@@ -72,7 +72,7 @@ namespace Buttons
         public void LoadContent()
         {
 
-            background = game.Content.Load<Texture2D>("ecran-accueil");
+            background = game.Content.Load<Texture2D>("background");
 
             TextButton returnGameButton = new TextButton(font, game, "Resume game", new Vector2(game.width / 2 - font.MeasureString("Resume game").X / 2, 200));
             TextButton optionsButton = new TextButton(font, game, "Options", new Vector2(game.width / 2 - font.MeasureString("Options").X / 2, returnGameButton.textLocation.Y + font.MeasureString("Options").Y + 20));
