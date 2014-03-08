@@ -22,7 +22,7 @@ namespace Buttons
         public IntroState(Game1 game)
         {
             this.game = game;
-            video = game.Content.Load<Video>("video");
+            video = game.Content.Load<Video>("intro");
             player = new VideoPlayer();
             player.Play(video);
         }
@@ -32,6 +32,7 @@ namespace Buttons
             KeyboardState ks = Keyboard.GetState();
             if (player.State == MediaState.Stopped || ks.IsKeyDown(Keys.Enter) || ks.IsKeyDown(Keys.Escape))
             {
+                game.drawMouse = true;
                 ChangeState(new MenuState(game));
             }
         }

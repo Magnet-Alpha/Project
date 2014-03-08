@@ -26,6 +26,7 @@ namespace Buttons
         public float widthFactor;
         public float heightFactor;
         public Texture2D cursor;
+        public bool drawMouse = false;
 
         public Game1()
         {
@@ -127,7 +128,8 @@ namespace Buttons
             MouseState mouse = Mouse.GetState();
            
             gameState.Draw(gameTime);
-            spriteBatch.Draw(cursor, new Rectangle(mouse.X, mouse.Y, cursor.Width/5, cursor.Height/5), Color.White);
+            if(drawMouse)
+                spriteBatch.Draw(cursor, new Rectangle(mouse.X, mouse.Y, cursor.Width/5, cursor.Height/5), Color.White);
 
             base.Draw(gameTime);
         }

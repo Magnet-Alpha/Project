@@ -277,11 +277,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="video.wmv">
-      <Name>video</Name>
+    <Compile Include="intro.wmv">
+      <Name>intro</Name>
       <Importer>WmvImporter</Importer>
       <Processor>VideoProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
