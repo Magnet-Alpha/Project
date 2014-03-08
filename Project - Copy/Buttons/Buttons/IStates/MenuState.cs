@@ -23,6 +23,16 @@ namespace Buttons
         InterfaceMenu mainMenu;
         int gap;
         Game1 game;
+        List<Keypoint> keypoints = new List<Keypoint>();
+        Virus test;
+        Keypoint test3;
+        Keypoint test4;
+        Keypoint test5;
+        Keypoint test6;
+        Keypoint test7;
+        Keypoint test8;
+        List<Unit> virus = new List<Unit>();
+        List<int> indexs = new List<int>();
 
         public MenuState(Game1 game)
         {
@@ -68,7 +78,20 @@ namespace Buttons
             
             mainMenu = new InterfaceMenu(new TextButton[] { newGameButton, continueButton, optionsButton, exitButton }, new Text[] { }, background, game);
             mainMenu.MenuOn = true;
-            
+
+            test = new Virus("b", 10, 10, 5, new Vector2(500, 100), 1, game.Content, game.spriteBatch, Etat.Alive);
+            test3 = new Keypoint(new Vector2(500, 100), false, false);
+            test4 = new Keypoint(new Vector2(500,300), false, false);
+            test5 = new Keypoint(new Vector2(700, 100), false, false);
+            test6 = new Keypoint(new Vector2(700, 300), false, false);
+            test7 = new Keypoint(new Vector2(500, 0), false, false);
+            test8 = new Keypoint(new Vector2(700, 0), false, false);
+            keypoints.Add(test3);
+            keypoints.Add(test4);
+            keypoints.Add(test5);
+            keypoints.Add(test6);
+            keypoints.Add(test7);
+            keypoints.Add(test8);
         }
 
         /// <summary>
@@ -105,7 +128,9 @@ namespace Buttons
 
             if (mainMenu.buttonWithIndexPressed(3)) // Exit
                 game.Exit();
-            
+
+            test.NewPosition(new Vector2(game.widthFactor, game.heightFactor));
+            test.Turn(keypoints, virus, ref indexs);
         }
 
         /// <summary>
@@ -122,6 +147,7 @@ namespace Buttons
             String copyright = "Copyright GeekHub@Epita 2018";
             Vector2 vector = new Vector2(game.width - font.MeasureString(copyright).X - 10, game.height - font.MeasureString(copyright).Y);
             game.spriteBatch.DrawString(font, copyright, vector, Color.White);
+            test.StateDraw(1, 1);
 
         }
 

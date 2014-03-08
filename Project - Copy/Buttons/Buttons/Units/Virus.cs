@@ -69,7 +69,9 @@ namespace Buttons
                         float z = this.moving.X;
                         this.moving.X = -this.moving.Y;
                         this.moving.Y = z;
-                        dir = (dir - 1) % 4;
+                        dir = dir - 1;
+                        if (dir == -1)
+                            dir = 3;
                     }
                 }
             }
