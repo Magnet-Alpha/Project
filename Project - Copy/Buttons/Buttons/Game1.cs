@@ -26,7 +26,7 @@ namespace Buttons
         public float widthFactor;
         public float heightFactor;
         public Texture2D cursor;
-        public bool drawMouse = false;
+        public bool drawMouse = true;
 
         public Game1()
         {

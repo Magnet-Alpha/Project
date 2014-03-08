@@ -43,24 +43,24 @@ namespace Buttons
                                                                                             + (int)font.MeasureString(musicLevelText.textValue).Y);
             soundEffectText.font = font;
             Text languageText;
-            languageText.textValue = "Language :";
+            languageText.textValue = "";
             languageText.location = new Vector2(game.width / 2 - (int)font.MeasureString(languageText.textValue).X - 20, 10 + soundEffectText.location.Y
                                                                                             + (int)font.MeasureString(languageText.textValue).Y);
             languageText.font = font;
 
             TextButton backToMainMenuButton = new TextButton(font, game, "Back", new Vector2(20, game.height - 80));
 
-            Text fullScreenText = new Text("Full Screen : ", new Vector2(game.width / 2 - (int)font.MeasureString("Full Screen :").X - 20, 10 + languageText.location.Y
+            Text fullScreenText = new Text("", new Vector2(game.width / 2 - (int)font.MeasureString("Full Screen :").X - 20, 10 + languageText.location.Y
                                                                                              + (int)font.MeasureString(languageText.textValue).Y), font);
 
-            TextButton englishButton = new TextButton(font, game, "English", new Vector2(languageText.location.X + (int)font.MeasureString(languageText.textValue).X + font.MeasureString("English").X - 50, languageText.location.Y));
-            TextButton frenchButton = new TextButton(font, game, "Francais", new Vector2(englishButton.right + 50, languageText.location.Y));
+            TextButton englishButton = new TextButton(font, game, "", new Vector2(languageText.location.X + (int)font.MeasureString(languageText.textValue).X + font.MeasureString("English").X - 50, languageText.location.Y));
+            TextButton frenchButton = new TextButton(font, game, "", new Vector2(englishButton.right + 50, languageText.location.Y));
 
-            TextButton toFS = new TextButton(font, game, "On", new Vector2((englishButton.left + englishButton.right) / 2, fullScreenText.location.Y));
-            TextButton toNS = new TextButton(font, game, "Off", new Vector2((frenchButton.left + frenchButton.right) / 2, fullScreenText.location.Y));
+            TextButton toFS = new TextButton(font, game, "", new Vector2((englishButton.left + englishButton.right) / 2, fullScreenText.location.Y));
+            TextButton toNS = new TextButton(font, game, "", new Vector2((frenchButton.left + frenchButton.right) / 2, fullScreenText.location.Y));
 
 
-            TextButton userNameButton = new TextButton(font, game, "Username :", new Vector2(game.width / 2 - font.MeasureString("Username :").X - 20, fullScreenText.location.Y + font.MeasureString(fullScreenText.textValue).Y + 10));
+            TextButton userNameButton = new TextButton(font, game, "", new Vector2(game.width / 2 - font.MeasureString("Username :").X - 20, fullScreenText.location.Y + font.MeasureString(fullScreenText.textValue).Y + 10));
 
 
             TextButton decreaseSoundEffect = new TextButton(font, game, "  -  ", new Vector2(soundEffectText.location.X + 200, soundEffectText.location.Y));
@@ -121,7 +121,7 @@ namespace Buttons
                 game.settings.musicVolume = game.music.Volume;
                 while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
             }
-
+            /*
             // full screen on
             if (optionsMenu.buttonWithIndexPressed(7) && !game.graphics.IsFullScreen)
             {
@@ -144,7 +144,7 @@ namespace Buttons
                 game.graphics.ApplyChanges();
                 previousState.Window_ClientSizeChanged();
                 
-            }
+            }*/
             // Back
             if (optionsMenu.buttonWithIndexPressed(0))
             {

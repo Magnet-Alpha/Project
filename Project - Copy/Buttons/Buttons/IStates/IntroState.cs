@@ -22,8 +22,10 @@ namespace Buttons
         public IntroState(Game1 game)
         {
             this.game = game;
+            game.drawMouse = false;
             video = game.Content.Load<Video>("intro");
             player = new VideoPlayer();
+            player.Volume = game.settings.SoundEffectVolume;
             player.Play(video);
         }
 

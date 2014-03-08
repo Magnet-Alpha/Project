@@ -26,14 +26,17 @@ namespace Buttons
         IPAddress localIP, remoteIP;
         int localPort = 80;
         int friendPort = 80;
+        TextButton backButton;
+        SpriteFont font
+            ;
 
         public MultiplayerState(Game1 game)
         {
             this.game = game;
-            localIP = GetLocalIP();
+            /*localIP = GetLocalIP();
             try
             {
-                remoteIP = GetLocalIP();
+                remoteIP = IPAddress.Parse(GetFriendIP());
                 //Console.WriteLine("Connected to " + remoteIP.ToString());
             }
             catch
@@ -45,37 +48,59 @@ namespace Buttons
             epLocal = new IPEndPoint(localIP, localPort);
             epRemote = new IPEndPoint(remoteIP, friendPort);
 
-            
-            
+
+
             sck = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             sck.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
 
-            
+
             sck.Bind(epRemote);
 
-            
+
 
             sck.Connect(epLocal);
 
             byte[] buffer = new byte[1500];
             sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(MessageCallBack), buffer);
-            SendMessage("Connection received");
-
+            SendMessage("Connection received");*/
+            localIP = GetLocalIP();
+            font = game.Content.Load<SpriteFont>("font");
+            LoadContent();
         }
 
-        public void Update(GameTime gameTime) {
 
+        void ShowConnectedPCs()
+        {
+            string str = GetFriendIP();
+            game.spriteBatch.DrawString(font, str, new Vector2(game.width / 2 - font.MeasureString(str).X / 2, 20), Color.White); 
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            backButton.Update();
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
                 SendMessage("lol");
                 Console.WriteLine("Message sent");
             }
-        
+            if (backButton.clicked)
+                ChangeState(new MenuState(game));
+
         }
-        public void Draw(GameTime gameTime) { }
+        public void Draw(GameTime gameTime) {
+            backButton.Draw();
+            ShowConnectedPCs();
+
+        }
         public void Initialize() { }
-        public void LoadContent() { }
-        public void ChangeState(IState state) { }
+        public void LoadContent()
+        {
+            backButton = new TextButton(font, game, "Back", new Vector2(20, game.height - 80));
+        }
+        public void ChangeState(IState state) {
+
+            game.gameState = state;
+        }
         public void Window_ClientSizeChanged() { }
 
 
@@ -90,30 +115,35 @@ namespace Buttons
             return IPAddress.Parse("127.0.0.1");
         }
 
-        private IPAddress GetFriendIP()
+        private string GetFriendIP()
         {
+            //Console.WriteLine(GetLocalIP());
+
             IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
             foreach (IPAddress ip in host.AddressList)
             {
-
-                Process[] allProcs = Process.GetProcesses(GetMachineNameFromIPAddress(ip.ToString()));
-                Console.WriteLine(GetMachineNameFromIPAddress(ip.ToString()));
-
-                foreach (Process p in allProcs)
+                if (ip != localIP)
                 {
-                    if (p.ProcessName == "You'll Catch A virus")
-                        return ip;
+                    Console.WriteLine(GetMachineNameFromIPAddress(ip.ToString()));
+                    Process[] allProcs = Process.GetProcesses(GetMachineNameFromIPAddress(ip.ToString()));
+                    Console.WriteLine(GetMachineNameFromIPAddress(ip.ToString()));
+
+                    foreach (Process p in allProcs)
+                    {
+                        if (p.ProcessName == "You'll Catch A virus")
+                            return GetMachineNameFromIPAddress(ip.ToString()) + ": " + ip.ToString();
+                    }
                 }
 
 
             }
-            throw (new Exception("No connections found"));
+            return "No PCs connected on network";
         }
 
 
         void MessageCallBack(IAsyncResult aResult)
         {
-           
+
             try
             {
                 Console.WriteLine("Message received");
@@ -126,14 +156,14 @@ namespace Buttons
                     object data = message.Deserialize();
                     if (data is TestClass)
                     {
-                        Console.WriteLine("From " + remoteIP.Address.ToString() + " : " + ((TestClass) data).text);
+                        Console.WriteLine("From " + remoteIP.Address.ToString() + " : " + ((TestClass)data).text);
                     }
                 }
 
                 byte[] buffer = new byte[1500];
                 sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(MessageCallBack), buffer);
 
-                
+
 
             }
             catch (Exception e)
@@ -151,7 +181,7 @@ namespace Buttons
                 m.Serialize(obj);
 
                 sck.Send(m.data);
-                
+
 
             }
             catch (Exception ex)
