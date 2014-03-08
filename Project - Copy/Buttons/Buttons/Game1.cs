@@ -25,6 +25,7 @@ namespace Buttons
         public UserSetting settings;
         public float widthFactor;
         public float heightFactor;
+        public Texture2D cursor;
 
         public Game1()
         {
@@ -56,7 +57,7 @@ namespace Buttons
         {
             // TODO: Add your initialization logic here
 
-            IsMouseVisible = true;
+            IsMouseVisible = false;
             SoundEffect.MasterVolume = 1;
             
             height = GraphicsDevice.PresentationParameters.BackBufferHeight;
@@ -66,9 +67,9 @@ namespace Buttons
 
             music.Volume = settings.musicVolume;
             Textures.Load(Content);
-            gameState = new MenuState(this);
+            gameState = new IntroState(this);
 
-            
+            cursor = Content.Load<Texture2D>("sprites\\cursor");
 
             
 
@@ -123,7 +124,10 @@ namespace Buttons
 
         protected override void Draw(GameTime gameTime)
         {
+            MouseState mouse = Mouse.GetState();
+           
             gameState.Draw(gameTime);
+            spriteBatch.Draw(cursor, new Rectangle(mouse.X, mouse.Y, cursor.Width/5, cursor.Height/5), Color.White);
 
             base.Draw(gameTime);
         }

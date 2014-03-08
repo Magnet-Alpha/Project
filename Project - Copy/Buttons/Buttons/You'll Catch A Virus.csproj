@@ -122,6 +122,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IStates\IntroState.cs" />
     <Compile Include="Menus-Buttons\InterfaceInGame.cs" />
     <Compile Include="Menus-Buttons\Button.cs" />
     <Compile Include="Map\Camera.cs" />
