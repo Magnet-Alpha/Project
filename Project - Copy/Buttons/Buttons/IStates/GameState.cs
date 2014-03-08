@@ -24,6 +24,7 @@ namespace Buttons
         KeyboardState oldKs;
         List<Unit> virus = new List<Unit>();                                              //List of viruses on the map
         List<Unit> tower = new List<Unit>();                                              //List of towers on the map
+        Tower[,] towers = new Tower[50, 50];
         List<Keypoint> keypoints = new List<Keypoint>();                                    //List of keypoints on the map
         Virus test;                                                                         //All those are tests
         Keypoint test3;
@@ -219,8 +220,14 @@ namespace Buttons
 
             if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released && choosing && mouse.X < game.width - 150 && mouse.Y > 30 && mouse.X > 0 && mouse.Y < game.height)
             {
-                Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, new Vector2((int)(mouse.X / (64 * game.widthFactor)) * (64 * game.widthFactor) + 64, (int)(mouse.Y / (32 * game.heightFactor)) * (32 * game.heightFactor) - 30 * game.heightFactor), choice.range, game.Content, game.spriteBatch, Etat.Alive);
-                tower.Add(create);
+                int x = (int)((mouse.X + Camera.Location.X) / (64 * game.widthFactor));
+                int y = (int)((mouse.Y + Camera.Location.Y) / (32 * game.heightFactor));
+                if (towers[x, y] == null)
+                {
+                    Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, new Vector2((int)((mouse.X + Camera.Location.X) / (64 * game.widthFactor)) * (64 * game.widthFactor) - Camera.Location.X, (int)((mouse.Y + Camera.Location.Y) / (32 * game.heightFactor)) * (32 * game.heightFactor) - 30 * game.heightFactor - Camera.Location.Y), choice.range, game.Content, game.spriteBatch, Etat.Alive);
+                    tower.Add(create);
+                    towers[x, y] = create;
+                }
             }
 
             if (mouse.RightButton == ButtonState.Pressed)
@@ -249,9 +256,17 @@ namespace Buttons
             {
                 v.StateDraw(game.widthFactor, game.heightFactor);                                                                  //Draw all active viruses
             }
-            foreach (Tower t in tower)
+            int x = 0;
+            while (x < 50)
             {
-                t.StateDraw(game.widthFactor, game.heightFactor);                                                                  //Draw all active towers
+                int y = 0;
+                while (y < 50)
+                {
+                    if (towers[x, y] != null)
+                        towers[x, y].StateDraw(game.widthFactor, game.heightFactor);
+                    y++;
+                }
+                x++;
             }
             
             
