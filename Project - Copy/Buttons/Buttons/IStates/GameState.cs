@@ -221,10 +221,10 @@ namespace Buttons
             if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released && choosing && mouse.X < game.width - 150 && mouse.Y > 30 && mouse.X > 0 && mouse.Y < game.height)
             {
                 int x = (int)((mouse.X + Camera.Location.X) / (64 * game.widthFactor));
-                int y = (int)((mouse.Y + Camera.Location.Y) / (32 * game.heightFactor));
+                int y = (int)((mouse.Y + Camera.Location.Y + 16 * game.heightFactor) / (32 * game.heightFactor));
                 if (towers[x, y] == null)
                 {
-                    Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, new Vector2((int)((mouse.X + Camera.Location.X) / (64 * game.widthFactor)) * (64 * game.widthFactor) - Camera.Location.X, (int)((mouse.Y + Camera.Location.Y) / (32 * game.heightFactor)) * (32 * game.heightFactor) - 30 * game.heightFactor - Camera.Location.Y), choice.range, game.Content, game.spriteBatch, Etat.Alive);
+                    Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, new Vector2(x * (64 * game.widthFactor) + 16 * game.widthFactor - Camera.Location.X * game.widthFactor, y * (32 * game.heightFactor) - 56 * game.heightFactor - Camera.Location.Y * game.heightFactor), choice.range, game.Content, game.spriteBatch, Etat.Alive);
                     tower.Add(create);
                     towers[x, y] = create;
                 }
