@@ -36,15 +36,11 @@ namespace Buttons
               Le PNG de la texture est un tableau commençant par 0 !
             */
 
-            Rows[13].Columns[5].AddBaseTile(1);
-            /*Rows[14].Columns[5].AddHeightTile(80);
-            Rows[16].Columns[5].AddHeightTile(54);
-            Rows[18].Columns[5].AddHeightTile(54);
-            Rows[20].Columns[5].AddHeightTile(54);
-            Rows[12].Columns[4].AddHeightTile(54);
-            Rows[13].Columns[4].AddHeightTile(54);
-            Rows[13].Columns[5].AddHeightTile(54);
-            Rows[12].Columns[6].AddHeightTile(54);*/
+            Rows[2].Columns[0].AddBaseTile(1);
+            Rows[1].Columns[0].AddBaseTile(10);
+            Rows[1].Columns[1].AddBaseTile(11);
+            Rows[4].Columns[0].AddBaseTile(12);
+            Rows[3].Columns[0].AddBaseTile(13);
         }
     }
 }
