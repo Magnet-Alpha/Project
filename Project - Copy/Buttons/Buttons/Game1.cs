@@ -108,6 +108,17 @@ namespace Buttons
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+
+            MouseState ms = Mouse.GetState();
+            if (ms.X < 0)
+                Mouse.SetPosition(10, ms.Y);
+            if (ms.X > width)
+                Mouse.SetPosition(width - 10, ms.Y);
+            if (ms.Y < 0)
+                Mouse.SetPosition(ms.X, 10);
+            if (ms.Y > height)
+                Mouse.SetPosition(ms.X, height - 10);
+
             gameState.Update(gameTime);
 
             Draw(gameTime);
