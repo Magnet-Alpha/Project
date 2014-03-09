@@ -20,7 +20,7 @@ namespace Buttons
         private MouseState oldMouse;
         public bool takingAction = false;
         public bool clicked = false;
-        Rectangle textRectangle;
+        public Rectangle textRectangle;
         public Vector2 textLocation;
         bool clickable = true;
         SoundEffectInstance click;

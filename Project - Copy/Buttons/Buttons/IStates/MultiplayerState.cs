@@ -88,6 +88,7 @@ namespace Buttons
 
         }
         public void Draw(GameTime gameTime) {
+            game.spriteBatch.Draw(Textures.background, new Rectangle(0,0,game.width, game.height), Color.White);
             backButton.Draw();
             ShowConnectedPCs();
 

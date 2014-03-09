@@ -18,6 +18,7 @@ namespace Buttons
         TextButton continueButton;
         TextButton optionsButton;
         TextButton exitButton;
+        TextButton websiteButton;
         SpriteFont font;
         Texture2D background = Textures.background;
         InterfaceMenu mainMenu;
@@ -74,9 +75,11 @@ namespace Buttons
 
             newGameButton = new TextButton(font, game, "New Game", new Vector2(game.width / 27, continueButton.top - gap));
             optionsButton = new TextButton(font, game, "Options", new Vector2(game.width /16 , game.height/2 + gap/2));
-            exitButton = new TextButton(font, game, "Exit", new Vector2(game.width / 12, optionsButton.bottom + gap - (int) font.MeasureString("Exit").Y));
+            websiteButton = new TextButton(font, game, "GeekHub", new Vector2(game.width / 12, optionsButton.bottom + gap - (int)font.MeasureString("GeekHub").Y));
+            exitButton = new TextButton(font, game, "Exit", new Vector2(game.width / 10, websiteButton.bottom + gap - (int) font.MeasureString("Exit").Y));
             
-            mainMenu = new InterfaceMenu(new TextButton[] { newGameButton, continueButton, optionsButton, exitButton }, new Text[] { }, background, game);
+
+            mainMenu = new InterfaceMenu(new TextButton[] { newGameButton, continueButton, optionsButton, exitButton, websiteButton }, new Text[] { }, background, game);
             mainMenu.MenuOn = true;
 
             test = new Virus("b", 10, 10, 5, new Vector2(500, 100), 1, game.Content, game.spriteBatch, Etat.Alive);
@@ -111,7 +114,7 @@ namespace Buttons
                 game.Exit();
 
             mainMenu.Update();
-
+            MouseState ms = Mouse.GetState();
             if (mainMenu.buttonWithIndexPressed(0)) // New Game
             {
                 ChangeState(new GameState(game));
@@ -128,6 +131,11 @@ namespace Buttons
 
             if (mainMenu.buttonWithIndexPressed(3)) // Exit
                 game.Exit();
+            if (mainMenu.buttonWithIndexPressed(4)) //website
+            {
+                System.Diagnostics.Process.Start("http://geekhub.tr.gg");
+                game.Exit();
+            }
 
             test.NewPosition(new Vector2(game.widthFactor, game.heightFactor));
             test.Turn(keypoints, virus, ref indexs);
