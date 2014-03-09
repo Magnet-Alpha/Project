@@ -22,15 +22,35 @@ namespace Buttons
             MapWidth = 30;
             MapHeight = 60;
 
+            Random resist = new Random();
             for (int y = 0; y < MapHeight; y++)
             {
                 MapRow thisRow = new MapRow();
                 for (int x = 0; x < MapWidth; x++)
                 {
-                        thisRow.Columns.Add(new MapCell(0)); //Texture générale
+                    int randomResist = resist.Next(0, 300);
+
+                    switch (randomResist)
+                    {
+                        case 7:
+                            thisRow.Columns.Add(new MapCell(10));
+                            break;
+                        case 42:
+                            thisRow.Columns.Add(new MapCell(11));
+                            break;
+                        case 169:
+                            thisRow.Columns.Add(new MapCell(12));
+                            break;
+                        case 299:
+                            thisRow.Columns.Add(new MapCell(13));
+                            break;
+                        default:
+                            thisRow.Columns.Add(new MapCell(0)); //Texture générale
+                            break;
+                    }
                 }
                 Rows.Add(thisRow);
-            }
+        }
 
             /*
               Ajoutez la texture voulu ici en indiquant les coordonnées et la texture voulu.
@@ -38,6 +58,26 @@ namespace Buttons
             */
 
             /* En fait sans éditeur de map, ça fait MASSSSSS lignes de codes pour générer la map xD */
+
+
+
+            Rows[5].Columns[1].AddBaseTile(20);
+            Rows[6].Columns[1].AddBaseTile(20);
+            Rows[5].Columns[4].AddBaseTile(20);
+            Rows[6].Columns[5].AddBaseTile(20);
+            Rows[14].Columns[1].AddBaseTile(20);
+            Rows[15].Columns[1].AddBaseTile(20);
+            Rows[15].Columns[4].AddBaseTile(20);
+            Rows[14].Columns[5].AddBaseTile(20);
+
+            Rows[5].Columns[12].AddBaseTile(20);
+            Rows[6].Columns[12].AddBaseTile(20);
+            Rows[5].Columns[15].AddBaseTile(20);
+            Rows[6].Columns[16].AddBaseTile(20);
+            Rows[14].Columns[12].AddBaseTile(20);
+            Rows[15].Columns[12].AddBaseTile(20);
+            Rows[15].Columns[15].AddBaseTile(20);
+            Rows[14].Columns[16].AddBaseTile(20);
 
             Rows[8].Columns[2].AddBaseTile(1);
             Rows[8].Columns[3].AddBaseTile(1);
