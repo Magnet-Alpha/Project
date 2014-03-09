@@ -36,11 +36,41 @@ namespace Buttons
               Le PNG de la texture est un tableau commençant par 0 !
             */
 
-            Rows[2].Columns[0].AddBaseTile(1);
-            Rows[1].Columns[0].AddBaseTile(10);
-            Rows[1].Columns[1].AddBaseTile(11);
-            Rows[4].Columns[0].AddBaseTile(12);
-            Rows[3].Columns[0].AddBaseTile(13);
+            /* En fait sans éditeur de map, ça fait MASSSSSS lignes de codes pour générer la map xD */
+
+            Rows[8].Columns[2].AddBaseTile(1);
+            Rows[8].Columns[3].AddBaseTile(1);
+            Rows[8].Columns[4].AddBaseTile(1);
+            Rows[9].Columns[2].AddBaseTile(1);
+            Rows[9].Columns[3].AddBaseTile(1);
+            Rows[7].Columns[2].AddBaseTile(1);
+            Rows[7].Columns[3].AddBaseTile(1);
+            Rows[10].Columns[2].AddBaseTile(1);
+            Rows[10].Columns[3].AddBaseTile(1);
+            Rows[10].Columns[4].AddBaseTile(1);
+            Rows[11].Columns[2].AddBaseTile(1);
+            Rows[11].Columns[3].AddBaseTile(1);
+            Rows[12].Columns[2].AddBaseTile(1);
+            Rows[12].Columns[3].AddBaseTile(1);
+            Rows[12].Columns[4].AddBaseTile(1);
+            Rows[13].Columns[2].AddBaseTile(1);
+            Rows[13].Columns[3].AddBaseTile(1);
+            Rows[7].Columns[1].AddBaseTile(2);
+            Rows[9].Columns[1].AddBaseTile(2);
+            Rows[11].Columns[1].AddBaseTile(2);
+            Rows[13].Columns[1].AddBaseTile(2);
+            Rows[6].Columns[2].AddBaseTile(5);
+            Rows[6].Columns[3].AddBaseTile(5);
+            Rows[6].Columns[4].AddBaseTile(5);
+            Rows[7].Columns[4].AddBaseTile(3);
+            Rows[9].Columns[4].AddBaseTile(3);
+            Rows[11].Columns[4].AddBaseTile(3);
+            Rows[13].Columns[4].AddBaseTile(3);
+            Rows[14].Columns[2].AddBaseTile(4);
+            Rows[14].Columns[4].AddBaseTile(4);
+            Rows[14].Columns[3].AddBaseTile(4);
+
+
         }
     }
 }
