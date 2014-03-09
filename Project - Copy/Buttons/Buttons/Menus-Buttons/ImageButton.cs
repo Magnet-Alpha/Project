@@ -17,11 +17,11 @@ namespace Buttons
         public bool takingAction = false;
         public bool clicked = false;
         public Rectangle ImgRectangle;
-        public Vector2 ImgLocation;
+        public Rectangle ImgLocation;
         private Game1 game;
         bool clickable = true;
 
-        public ImageButton(CustomSpriteBatch sBatch, Texture2D image, Vector2 imgLoc, Game1 game)
+        public ImageButton(CustomSpriteBatch sBatch, Texture2D image, Rectangle imgLoc, Game1 game)
         {
             spriteBatch = sBatch;
             img = image;
@@ -36,7 +36,7 @@ namespace Buttons
             set
             {
                 img = value;
-                ImgLocation = new Vector2();
+                ImgLocation = new Rectangle();
             }
         }
         public bool Clickable
@@ -149,10 +149,6 @@ namespace Buttons
             }
             
             game.spriteBatch.Draw(img, ImgRectangle, null, color, rotation, spriteOrigin, spriteEffects, spriteLayer);
-        }
-        public void TheFullscreen(float w, float h)
-        {
-            this.ImgLocation = this.ImgLocation * new Vector2(w, h);
         }
     }
 }

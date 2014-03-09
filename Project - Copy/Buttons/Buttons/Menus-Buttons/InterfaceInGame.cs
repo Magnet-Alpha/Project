@@ -64,8 +64,8 @@ namespace Buttons
             }
             else
             {
-                game.spriteBatch.Draw(background, new Rectangle(game.width - 150, 0, game.width, game.height), Color.White);
-                game.spriteBatch.Draw(background, new Rectangle(0, 0, game.width - 150, 30), Color.White);
+                game.spriteBatch.Draw(background, new Rectangle(game.width - game.width / 12, 0, game.width / 12, game.height - game.height / 5), Color.White);
+                game.spriteBatch.Draw(background, new Rectangle(0, game.height - game.height / 5, game.width, game.height / 5), Color.White);
             }
             for (int i = 0; i < buttons.Length; i++)
             {

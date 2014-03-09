@@ -75,19 +75,19 @@ namespace Buttons
             int gold = 0;
             Text goldText;
             goldText.textValue = "Gold : " + gold;
-            goldText.location = new Vector2(1 * game.width / 32, 1);
+            goldText.location = new Vector2(game.width / 2 + game.width / 10, game.height - game.height / 8);
             goldText.font = font;
 
             int income = 0;
             Text incomeText;
             incomeText.textValue = "Income : " + income;
-            incomeText.location = new Vector2(10 * game.width / 32, 1);
+            incomeText.location = new Vector2(game.width / 3, game.height - game.height / 8);
             incomeText.font = font;
 
             int life = 0;
             Text lifeText;
             lifeText.textValue = "Life : " + life;
-            lifeText.location = new Vector2(20 * game.width / 32, 1);
+            lifeText.location = new Vector2(game.width / 6, game.height - game.height / 8);
             lifeText.font = font;
 
             Texture2D textureimg;
@@ -98,9 +98,9 @@ namespace Buttons
             background = game.Content.Load<Texture2D>("testbackground");
             Texture2D menu;
             menu = game.Content.Load<Texture2D>("menu");
-            firstbut = new ImageButton(game.spriteBatch, textureimg, new Vector2((13 * game.width / 16) + 7, 1), game);
-            secondbut = new ImageButton(game.spriteBatch, textureimg2, new Vector2(7+firstbut.right, 1), game);
-            backmenu = new ImageButton(game.spriteBatch, menu, new Vector2(firstbut.left, game.height - menu.Height), game);
+            firstbut = new ImageButton(game.spriteBatch, textureimg, new Rectangle(game.width - game.width / 12 + game.width / 60, game.width / 60, game.width / 30, game.width / 30), game);
+            secondbut = new ImageButton(game.spriteBatch, textureimg2, new Rectangle(game.width - game.width / 12 + game.width / 60, firstbut.bottom + game.width / 60, game.width / 30, game.width / 30), game);
+            backmenu = new ImageButton(game.spriteBatch, menu, new Rectangle(firstbut.left, game.height - menu.Height, game.width / 30, game.width / 30), game);
             Interface = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu}, game, new Text[3] { goldText, incomeText, lifeText }, background, game.spriteBatch);
             Interface.menuOn = true;
 
@@ -226,7 +226,13 @@ namespace Buttons
                 int y = (int)((mouse.Y + Camera.Location.Y + 16) / (32 * game.heightFactor));
                 if (towers[x, 2*y] == null && TheMap(zx, zy))
                 {
-                    Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, new Vector2(x * (64 * game.widthFactor) + 16 * game.widthFactor - Camera.Location.X * game.widthFactor, y * (32 * game.heightFactor) - 56 * game.heightFactor - Camera.Location.Y * game.heightFactor), choice.range, game.Content, game.spriteBatch, Etat.Alive);
+                    Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, 
+                        new Vector2(x * (64 * game.widthFactor) + 16 * game.widthFactor - Camera.Location.X * game.widthFactor, 
+                        y * (32 * game.heightFactor) - 56 * game.heightFactor - Camera.Location.Y * game.heightFactor),
+                        choice.range, 
+                        game.Content, 
+                        game.spriteBatch, 
+                        Etat.Alive);
                     tower.Add(create);
                     towers[x, 2*y] = create;
                 }
@@ -404,11 +410,6 @@ namespace Buttons
             Interface.texts[0].location = new Vector2 (3 * game.width / 32, 1);
             Interface.texts[1].location = new Vector2 (13 * game.width / 32, 1);
             Interface.texts[2].location = new Vector2(24 * game.width / 32, 1);
-            
-            foreach (ImageButton ib in Interface.buttons) 
-            {
-                ib.TheFullscreen(game.widthFactor, game.heightFactor);
-            }
             
             foreach (Virus v in virus)
             {
