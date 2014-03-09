@@ -61,7 +61,7 @@ namespace Buttons
             }
             if (os == OS.Mac)
             {
-                string str = "All viruses eliminated dead, you won the game.\nJust kidding, starting the game with Windows.";
+                string str = "All viruses eliminated, you won the game.\nJust kidding, starting the game with Windows.";
                 game.spriteBatch.DrawString(font, str, new Vector2(game.width/2 - font.MeasureString(str).X/2, game.height/2 - font.MeasureString(str).Y/2),Color.White);
             }
 
