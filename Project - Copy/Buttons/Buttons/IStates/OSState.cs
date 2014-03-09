@@ -19,6 +19,11 @@ namespace Buttons
         ImageButton windows;
         SpriteFont font;
         OS os = OS.Null;
+        int n = 0;
+        KeyboardState oldKS;
+        string[] macStrings = { "A long time ago, in the late 70's, a great mind had the idea of creating\nan easy to use personal computer and operating system. He named it Macintosh.\nThis computer line continued until today and became one of the most\npopular computers in the world. As technology advanced, hackers tried\nto create viruses for the operating system which had a great security.\nThey never succeeded.",
+                                    "All viruses eliminated, you won the game.\nJust kidding, starting the game with Windows."};
+        string windowsStory = "A long time ago, in the mid-80's, engineers have created the operating\nsystem that would change the future of the world: Windows. This\noperating system is now being used by more then the half of\ncomputers. But there was thing the creators never tought about: viruses.";
 
         public enum OS
         {
@@ -39,15 +44,23 @@ namespace Buttons
         {
             windows.Update();
             apple.Update();
+            KeyboardState ks = Keyboard.GetState();
             if (windows.takingAction)
+                os = OS.Windows;
+            if (os == OS.Windows && n == 1)
+                ChangeState(new GameState(game));
+            if (os == OS.Windows && ks.IsKeyDown(Keys.Enter) && oldKS.IsKeyUp(Keys.Enter))
+                n++;
+
+            if (os == OS.Mac && n == 2)
                 ChangeState(new GameState(game));
 
-            if (os == OS.Mac && Keyboard.GetState().IsKeyDown(Keys.Enter))
-                ChangeState(new GameState(game));
+            if (os == OS.Mac && ks.IsKeyDown(Keys.Enter) && oldKS.IsKeyUp(Keys.Enter))
+                n++;
 
-            
             if (apple.takingAction)
                 os = OS.Mac;
+            oldKS = ks;
             
         }
         public void Draw(GameTime gameTime)
@@ -55,16 +68,17 @@ namespace Buttons
             game.spriteBatch.Draw(Textures.background, new Rectangle(0, 0, game.width, game.height), Color.White);
             if (os == OS.Null)
             {
-                game.spriteBatch.DrawString(font, "Choose your OS", new Vector2(game.width / 2 - font.MeasureString("Choose your OS").X / 2, 50), Color.White);
+                game.spriteBatch.DrawString(font, "Choose your OS", new Vector2(game.width / 2 - font.MeasureString("Choose your OS").X / 2, 50), Color.Violet);
                 apple.Draw();
                 windows.Draw();
             }
-            if (os == OS.Mac)
+            if (os == OS.Mac && n < 2)
             {
-                string str = "All viruses eliminated, you won the game.\nJust kidding, starting the game with Windows.";
-                game.spriteBatch.DrawString(font, str, new Vector2(game.width/2 - font.MeasureString(str).X/2, game.height/2 - font.MeasureString(str).Y/2),Color.White);
+                string str = macStrings[n];
+                game.spriteBatch.DrawString(font, str, new Vector2(game.width/2 - font.MeasureString(str).X/2, game.height/2 - font.MeasureString(str).Y/2),Color.Violet);
             }
-
+            if (os == OS.Windows)
+                game.spriteBatch.DrawString(font, windowsStory, new Vector2(game.width / 2 - font.MeasureString(windowsStory).X / 2, game.height / 2 - font.MeasureString(windowsStory).Y / 2), Color.Violet);
 
 
         }
