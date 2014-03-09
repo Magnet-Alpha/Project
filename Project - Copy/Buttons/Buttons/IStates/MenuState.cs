@@ -117,7 +117,7 @@ namespace Buttons
             MouseState ms = Mouse.GetState();
             if (mainMenu.buttonWithIndexPressed(0)) // New Game
             {
-                ChangeState(new GameState(game));
+                ChangeState(new OSState(game));
             }
 
             if (mainMenu.buttonWithIndexPressed(1))
@@ -131,10 +131,9 @@ namespace Buttons
 
             if (mainMenu.buttonWithIndexPressed(3)) // Exit
                 game.Exit();
-            if (mainMenu.buttonWithIndexPressed(4)) //website
+            if (mainMenu.buttonWithIndexPressed(4)) // Credits
             {
-                System.Diagnostics.Process.Start("http://geekhub.tr.gg");
-                game.Exit();
+                ChangeState(new CreditState(game));
             }
 
             test.NewPosition(new Vector2(game.widthFactor, game.heightFactor));

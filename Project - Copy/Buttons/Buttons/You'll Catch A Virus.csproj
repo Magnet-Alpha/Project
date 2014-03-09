@@ -122,7 +122,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IStates\CreditState.cs" />
     <Compile Include="IStates\IntroState.cs" />
+    <Compile Include="IStates\OSState.cs" />
     <Compile Include="Menus-Buttons\InterfaceInGame.cs" />
     <Compile Include="Menus-Buttons\Button.cs" />
     <Compile Include="Map\Camera.cs" />
@@ -202,6 +204,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

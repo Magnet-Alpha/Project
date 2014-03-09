@@ -30,6 +30,15 @@ namespace Buttons
             ImgRectangle = new Rectangle((int)ImgLocation.X, (int)ImgLocation.Y, (int)img.Height, (int)img.Width);
         }
 
+        public ImageButton(Texture2D img, Rectangle imgLoc, Game1 game)
+        {
+            spriteBatch = game.spriteBatch;
+            this.img = img;
+            this.game = game;
+            ImgLocation = imgLoc;
+            ImgRectangle = imgLoc;
+        }
+
         public Texture2D Img
         {
             get { return img; }
