@@ -80,12 +80,12 @@ namespace Buttons
             mainMenu.MenuOn = true;
 
             test = new Virus("b", 10, 10, 5, new Vector2(500, 100), 1, game.Content, game.spriteBatch, Etat.Alive);
-            test3 = new Keypoint(new Vector2(500, 100), false, false);
-            test4 = new Keypoint(new Vector2(500,300), false, false);
-            test5 = new Keypoint(new Vector2(700, 100), false, false);
-            test6 = new Keypoint(new Vector2(700, 300), false, false);
-            test7 = new Keypoint(new Vector2(500, 0), false, false);
-            test8 = new Keypoint(new Vector2(700, 0), false, false);
+            test3 = new Keypoint(new Vector2(500, 100), true, false);
+            test4 = new Keypoint(new Vector2(500, 300), true, false);
+            test5 = new Keypoint(new Vector2(700, 100), true, false);
+            test6 = new Keypoint(new Vector2(700, 300), true, false);
+            test7 = new Keypoint(new Vector2(500, 0), true, false);
+            test8 = new Keypoint(new Vector2(700, 0), true, false);
             keypoints.Add(test3);
             keypoints.Add(test4);
             keypoints.Add(test5);

@@ -30,6 +30,9 @@ namespace Buttons
         Keypoint test3;
         Keypoint test4;
         Keypoint test5;
+        Keypoint test6;
+        Keypoint test7;
+        Keypoint test8;
         Vector2 v = new Vector2(0, 0);
         Vector2 v2 = new Vector2(200, 100);
         Vector2 ancientL;                                                                   //Memorizing Camera position before moving it
@@ -106,12 +109,18 @@ namespace Buttons
 
             //things about the map ^^
             Tile.TileSetTexture = game.Content.Load<Texture2D>(@"sprites//map//maptexture");
-            test3 = new Keypoint(new Vector2(200, 40), false, false);    
-            test4 = new Keypoint(new Vector2(200, 400), true, false);
-            test5 = new Keypoint(new Vector2(500, 400), true, true);
+            test3 = new Keypoint(new Vector2(176, 542), true, false);
+            test4 = new Keypoint(new Vector2(816, 542), true, false);
+            test5 = new Keypoint(new Vector2(816, 350), true, false);
+            test6 = new Keypoint(new Vector2(496, 350), false, false);
+            test7 = new Keypoint(new Vector2(496, 126), false, false);
+            test8 = new Keypoint(new Vector2(880, 126), false, true);
             keypoints.Add(test3);
             keypoints.Add(test4);
             keypoints.Add(test5);
+            keypoints.Add(test6);
+            keypoints.Add(test7);
+            keypoints.Add(test8);
             choosing = false;
         }
 
@@ -171,7 +180,7 @@ namespace Buttons
 
             if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0))
             {
-                test = new Virus("b", 10, 10, 5, new Vector2(-Camera.Location.X * game.widthFactor + difL.X, 40 -Camera.Location.Y * game.heightFactor + difL.Y), 1, game.Content, game.spriteBatch, Etat.Alive);
+                test = new Virus("b", 10, 10, 5, new Vector2( 176 -Camera.Location.X * game.widthFactor + difL.X, 126 -Camera.Location.Y * game.heightFactor + difL.Y), 1, game.Content, game.spriteBatch, Etat.Alive);
                 virus.Add(test);
             }
             if (Interface.buttonWithIndexPressed(1))
@@ -218,10 +227,10 @@ namespace Buttons
 
 
 
-            if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released && choosing && mouse.X < game.width - 150 && mouse.Y > 30 && mouse.X > 0 && mouse.Y < game.height)
+            if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released && choosing && mouse.X < game.width - game.width / 12 && mouse.Y > 0 && mouse.X > 0 && mouse.Y < game.height - game.height / 5)
             {
                 float zx = (mouse.X + Camera.Location.X) % (64 * game.widthFactor);
-                float zy = (mouse.Y + Camera.Location.Y + 16) % (32 * game.heightFactor);
+                float zy = (mouse.Y + Camera.Location.Y - 16) % (32 * game.heightFactor);
                 int x = (int)((mouse.X + Camera.Location.X) / (64 * game.widthFactor));
                 int y = (int)((mouse.Y + Camera.Location.Y + 16) / (32 * game.heightFactor));
                 if (towers[x, 2*y] == null && TheMap(zx, zy))
@@ -254,7 +263,7 @@ namespace Buttons
                             y++;
                             break;
                     }
-                    if (towers[x, 2 * y -1] == null)
+                    if (y >= 1 && towers[x, 2 * y -1] == null)
                     {
                         Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, new Vector2(x * (64 * game.widthFactor) - 16 * game.widthFactor - Camera.Location.X * game.widthFactor, y * (32 * game.heightFactor) -72 * game.heightFactor - Camera.Location.Y * game.heightFactor), choice.range, game.Content, game.spriteBatch, Etat.Alive);
                         tower.Add(create);
@@ -436,32 +445,34 @@ namespace Buttons
         {
             if (x < 32 && y < 16)
             {
-                if (-(x / 2) + 15 <= y)
+                if (-(x) + 16 <= y)
                     return true;
                 else
                     return false;
             }
             else if (x >= 32 && y < 16)
             {
-                if ((x - 32) / 2 <= y)
+                if ((x - 32) <= y)
                     return true;
                 else
                     return false;
             }
             else if (x < 32 && y <= 16)
             {
-                if (x / 2 >= y - 16)
+                if (x >= y - 16)
+                    return true;
+                else
+                    return false;
+            }
+            else if (x >= 32 && y >= 16)
+            {
+                if (-((x - 32)) + 16 <= y - 16)
                     return true;
                 else
                     return false;
             }
             else
-            {
-                if (-((x - 32)/2) + 15 <= y - 16)
-                    return true;
-                else
-                    return false;
-            }
+                return true;
         }
 
         public int TheMap2(float x, float y)

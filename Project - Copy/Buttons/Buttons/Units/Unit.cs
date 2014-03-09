@@ -62,7 +62,7 @@ namespace Buttons
             this.Cooldown = cooldown;
             this.Position = position;
             this.State = Etat.Alive;
-            this.moving = new Vector2(1,0);
+            this.moving = new Vector2(0,1);
             this.unitbatch = sb;
             this.etat = e;
         }
