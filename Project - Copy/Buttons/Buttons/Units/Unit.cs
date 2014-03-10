@@ -52,6 +52,7 @@ namespace Buttons
             }
         
         }
+
         public Unit(string name, int hp, int attack, int cooldown, Vector2 position, ContentManager content, CustomSpriteBatch sb, Etat e)       //Creation of an unit, taking his name, his max hp and his attack. Unit initial position will be his spawn point
         {
             this.Name = name;
@@ -66,6 +67,11 @@ namespace Buttons
             this.unitbatch = sb;
             this.etat = e;
         }
+
+        public Unit()
+        {
+        }
+
         public void StateDraw(float w, float h)
         {
             if (this.State == Etat.Alive)

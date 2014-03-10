@@ -33,6 +33,14 @@ namespace Buttons
         Keypoint test6;
         Keypoint test7;
         Keypoint test8;
+        Coordonnees test9;
+        Coordonnees test10;
+        Coordonnees test11;
+        Coordonnees test12;
+        Coordonnees test13;
+        Coordonnees test14;
+        Coordonnees test15;
+        Coordonnees test16;
         Vector2 v = new Vector2(0, 0);
         Vector2 v2 = new Vector2(200, 100);
         Vector2 ancientL;                                                                   //Memorizing Camera position before moving it
@@ -122,6 +130,22 @@ namespace Buttons
             keypoints.Add(test7);
             keypoints.Add(test8);
             choosing = false;
+            test9 = new Coordonnees(3, 9, 6, 13);
+            test10 = new Coordonnees(5, 7, 14, 37);
+            test11 = new Coordonnees(8, 27, 34, 37);
+            test12 = new Coordonnees(25, 27, 22, 37);
+            test13 = new Coordonnees(15, 24, 22, 25);
+            test14 = new Coordonnees(15, 17, 8, 21);
+            test15 = new Coordonnees(18, 24, 8, 11);
+            test16 = new Coordonnees(25, 31, 6, 13);
+            test9.Fill(ref towers);
+            test10.Fill(ref towers);
+            test11.Fill(ref towers);
+            test12.Fill(ref towers);
+            test13.Fill(ref towers);
+            test14.Fill(ref towers);
+            test15.Fill(ref towers);
+            test16.Fill(ref towers);
         }
 
 
@@ -189,7 +213,7 @@ namespace Buttons
                 choice.name = "b";
                 choice.attack = 10;
                 choice.cooldown = 10;
-                choice.range = 100;
+                choice.range = 200;
             }
             //-----------------------------------------------------------------
 
@@ -304,7 +328,7 @@ namespace Buttons
                 int y = 0;
                 while (y < 50)
                 {
-                    if (towers[x, y] != null)
+                    if (towers[x, y] != null && towers[x,y].exist)
                         towers[x, y].StateDraw(game.widthFactor, game.heightFactor);
                     y++;
                 }

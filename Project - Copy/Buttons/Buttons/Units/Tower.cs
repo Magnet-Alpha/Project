@@ -17,6 +17,7 @@ namespace Buttons
         protected Unit target;                                 //Target of the tower
         protected double Range { get; set; }                    //Range of attack of the tower
         private double p2;
+        public bool exist;
         public override Etat State
         {
             get
@@ -36,6 +37,12 @@ namespace Buttons
             imgs.Add(content.Load<Texture2D>("Sprites\\tower\\tour2"));
             imgs.Add(content.Load<Texture2D>("Sprites\\tower\\tourattack2"));
             imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
+            this.exist = true;
+        }
+
+        public Tower()
+        {
+            this.exist = false;
         }
 
         public void Attacking()
