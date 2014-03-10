@@ -23,210 +23,91 @@ namespace Buttons
         Game1 game;
         Socket sck;
         EndPoint epLocal, epRemote;
-        IPAddress localIP, remoteIP;
-        int localPort = 80;
-        int friendPort = 80;
-        TextButton backButton;
-        SpriteFont font
-            ;
+        SpriteFont font;
+        string localIp, remoteIp = "192.168.137.2";
+        int localPort = 80, remotePort = 81;
 
         public MultiplayerState(Game1 game)
         {
             this.game = game;
-            /*localIP = GetLocalIP();
-            try
-            {
-                remoteIP = IPAddress.Parse(GetFriendIP());
-                //Console.WriteLine("Connected to " + remoteIP.ToString());
-            }
-            catch
-            {
-                Console.WriteLine("No connection found. Waiting for connection.");
-            }
-
-
-            epLocal = new IPEndPoint(localIP, localPort);
-            epRemote = new IPEndPoint(remoteIP, friendPort);
-
-
-
             sck = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             sck.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-
-
-            sck.Bind(epRemote);
-
-
-
-            sck.Connect(epLocal);
-
-            byte[] buffer = new byte[1500];
-            sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(MessageCallBack), buffer);
-            SendMessage("Connection received");*/
-            localIP = GetLocalIP();
-            font = game.Content.Load<SpriteFont>("font");
-            LoadContent();
+            localIp = GetLocalIP();
+            Console.WriteLine(localIp);
+            connect();
+            sendMessage("Hello");
         }
 
-
-        void ShowConnectedPCs()
-        {
-            string str = GetFriendIP();
-            game.spriteBatch.DrawString(font, str, new Vector2(game.width / 2 - font.MeasureString(str).X / 2, 20), Color.White); 
-        }
-
-        public void Update(GameTime gameTime)
-        {
-            backButton.Update();
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
-            {
-                SendMessage("lol");
-                Console.WriteLine("Message sent");
-            }
-            if (backButton.clicked)
-                ChangeState(new MenuState(game));
-
-        }
-        public void Draw(GameTime gameTime) {
-            game.spriteBatch.Draw(Textures.background, new Rectangle(0,0,game.width, game.height), Color.White);
-            backButton.Draw();
-            ShowConnectedPCs();
-
-        }
-        public void Initialize() { }
-        public void LoadContent()
-        {
-            backButton = new TextButton(font, game, "Back", new Vector2(20, game.height - 80));
-        }
-        public void ChangeState(IState state) {
-
-            game.gameState = state;
-        }
-        public void Window_ClientSizeChanged() { }
-
-
-        private IPAddress GetLocalIP()
+        private string GetLocalIP()
         {
             IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
             foreach (IPAddress ip in host.AddressList)
             {
                 if (ip.AddressFamily == AddressFamily.InterNetwork)
-                    return ip;
+                    return ip.ToString();
             }
-            return IPAddress.Parse("127.0.0.1");
+            return "127.0.0.1";
         }
 
-        private string GetFriendIP()
+        void connect()
         {
-            //Console.WriteLine(GetLocalIP());
 
-            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (IPAddress ip in host.AddressList)
-            {
-                if (ip != localIP)
-                {
-                    Console.WriteLine(GetMachineNameFromIPAddress(ip.ToString()));
-                    Process[] allProcs = Process.GetProcesses(GetMachineNameFromIPAddress(ip.ToString()));
-                    Console.WriteLine(GetMachineNameFromIPAddress(ip.ToString()));
+            epLocal = new IPEndPoint(IPAddress.Parse(localIp), localPort);
+            sck.Bind(epLocal);
 
-                    foreach (Process p in allProcs)
-                    {
-                        if (p.ProcessName == "You'll Catch A virus")
-                            return GetMachineNameFromIPAddress(ip.ToString()) + ": " + ip.ToString();
-                    }
-                }
+            epRemote = new IPEndPoint(IPAddress.Parse(remoteIp), remotePort);
+            sck.Connect(epRemote);
 
+            byte[] buffer = new byte[1500];
+            sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(MessageCallBack), buffer);
 
-            }
-            return "No PCs connected on network";
+            Console.WriteLine("Connected to " + remoteIp);
         }
 
+
+        void sendMessage(string str)
+        {
+            System.Text.ASCIIEncoding enc = new ASCIIEncoding();
+            byte[] msg = new byte[8000];
+            msg = enc.GetBytes(str);
+
+            sck.Send(msg);
+
+        }
 
         void MessageCallBack(IAsyncResult aResult)
         {
+            Console.WriteLine("Message received");
 
-            try
+            int size = sck.EndReceiveFrom(aResult, ref epRemote);
+            if (size > 0)
             {
-                Console.WriteLine("Message received");
-                int size = sck.EndReceiveFrom(aResult, ref epRemote);
-                if (size > 0)
-                {
-                    byte[] receivedData = (byte[])aResult.AsyncState;
+                byte[] receivedData = new Byte[1464];
+                receivedData = (byte[])aResult.AsyncState;
 
-                    Message message = new Message(receivedData);
-                    object data = message.Deserialize();
-                    if (data is TestClass)
-                    {
-                        Console.WriteLine("From " + remoteIP.Address.ToString() + " : " + ((TestClass)data).text);
-                    }
-                }
-
-                byte[] buffer = new byte[1500];
-                sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(MessageCallBack), buffer);
-
-
-
+                ASCIIEncoding eEncpding = new ASCIIEncoding();
+                string receivedMessage = eEncpding.GetString(receivedData);
+                Console.WriteLine("received message:" + receivedMessage);
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
+
+            byte[] buffer = new byte[1500];
+            sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(MessageCallBack), buffer);
         }
 
-        void SendMessage(object obj)
+        public void Update(GameTime gameTime)
         {
-            try
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
-                byte[] msg = new byte[1500];
-                Message m = new Message();
-                m.Serialize(obj);
-
-                sck.Send(m.data);
-
-
+                game.gameState = new MenuState(game);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                sendMessage("Hello");
         }
-
-        private static string GetMachineNameFromIPAddress(string ipAdress)
-        {
-            string machineName = string.Empty;
-            try
-            {
-                IPHostEntry hostEntry = Dns.GetHostEntry(ipAdress);
-
-                machineName = hostEntry.HostName;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-            return machineName;
-        }
-
-        // Convert an object to a byte array
-        private byte[] ObjectToByteArray(Object obj)
-        {
-            if (obj == null)
-                return null;
-            BinaryFormatter bf = new BinaryFormatter();
-            MemoryStream ms = new MemoryStream();
-            bf.Serialize(ms, obj);
-            return ms.ToArray();
-        }
-        // Convert a byte array to an Object
-        private Object ByteArrayToObject(byte[] arrBytes)
-        {
-            MemoryStream memStream = new MemoryStream();
-            BinaryFormatter binForm = new BinaryFormatter();
-            memStream.Write(arrBytes, 0, arrBytes.Length);
-            memStream.Seek(0, SeekOrigin.Begin);
-            Object obj = (Object)binForm.Deserialize(memStream);
-            return obj;
-        }
+        public void Draw(GameTime gameTime) { }
+        public void Initialize() { }
+        public void LoadContent() { }
+        public void ChangeState(IState state) { }
+        public void Window_ClientSizeChanged() { }
 
     }
 }

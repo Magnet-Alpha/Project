@@ -17,6 +17,7 @@ namespace Buttons
         SpriteFont font;
         TextButton back;
         TextButton website;
+        MouseState oldMs = Mouse.GetState();
 
         public CreditState(Game1 game)
         {
@@ -28,15 +29,18 @@ namespace Buttons
 
         public void Update(GameTime gameTime)
         {
+            MouseState ms = Mouse.GetState();
             back.Update();
             website.Update();
             if (back.takingAction)
                 ChangeState(new MenuState(game));
-            if (website.takingAction)
+            if (website.takingAction && oldMs.LeftButton == ButtonState.Released)
             {
                 System.Diagnostics.Process.Start("http://geekhub.tr.gg");
-                game.Exit();
+                //while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
+                //game.Exit();
             }
+            oldMs = ms;
         }
         public void Draw(GameTime gameTime)
         {

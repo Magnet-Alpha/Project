@@ -158,7 +158,6 @@
     <Compile Include="UserSetting.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="applehistory.txt" />
     <Content Include="logo.ico" />
     <Content Include="lol.ico" />
     <Content Include="GameThumbnail.png" />

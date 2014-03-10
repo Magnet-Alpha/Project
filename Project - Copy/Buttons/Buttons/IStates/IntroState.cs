@@ -32,7 +32,7 @@ namespace Buttons
         public void Update(GameTime gameTime)
         {
             KeyboardState ks = Keyboard.GetState();
-            if (player.State == MediaState.Stopped || ks.IsKeyDown(Keys.Enter) || ks.IsKeyDown(Keys.Escape))
+            if (player.State == MediaState.Stopped || ks.IsKeyDown(Keys.Enter) || ks.IsKeyDown(Keys.Escape) || Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
                 game.drawMouse = true;
                 ChangeState(new MenuState(game));

@@ -17,8 +17,10 @@ namespace Buttons
         Game1 game;
         ImageButton apple;
         ImageButton windows;
+        TextButton next;
         SpriteFont font;
         OS os = OS.Null;
+        MouseState oldMs;
         int n = 0;
         KeyboardState oldKS;
         string[] macStrings = { "A long time ago, in the late 70's, a great mind had the idea of creating\nan easy to use personal computer and operating system. He named it Macintosh.\nThis computer line continued until today and became one of the most\npopular computers in the world. As technology advanced, hackers tried\nto create viruses for the operating system which had a great security.\nThey never succeeded.",
@@ -38,34 +40,51 @@ namespace Buttons
             apple = new ImageButton(appleLogo, new Rectangle(game.width / 3, 100, 50, 50), game);
             windows = new ImageButton(game.Content.Load<Texture2D>("Sprites\\os\\windows"), new Rectangle(2 * game.width / 3, 100, 50, 50), game);
             font = game.Content.Load<SpriteFont>("font");
+            next = new TextButton(font, game, "Next", new Vector2(game.width - 100, game.height - 80));
+            next.Clickable = false;
         }
 
         public void Update(GameTime gameTime)
         {
             windows.Update();
             apple.Update();
+            //next.Update();
             KeyboardState ks = Keyboard.GetState();
+            MouseState ms = Mouse.GetState();
+
             if (windows.takingAction)
                 os = OS.Windows;
-            if (os == OS.Windows && n == 1)
-                ChangeState(new GameState(game));
-            if (os == OS.Windows && ks.IsKeyDown(Keys.Enter) && oldKS.IsKeyUp(Keys.Enter))
-                n++;
 
-            if (os == OS.Mac && n == 2)
+            if (os == OS.Windows && n == 1 && ks.IsKeyDown(Keys.Enter))
                 ChangeState(new GameState(game));
 
-            if (os == OS.Mac && ks.IsKeyDown(Keys.Enter) && oldKS.IsKeyUp(Keys.Enter))
+            if (os == OS.Windows && ks.IsKeyDown(Keys.Enter))
                 n++;
+
+            if (os == OS.Mac && n == 1 && ks.IsKeyDown(Keys.Enter) && oldKS.IsKeyUp(Keys.Enter))
+                ChangeState(new GameState(game));
+
+            if ((os == OS.Mac && n < 2 && ks.IsKeyDown(Keys.Enter) && oldKS.IsKeyUp(Keys.Enter)))
+                n ++;
 
             if (apple.takingAction)
                 os = OS.Mac;
+
             oldKS = ks;
+            oldMs = ms;
+            
             
         }
         public void Draw(GameTime gameTime)
         {
             game.spriteBatch.Draw(Textures.background, new Rectangle(0, 0, game.width, game.height), Color.White);
+            if (os != OS.Null)
+            {
+                apple.Clickable = false;
+                windows.Clickable = false;
+                //next.Clickable = true;
+            }
+            //next.Draw();
             if (os == OS.Null)
             {
                 game.spriteBatch.DrawString(font, "Choose your OS", new Vector2(game.width / 2 - font.MeasureString("Choose your OS").X / 2, 50), Color.Violet);
