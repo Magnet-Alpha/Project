@@ -117,12 +117,12 @@ namespace Buttons
 
             //things about the map ^^
             Tile.TileSetTexture = game.Content.Load<Texture2D>(@"sprites//map//maptexture");
-            test3 = new Keypoint(new Vector2(176, 542), true, false);
-            test4 = new Keypoint(new Vector2(816, 542), true, false);
-            test5 = new Keypoint(new Vector2(816, 350), true, false);
-            test6 = new Keypoint(new Vector2(496, 350), false, false);
-            test7 = new Keypoint(new Vector2(496, 126), false, false);
-            test8 = new Keypoint(new Vector2(880, 126), false, true);
+            test3 = new Keypoint(new Vector2(176 - Camera.Location.X, 542 - Camera.Location.Y), true, false);
+            test4 = new Keypoint(new Vector2(816 - Camera.Location.X, 542 - Camera.Location.Y), true, false);
+            test5 = new Keypoint(new Vector2(816 - Camera.Location.X, 350 - Camera.Location.Y), true, false);
+            test6 = new Keypoint(new Vector2(496 - Camera.Location.X, 350 - Camera.Location.Y), false, false);
+            test7 = new Keypoint(new Vector2(496 - Camera.Location.X, 126 - Camera.Location.Y), false, false);
+            test8 = new Keypoint(new Vector2(880 - Camera.Location.X, 126 - Camera.Location.Y), false, true);
             keypoints.Add(test3);
             keypoints.Add(test4);
             keypoints.Add(test5);
