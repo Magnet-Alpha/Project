@@ -16,7 +16,7 @@ namespace Buttons
         Game1 game;
         SpriteFont font;
         TextButton back;
-        TextButton website;
+        
         MouseState oldMs = Mouse.GetState();
 
         public CreditState(Game1 game)
@@ -24,22 +24,22 @@ namespace Buttons
             this.game = game;
             font = game.Content.Load<SpriteFont>("font");
             back = new TextButton(font, game, "Back", new Vector2(20, game.height - 80));
-            website = new TextButton(font, game, "Website", new Vector2(game.width / 2 - (int)font.MeasureString("back").X / 2, 230));
+            //website = new TextButton(font, game, "Website", new Vector2(game.width / 2 - (int)font.MeasureString("back").X / 2, 230));
         }
 
         public void Update(GameTime gameTime)
         {
             MouseState ms = Mouse.GetState();
             back.Update();
-            website.Update();
+            //website.Update();
             if (back.takingAction)
                 ChangeState(new MenuState(game));
-            if (website.takingAction && oldMs.LeftButton == ButtonState.Released)
+           /* if (website.takingAction && oldMs.LeftButton == ButtonState.Released)
             {
                 System.Diagnostics.Process.Start("http://geekhub.tr.gg");
                 //while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
                 //game.Exit();
-            }
+            }*/
             oldMs = ms;
         }
         public void Draw(GameTime gameTime)
@@ -50,7 +50,7 @@ namespace Buttons
             game.spriteBatch.DrawString(font, "Jimmy \"Kojima\" Ha", new Vector2(game.width / 2 - (int)font.MeasureString("Jimmy \"Kojima\" Ha").X / 2, 120), Color.White);
             game.spriteBatch.DrawString(font, "Nicolas \"Toncar\" Carton", new Vector2(game.width / 2 - (int)font.MeasureString("Nicolas \"Toncar\" Carton").X / 2, 170), Color.White);
             back.Draw();
-            website.Draw();
+            //website.Draw();
         }
         public void Initialize() { }
         public void LoadContent() { }

@@ -151,9 +151,9 @@ namespace Buttons
 
             mainMenu.Draw();
            
-            String copyright = "Copyright GeekHub@Epita 2018";
+            /*String copyright = "Copyright GeekHub@Epita 2018";
             Vector2 vector = new Vector2(game.width - font.MeasureString(copyright).X - 10, game.height - font.MeasureString(copyright).Y);
-            game.spriteBatch.DrawString(font, copyright, vector, Color.White);
+            game.spriteBatch.DrawString(font, copyright, vector, Color.White);*/
             test.StateDraw(1, 1);
 
         }

@@ -24,7 +24,7 @@ namespace Buttons
         KeyboardState oldKs;
         List<Unit> virus = new List<Unit>();                                              //List of viruses on the map
         List<Unit> tower = new List<Unit>();                                              //List of towers on the map
-        Tower[,] towers = new Tower[50, 50];
+        Tower[,] towers = new Tower[30, 60];
         List<Keypoint> keypoints = new List<Keypoint>();                                    //List of keypoints on the map
         Virus test;                                                                         //All those are tests
         Keypoint test3;
@@ -323,10 +323,10 @@ namespace Buttons
                 v.StateDraw(game.widthFactor, game.heightFactor);                                                                  //Draw all active viruses
             }
             int x = 0;
-            while (x < 50)
+            while (x < towers.GetLength(0))
             {
                 int y = 0;
-                while (y < 50)
+                while (y < towers.GetLength(1))
                 {
                     if (towers[x, y] != null && towers[x,y].exist)
                         towers[x, y].StateDraw(game.widthFactor, game.heightFactor);

@@ -77,27 +77,33 @@ namespace Buttons
         }
         public void Draw(GameTime gameTime)
         {
-            game.spriteBatch.Draw(Textures.background, new Rectangle(0, 0, game.width, game.height), Color.White);
+            game.spriteBatch.Draw(game.Content.Load<Texture2D>("white"), new Rectangle(0, 0, game.width, game.height), Color.White);
+
+
             if (os != OS.Null)
             {
                 apple.Clickable = false;
                 windows.Clickable = false;
                 //next.Clickable = true;
             }
+            else
+            {
+                game.spriteBatch.Draw(Textures.background, new Rectangle(0, 0, game.width, game.height), Color.White);
+            }
             //next.Draw();
             if (os == OS.Null)
             {
-                game.spriteBatch.DrawString(font, "Choose your OS", new Vector2(game.width / 2 - font.MeasureString("Choose your OS").X / 2, 50), Color.Violet);
+                game.spriteBatch.DrawString(font, "Choose your OS", new Vector2(game.width / 2 - font.MeasureString("Choose your OS").X / 2, 50), Color.White);
                 apple.Draw();
                 windows.Draw();
             }
             if (os == OS.Mac && n < 2)
             {
                 string str = macStrings[n];
-                game.spriteBatch.DrawString(font, str, new Vector2(game.width/2 - font.MeasureString(str).X/2, game.height/2 - font.MeasureString(str).Y/2),Color.Violet);
+                game.spriteBatch.DrawString(font, str, new Vector2(game.width/2 - font.MeasureString(str).X/2, game.height/2 - font.MeasureString(str).Y/2), Color.Black);
             }
             if (os == OS.Windows)
-                game.spriteBatch.DrawString(font, windowsStory, new Vector2(game.width / 2 - font.MeasureString(windowsStory).X / 2, game.height / 2 - font.MeasureString(windowsStory).Y / 2), Color.Violet);
+                game.spriteBatch.DrawString(font, windowsStory, new Vector2(game.width / 2 - font.MeasureString(windowsStory).X / 2, game.height / 2 - font.MeasureString(windowsStory).Y / 2), Color.Black);
 
 
         }

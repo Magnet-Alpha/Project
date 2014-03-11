@@ -160,9 +160,9 @@ namespace Buttons
             game.spriteBatch.DrawString(font, LevelString((int)(game.settings.SoundEffectVolume * 10)), new Vector2(optionsMenu.buttons[1].textLocation.X + 60, optionsMenu.buttons[1].textLocation.Y), Color.White);
             Console.WriteLine(game.settings.SoundEffectVolume);
 
-            String copyright = "Copyright GeekHub@Epita 2018";
+            /*String copyright = "Copyright GeekHub@Epita 2018";
             Vector2 vector = new Vector2(game.width - font.MeasureString(copyright).X - 10, game.height - font.MeasureString(copyright).Y);
-            game.spriteBatch.DrawString(font, copyright, vector, Color.White);
+            game.spriteBatch.DrawString(font, copyright, vector, Color.White);*/
         }
         public void Initialize() { }
 

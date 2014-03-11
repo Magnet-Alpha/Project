@@ -88,8 +88,7 @@ namespace Buttons
         }
 
         public void ChangeState(IState state) {
-            //state.LoadContent();
-            game.gameState = state;    
+           gameState.ChangeState(state);  
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Buttons
                 MapRow thisRow = new MapRow();
                 for (int x = 0; x < MapWidth; x++)
                 {
-                    int randomResist = resist.Next(0, 300);
+                    int randomResist = resist.Next(0, 100);
 
                     switch (randomResist)
                     {
@@ -38,10 +38,10 @@ namespace Buttons
                         case 42:
                             thisRow.Columns.Add(new MapCell(11));
                             break;
-                        case 169:
+                        case 99:
                             thisRow.Columns.Add(new MapCell(12));
                             break;
-                        case 299:
+                        case 79:
                             thisRow.Columns.Add(new MapCell(13));
                             break;
                         default:

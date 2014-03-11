@@ -35,6 +35,7 @@ namespace Buttons
             if (player.State == MediaState.Stopped || ks.IsKeyDown(Keys.Enter) || ks.IsKeyDown(Keys.Escape) || Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
                 game.drawMouse = true;
+                game.music.Play();
                 ChangeState(new MenuState(game));
             }
         }
