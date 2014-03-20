@@ -14,7 +14,7 @@ namespace Buttons
 {
     class Virus : Unit
     {
-        protected double Speed { get; set; }
+        public double Speed { get; set; }
         private int dir;
         private int x;
         public override Etat State
@@ -41,11 +41,14 @@ namespace Buttons
         {
             this.Position = this.Position + this.moving * (float)this.Speed * E;
         }
-        public void NewSpeed(GameTime gametime)
+        public void Death()
         {
-            this.Speed = this.Speed - 10 * (float)gametime.ElapsedGameTime.TotalMinutes;
+            if (this.Hp <= 0)
+            {
+                this.State = Etat.Dead;
+            }
         }
-        public void Turn(List<Keypoint> keypoints, List<Unit> virus, ref List<int>indexs)
+        public void Turn(List<Keypoint> keypoints)
         {
             foreach (Keypoint k in keypoints)
             {
@@ -53,9 +56,8 @@ namespace Buttons
                 {
                     if (k.objectif)
                     {
-                        this.etat = Etat.Dead;
+                        this.Hp = 0;
                         this.moving = new Vector2(0, 0);
-                        indexs.Add(virus.IndexOf(this));
                     }
                     if (k.vers_g)
                     {

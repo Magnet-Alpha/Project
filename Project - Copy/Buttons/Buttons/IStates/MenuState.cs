@@ -32,7 +32,7 @@ namespace Buttons
         Keypoint test6;
         Keypoint test7;
         Keypoint test8;
-        List<Unit> virus = new List<Unit>();
+        List<Virus> virus = new List<Virus>();
         List<int> indexs = new List<int>();
 
         public MenuState(Game1 game)
@@ -137,7 +137,7 @@ namespace Buttons
             }
 
             test.NewPosition(new Vector2(game.widthFactor, game.heightFactor));
-            test.Turn(keypoints, virus, ref indexs);
+            test.Turn(keypoints);
         }
 
         /// <summary>

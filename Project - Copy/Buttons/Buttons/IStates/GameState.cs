@@ -22,10 +22,11 @@ namespace Buttons
         float heightRowDepthMod = 0.00001f;
         public GameStateStatus status;
         KeyboardState oldKs;
-        List<Unit> virus = new List<Unit>();                                              //List of viruses on the map
+        List<Virus> virus = new List<Virus>();                                              //List of viruses on the map
         List<Unit> tower = new List<Unit>();                                              //List of towers on the map
         Tower[,] towers = new Tower[30, 60];
         List<Keypoint> keypoints = new List<Keypoint>();                                    //List of keypoints on the map
+        List<Projectile> projs = new List<Projectile>();
         Virus test;                                                                         //All those are tests
         Keypoint test3;
         Keypoint test4;
@@ -46,6 +47,7 @@ namespace Buttons
         Vector2 ancientL;                                                                   //Memorizing Camera position before moving it
         Vector2 difL;                                                                       //Memorizing difference between camera position when moving it
         List<int> indexs = new List<int>();
+        List<int> indexP = new List<int>();
         ImageButton firstbut;
         ImageButton secondbut;
         ImageButton backmenu;
@@ -212,7 +214,7 @@ namespace Buttons
                 choosing = true;
                 choice.name = "b";
                 choice.attack = 10;
-                choice.cooldown = 10;
+                choice.cooldown = 20;
                 choice.range = 200;
             }
             //-----------------------------------------------------------------
@@ -234,18 +236,37 @@ namespace Buttons
             {
                 v.fuckingcamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                          //Correcting Camera location problems
                 v.NewPosition(new Vector2(game.widthFactor, game.heightFactor));                                                                //Virus moving
-                v.Turn(keypoints, virus, ref indexs);                                           //Virus turning and dying at objective
+                v.Turn(keypoints);                                           //Virus turning and dying at objective
+                v.Death();
             }
-            foreach (int i in indexs)
+            int m = 0;
+            while (m < virus.Count)
             {
-                virus.RemoveAt(i);                                                              //Delete dead viruses
+                if (virus[m].State == Etat.Dead)
+                    virus.RemoveAt(m);
+                else
+                    m++;
             }
-            indexs.Clear();
+            foreach (Projectile p in projs)
+            {
+                p.TheCamera(difL);
+                p.NewPosition();
+                p.Destruction();
+            }
+            int n = 0;
+            while(n < projs.Count)
+            {
+                if (!projs[n].isalive)
+                    projs.RemoveAt(n);
+                else
+                    n++;
+            }
             // TODO: Add your update logic here
             foreach (Tower t in tower)
             {
                 t.fuckingcamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                          //Correcting Camera location problems
                 t.Stating(virus);                                                               //Detecting viruses
+                t.Attacking(ref projs);
             }
             difL = new Vector2(0,0);
 
@@ -321,6 +342,10 @@ namespace Buttons
             foreach (Virus v in virus)
             {
                 v.StateDraw(game.widthFactor, game.heightFactor);                                                                  //Draw all active viruses
+            }
+            foreach (Projectile p in projs)
+            {
+                p.Draw(game.widthFactor, game.heightFactor);
             }
             int x = 0;
             while (x < towers.GetLength(0))

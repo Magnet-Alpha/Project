@@ -14,10 +14,11 @@ namespace Buttons
 {
     class Tower : Unit
     {
-        protected Unit target;                                 //Target of the tower
+        protected Virus target;                                 //Target of the tower
         protected double Range { get; set; }                    //Range of attack of the tower
         private double p2;
         public bool exist;
+        public ContentManager c;
         public override Etat State
         {
             get
@@ -34,6 +35,7 @@ namespace Buttons
         {
             this.Range = range;
             this.p2 = Math.Pow(range, 2);
+            this.c = content;
             imgs.Add(content.Load<Texture2D>("Sprites\\tower\\tour2"));
             imgs.Add(content.Load<Texture2D>("Sprites\\tower\\tourattack2"));
             imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
@@ -45,20 +47,27 @@ namespace Buttons
             this.exist = false;
         }
 
-        public void Attacking()
+        public void Attacking(ref List<Projectile> projs)
         {
             if (this.State == Etat.Attack & this.Cooldown <= 0)
             {
                 this.Cooldown = this.basecooldown;
-                target.Hp = target.Hp - this.Attack;
+                Projectile P = new Projectile(this.Position, this.unitbatch, target.Position + 30 * target.moving * (float)target.Speed, this.c, this.target, 1, this.Attack);
+                projs.Add(P);
+            }
+            else
+            {
+                Cooldown--;
             }
         }
 
-        public void Stating(List<Unit> virus)
+        public void Stating(List<Virus> virus)
         {
             if (this.Hp <= 0)
                 this.etat = Etat.Dead;
-            foreach (Unit unite in virus)
+            if (virus.Count == 0)
+                this.etat = Etat.Alive;
+            foreach (Virus unite in virus)
             {
                 if (Math.Pow((unite.Position.X - this.Position.X), 2) + 4 * Math.Pow((-(unite.Position.Y - this.Position.Y)), 2) <= p2 && (this.State == Etat.Alive || this.State == Etat.Attack) && unite.State != Etat.Dead)
                 {

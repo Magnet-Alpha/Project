@@ -16,21 +16,33 @@ namespace Buttons
     {
         private Vector2 direction;
         private Vector2 position;
-        private SpriteBatch sb;
-        private GameTime origin;
-        private GameTime lifespan;
+        private Vector2 futpos;
+        private int speed;
+        private int attack;
+        private int life;
+        private CustomSpriteBatch sb;
+        private List<Texture2D> imgs = new List<Texture2D>();
+        private Virus target;
+        public bool isalive;
 
-        public Projectile(Vector2 direction, SpriteBatch sb, GameTime origin, GameTime lifespan)
+        public Projectile(Vector2 position, CustomSpriteBatch sb, Vector2 futpos, ContentManager content, Virus target, int speed, int attack)
         {
+            this.position = position;
             this.sb = sb;
-            this.direction = direction;
-            this.origin = origin;
-            this.lifespan = lifespan;
+            this.futpos = futpos;
+            this.direction = new Vector2((futpos.X - position.X), (futpos.Y - position.Y));
+            this.target = target;
+            this.speed = speed;
+            this.attack = attack;
+            imgs.Add(content.Load<Texture2D>("Sprites\\tower\\projectile"));
+            this.isalive = true;
+            this.life = 0;
         }
 
         public void NewPosition()
         {
-            this.position = this.position + this.direction;
+            this.position = this.position + this.direction * ((float)this.speed / 20);
+            this.life++;
         }
 
         public void TheCamera(Vector2 L)
@@ -38,12 +50,18 @@ namespace Buttons
             this.position = this.position - L;
         }
 
-        public void Destruction(GameTime time)
+        public void Destruction()
         {
-            if (time.TotalGameTime.Milliseconds - this.origin.TotalGameTime.Milliseconds > this.lifespan.TotalGameTime.Milliseconds)
+            if (this.life == 30)
             {
-
+                target.Hp = target.Hp - this.attack;
+                this.isalive = false;
             }
+        }
+
+        public void Draw(float w, float h)
+        {
+            sb.Draw(imgs[0], new Rectangle((int)this.position.X, (int)this.position.Y, 32 * (int)w, 64 * (int)h), Color.White);
         }
     }
 }
