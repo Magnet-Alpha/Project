@@ -41,7 +41,7 @@ namespace Buttons
 
         public void NewPosition()
         {
-            this.position = this.position + this.direction * ((float)this.speed / 20);
+            this.position = this.position + this.direction * ((float)this.speed / 30);
             this.life++;
         }
 
@@ -61,7 +61,10 @@ namespace Buttons
 
         public void Draw(float w, float h)
         {
-            sb.Draw(imgs[0], new Rectangle((int)this.position.X, (int)this.position.Y, 32 * (int)w, 64 * (int)h), Color.White);
+            if (this.direction.Y < 0)
+                sb.Draw(imgs[0], new Rectangle((int)this.position.X, (int)this.position.Y, 64 * (int)w, 64 * (int)h), new Rectangle(0, 18, 292, 195), Color.White, (float)Math.PI/3, new Vector2(0, 0), SpriteEffects.None, 0);
+            else
+                sb.Draw(imgs[0], new Rectangle((int)this.position.X, (int)this.position.Y, 64 * (int)w, 64 * (int)h), new Rectangle(0, 18, 292, 195), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0);
         }
     }
 }
