@@ -32,6 +32,7 @@ namespace Buttons
         protected int basecooldown;                         //base cooldown
         public int Cooldown { get; set; }                   //Actual unit cooldown before attacking again
         public Vector2 Position { get; set; }               //Actual position of the unit
+        public Vector2 Center { get; set; }                 //Correction of position
         public Vector2 moving;                              //Actual direction of the unit
         protected Etat etat;
         protected List<Texture2D> imgs = new List<Texture2D>();
