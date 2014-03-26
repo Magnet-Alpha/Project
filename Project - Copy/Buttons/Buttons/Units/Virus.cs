@@ -17,6 +17,7 @@ namespace Buttons
         public double Speed { get; set; }
         private int dir;
         private int x;
+        private Texture2D lifebar;
         public override Etat State
         {
             get
@@ -36,6 +37,7 @@ namespace Buttons
             imgs.Add(content.Load<Texture2D>("Sprites\\virus\\virus"));
             imgs.Add(content.Load<Texture2D>("TestSprites\\test attack 1" + this.Name));
             imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
+            lifebar = content.Load<Texture2D>("Sprites\\virus\\lifebar");
         }
         public void NewPosition(Vector2 E)
         {
@@ -95,6 +97,7 @@ namespace Buttons
                     break;
             }
             unitbatch.Draw(imgs[img], new Rectangle((int)this.Position.X, (int)this.Position.Y, 32 * (int)w , 32 * (int)h), new Rectangle(((int)x/30) * 132 , y*133, 132, 133), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0);
+            unitbatch.Draw(lifebar, new Rectangle((int)this.Position.X, (int)this.Position.Y + 36, 32 * (int)w, 4 * (int)h), new Rectangle((int)(8 - 8 * (float)this.Hp / this.maxhp) * 16, 0, 16, 4), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0);
         }
     }
 }

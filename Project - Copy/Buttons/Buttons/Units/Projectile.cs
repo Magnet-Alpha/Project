@@ -61,7 +61,7 @@ namespace Buttons
 
         public void Draw(float w, float h)
         {
-            sb.Draw(imgs[0], new Rectangle((int)this.position.X, (int)this.position.Y, 64 * (int)w, 32 * (int)h), new Rectangle(0, 18, 292, 195), Color.White, (float)Math.Atan2(direction.Y, direction.X) - 5*(float)Math.PI/6, new Vector2(0, 0), SpriteEffects.None, 0);
+            sb.Draw(imgs[0], new Rectangle((int)this.position.X, (int)this.position.Y, 32 * (int)w, 32 * (int)h), new Rectangle(0, 18, 292, 195), Color.White, (float)Math.Atan2(direction.Y, direction.X) - 3*(float)Math.PI/4, new Vector2(0, 0), SpriteEffects.None, 0);
         }
     }
 }

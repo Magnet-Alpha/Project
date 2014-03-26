@@ -206,7 +206,7 @@ namespace Buttons
 
             if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0))
             {
-                test = new Virus("b", 10, 10, 5, new Vector2( 176 -Camera.Location.X * game.widthFactor + difL.X, 126 -Camera.Location.Y * game.heightFactor + difL.Y), 1, game.Content, game.spriteBatch, Etat.Alive);
+                test = new Virus("b", 100, 10, 5, new Vector2( 176 -Camera.Location.X * game.widthFactor + difL.X, 126 -Camera.Location.Y * game.heightFactor + difL.Y), 1, game.Content, game.spriteBatch, Etat.Alive);
                 virus.Add(test);
             }
             if (Interface.buttonWithIndexPressed(1))
