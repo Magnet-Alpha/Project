@@ -36,6 +36,7 @@ namespace Buttons
             this.Range = range;
             this.p2 = Math.Pow(range, 2);
             this.c = content;
+            this.Center = new Vector2(this.Position.X + 16, this.Position.Y + 56);
             imgs.Add(content.Load<Texture2D>("Sprites\\tower\\tour2"));
             imgs.Add(content.Load<Texture2D>("Sprites\\tower\\tourattack2"));
             imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
@@ -52,7 +53,7 @@ namespace Buttons
             if (this.State == Etat.Attack & this.Cooldown <= 0)
             {
                 this.Cooldown = this.basecooldown;
-                Projectile P = new Projectile(this.Position, this.unitbatch, target.Position + 30 * target.moving * (float)target.Speed, this.c, this.target, 1, this.Attack);
+                Projectile P = new Projectile(new Vector2 (this.Center.X, this.Center.Y - 8), this.unitbatch, target.Center + 30 * target.moving * (float)target.Speed, this.c, this.target, 1, this.Attack);
                 projs.Add(P);
             }
             else
@@ -69,7 +70,7 @@ namespace Buttons
                 this.etat = Etat.Alive;
             foreach (Virus unite in virus)
             {
-                if (Math.Pow((unite.Position.X - this.Position.X), 2) + 4 * Math.Pow((-(unite.Position.Y - this.Position.Y)), 2) <= p2 && (this.State == Etat.Alive || this.State == Etat.Attack) && unite.State != Etat.Dead)
+                if (Math.Pow((unite.Center.X - this.Center.X), 2) + 4 * Math.Pow((-(unite.Center.Y - this.Center.Y)), 2) <= p2 && (this.State == Etat.Alive || this.State == Etat.Attack) && unite.State != Etat.Dead)
                 {
                     this.target = unite;
                     unite.State = Etat.Attacked;
@@ -79,6 +80,12 @@ namespace Buttons
                 else
                     this.etat = Etat.Alive;
             }
+        }
+
+        public override void fuckingcamera(Vector2 L, Vector2 E)
+        {
+            base.fuckingcamera(L, E);
+            this.Center = new Vector2(this.Position.X + 16, this.Position.Y + 56);
         }
     } ///Vector2.Distance(this.Position, unite.Position) <= Range
     ///Math.Pow((unite.Position.X - this.Position.X), 2) + 4 * Math.Pow((-(unite.Position.Y - this.Position.Y)), 2) <= p2 

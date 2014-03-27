@@ -34,6 +34,7 @@ namespace Buttons
             this.Speed = speed;
             dir = 3;
             x = 0;
+            this.Center = new Vector2(this.Position.X + 16, this.Position.Y + 16);
             imgs.Add(content.Load<Texture2D>("Sprites\\virus\\virus"));
             imgs.Add(content.Load<Texture2D>("TestSprites\\test attack 1" + this.Name));
             imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
@@ -42,6 +43,7 @@ namespace Buttons
         public void NewPosition(Vector2 E)
         {
             this.Position = this.Position + this.moving * (float)this.Speed * E;
+            this.Center = new Vector2(this.Position.X + 16, this.Position.Y + 16);
         }
         public void Death()
         {

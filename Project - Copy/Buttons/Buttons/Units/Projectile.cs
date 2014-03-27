@@ -27,7 +27,7 @@ namespace Buttons
 
         public Projectile(Vector2 position, CustomSpriteBatch sb, Vector2 futpos, ContentManager content, Virus target, int speed, int attack)
         {
-            this.position = position;
+            this.position = new Vector2(position.X - 16 * (float)Math.Cos(Math.Atan2(direction.Y, direction.X)), position.Y - 8 * (float)Math.Sin(Math.Atan2(direction.Y, direction.X)));
             this.sb = sb;
             this.futpos = futpos;
             this.direction = new Vector2((futpos.X - position.X), (futpos.Y - position.Y));
