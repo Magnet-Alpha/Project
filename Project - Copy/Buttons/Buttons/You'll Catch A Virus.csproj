@@ -16,8 +16,8 @@
     <XnaProfile>Reach</XnaProfile>
     <XnaCrossPlatformGroupID>462f5b9b-8c25-4cc5-b4c0-62d238ef1910</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
-    <ApplicationIcon>logo.ico</ApplicationIcon>
-    <Thumbnail>GameThumbnail.png</Thumbnail>
+    <ApplicationIcon>Utilities&amp;Stuff\logo.ico</ApplicationIcon>
+    <Thumbnail>Utilities&amp;Stuff\GameThumbnail.png</Thumbnail>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>C:\Users\Moray\Desktop\Youll catch a virus\</PublishUrl>
     <Install>true</Install>
@@ -149,20 +149,21 @@
     <Compile Include="Menus-Buttons\Screen.cs" />
     <Compile Include="Menus-Buttons\InterfaceMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Game1.cs" />
-    <Compile Include="Structs.cs" />
+    <Compile Include="Utilities&amp;Stuff\Program.cs" />
+    <Compile Include="Utilities&amp;Stuff\Game1.cs" />
+    <Compile Include="Utilities&amp;Stuff\Strings.cs" />
+    <Compile Include="Utilities&amp;Stuff\Structs.cs" />
     <Compile Include="Map\Tile.cs" />
     <Compile Include="Map\TileMap.cs" />
     <Compile Include="Units\Tower.cs" />
     <Compile Include="Units\Unit.cs" />
     <Compile Include="Units\Virus.cs" />
-    <Compile Include="UserSetting.cs" />
+    <Compile Include="Utilities&amp;Stuff\UserSetting.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="logo.ico" />
-    <Content Include="lol.ico" />
-    <Content Include="GameThumbnail.png" />
+    <Content Include="Utilities&amp;Stuff\logo.ico" />
+    <Content Include="Utilities&amp;Stuff\lol.ico" />
+    <Content Include="Utilities&amp;Stuff\GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ButtonsContent\You%27ll Catch A Virus Content.contentproj">
@@ -202,7 +203,7 @@
     <None Include="You%27ll Catch A Virus_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="preferences.txt">
+    <Content Include="Utilities&amp;Stuff\preferences.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

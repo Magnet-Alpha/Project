@@ -33,6 +33,7 @@ namespace Buttons
             sck = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             sck.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             localIp = GetLocalIP();
+            remoteIp = localIp;
             Console.WriteLine(localIp);
             connect();
             sendMessage("Hello");
@@ -70,7 +71,7 @@ namespace Buttons
             System.Text.ASCIIEncoding enc = new ASCIIEncoding();
             byte[] msg = new byte[8000];
             msg = enc.GetBytes(str);
-
+            
             sck.Send(msg);
 
         }
@@ -78,8 +79,12 @@ namespace Buttons
         void MessageCallBack(IAsyncResult aResult)
         {
             Console.WriteLine("Message received");
+            byte[] buffer = new byte[1500];
+            int size = 0;
 
-            int size = sck.EndReceiveFrom(aResult, ref epRemote);
+            size = sck.EndReceiveFrom(aResult, ref epRemote);
+
+
             if (size > 0)
             {
                 byte[] receivedData = new Byte[1464];
@@ -90,7 +95,7 @@ namespace Buttons
                 Console.WriteLine("received message:" + receivedMessage);
             }
 
-            byte[] buffer = new byte[1500];
+
             sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(MessageCallBack), buffer);
         }
 
@@ -102,6 +107,18 @@ namespace Buttons
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))
                 sendMessage("Hello");
+            /*byte[] buffer = new byte[100];
+
+            int size = sck.Receive(buffer);
+
+            if(size > 0)
+            {
+                ASCIIEncoding eEncpding = new ASCIIEncoding();
+                string receivedMessage = eEncpding.GetString(buffer);
+                Console.WriteLine("received message:" + receivedMessage);
+            }
+            */
+
         }
         public void Draw(GameTime gameTime) { }
         public void Initialize() { }
