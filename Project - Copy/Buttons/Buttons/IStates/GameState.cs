@@ -228,6 +228,8 @@ namespace Buttons
                 
             }
             oldKs = ks;
+
+
             foreach (Keypoint k in keypoints)
             {
                 k.TheCamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                              //Correcting Camera location problems

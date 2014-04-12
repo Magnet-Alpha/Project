@@ -25,7 +25,7 @@ namespace Buttons
         EndPoint epLocal, epRemote;
         SpriteFont font;
         string localIp, remoteIp = "192.168.137.2";
-        int localPort = 80, remotePort = 81;
+        int localPort = 80, remotePort = 80;
 
         public MultiplayerState(Game1 game)
         {
@@ -104,10 +104,12 @@ namespace Buttons
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
+                sck.Close();
                 game.gameState = new MenuState(game);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))
                 sendMessage("Hello");
+
             /*byte[] buffer = new byte[100];
 
             int size = sck.Receive(buffer);
