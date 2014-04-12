@@ -34,30 +34,30 @@ namespace Buttons
 
             // menu options
             Text musicLevelText;
-            musicLevelText.textValue = "Music :";
+            musicLevelText.textValue = Strings.stringForKey("Music");
             musicLevelText.location = new Vector2(game.width / 2 - (int)font.MeasureString(musicLevelText.textValue).X - 20, 50);
             musicLevelText.font = font;
             Text soundEffectText;
-            soundEffectText.textValue = "Sound Effects :";
+            soundEffectText.textValue = Strings.stringForKey("SoundEffects");
             soundEffectText.location = new Vector2(game.width / 2 - (int)font.MeasureString(soundEffectText.textValue).X - 20, 10 + musicLevelText.location.Y
                                                                                             + (int)font.MeasureString(musicLevelText.textValue).Y);
             soundEffectText.font = font;
             Text languageText;
-            languageText.textValue = "";
+            languageText.textValue = Strings.stringForKey("Language");
             languageText.location = new Vector2(game.width / 2 - (int)font.MeasureString(languageText.textValue).X - 20, 10 + soundEffectText.location.Y
                                                                                             + (int)font.MeasureString(languageText.textValue).Y);
             languageText.font = font;
 
-            TextButton backToMainMenuButton = new TextButton(font, game, "Back", new Vector2(20, game.height - 80));
+            TextButton backToMainMenuButton = new TextButton(font, game, Strings.stringForKey("Back"), new Vector2(20, game.height - 80));
 
-            Text fullScreenText = new Text("", new Vector2(game.width / 2 - (int)font.MeasureString("Full Screen :").X - 20, 10 + languageText.location.Y
+            Text fullScreenText = new Text(Strings.stringForKey("Fullscreen"), new Vector2(game.width / 2 - (int)font.MeasureString("Full Screen :").X - 20, 10 + languageText.location.Y
                                                                                              + (int)font.MeasureString(languageText.textValue).Y), font);
 
-            TextButton englishButton = new TextButton(font, game, "", new Vector2(languageText.location.X + (int)font.MeasureString(languageText.textValue).X + font.MeasureString("English").X - 50, languageText.location.Y));
-            TextButton frenchButton = new TextButton(font, game, "", new Vector2(englishButton.right + 50, languageText.location.Y));
+            TextButton englishButton = new TextButton(font, game, Strings.stringForKey("English"), new Vector2(languageText.location.X + (int)font.MeasureString(languageText.textValue).X + font.MeasureString("English").X - 50, languageText.location.Y));
+            TextButton frenchButton = new TextButton(font, game, Strings.stringForKey("French"), new Vector2(englishButton.right + 50, languageText.location.Y));
 
-            TextButton toFS = new TextButton(font, game, "", new Vector2((englishButton.left + englishButton.right) / 2, fullScreenText.location.Y));
-            TextButton toNS = new TextButton(font, game, "", new Vector2((frenchButton.left + frenchButton.right) / 2, fullScreenText.location.Y));
+            TextButton toFS = new TextButton(font, game, Strings.stringForKey("On"), new Vector2((englishButton.left + englishButton.right) / 2, fullScreenText.location.Y));
+            TextButton toNS = new TextButton(font, game, Strings.stringForKey("Off"), new Vector2((frenchButton.left + frenchButton.right) / 2, fullScreenText.location.Y));
 
 
             TextButton userNameButton = new TextButton(font, game, "", new Vector2(game.width / 2 - font.MeasureString("Username :").X - 20, fullScreenText.location.Y + font.MeasureString(fullScreenText.textValue).Y + 10));
@@ -80,6 +80,8 @@ namespace Buttons
 
         public void Update(GameTime gameTime)
         {
+
+            optionsMenu.Update();
             // Sound Buttons
             // effects -
             if (optionsMenu.buttonWithIndexPressed(1))
@@ -121,7 +123,22 @@ namespace Buttons
                 game.settings.musicVolume = game.music.Volume;
                 while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
             }
-            /*
+            // laguange : english
+            if (optionsMenu.buttonWithIndexPressed(5))
+            {
+                Strings.Language = Language.English;
+                game.settings.language = Language.English;
+                LoadContent();
+                while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
+            }
+            if (optionsMenu.buttonWithIndexPressed(6))
+            {
+                Strings.Language = Language.French;
+                game.settings.language = Language.French;
+                LoadContent();
+                while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
+            }
+
             // full screen on
             if (optionsMenu.buttonWithIndexPressed(7) && !game.graphics.IsFullScreen)
             {
@@ -144,7 +161,7 @@ namespace Buttons
                 game.graphics.ApplyChanges();
                 previousState.Window_ClientSizeChanged();
                 
-            }*/
+            }
             // Back
             if (optionsMenu.buttonWithIndexPressed(0))
             {
@@ -155,14 +172,15 @@ namespace Buttons
         public void Draw(GameTime gameTime)
         {
             optionsMenu.Draw();
+            for (int i = 0; i < optionsMenu.buttons.Length; i++)
+                optionsMenu.buttons[i].Draw();
+
 
             game.spriteBatch.DrawString(font, LevelString((int)(game.music.Volume * 10)), new Vector2(optionsMenu.buttons[3].textLocation.X + 60, optionsMenu.buttons[3].textLocation.Y), Color.White);
             game.spriteBatch.DrawString(font, LevelString((int)(game.settings.SoundEffectVolume * 10)), new Vector2(optionsMenu.buttons[1].textLocation.X + 60, optionsMenu.buttons[1].textLocation.Y), Color.White);
             Console.WriteLine(game.settings.SoundEffectVolume);
 
-            /*String copyright = "Copyright GeekHub@Epita 2018";
-            Vector2 vector = new Vector2(game.width - font.MeasureString(copyright).X - 10, game.height - font.MeasureString(copyright).Y);
-            game.spriteBatch.DrawString(font, copyright, vector, Color.White);*/
+            
         }
         public void Initialize() { }
 

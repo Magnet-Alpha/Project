@@ -40,6 +40,7 @@ namespace Buttons
             graphics.PreferredBackBufferHeight = 600; 
             music.IsLooped = true;
             settings = new UserSetting();
+            Strings.Language = settings.language;
             Console.WriteLine(settings.musicVolume + " " + settings.SoundEffectVolume);
             graphics.IsFullScreen = settings.fullScreen;
             graphics.ApplyChanges();

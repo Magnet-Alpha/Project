@@ -71,12 +71,12 @@ namespace Buttons
             gap = (int)font.MeasureString("L").Y;
             //menu general
             
-            continueButton = new TextButton(font, game, "Multiplayer", new Vector2(game.width /20 , game.height/2 - gap/2));
+            continueButton = new TextButton(font, game, Strings.stringForKey("Multiplayer"), new Vector2(game.width /20 , game.height/2 - gap/2));
 
-            newGameButton = new TextButton(font, game, "New Game", new Vector2(game.width / 27, continueButton.top - gap));
-            optionsButton = new TextButton(font, game, "Options", new Vector2(game.width /16 , game.height/2 + gap/2));
+            newGameButton = new TextButton(font, game, Strings.stringForKey("NewGame"), new Vector2(game.width / 27, continueButton.top - gap));
+            optionsButton = new TextButton(font, game, Strings.stringForKey("Options"), new Vector2(game.width /16 , game.height/2 + gap/2));
             websiteButton = new TextButton(font, game, "GeekHub", new Vector2(game.width / 12, optionsButton.bottom + gap - (int)font.MeasureString("GeekHub").Y));
-            exitButton = new TextButton(font, game, "Exit", new Vector2(game.width / 10, websiteButton.bottom + gap - (int) font.MeasureString("Exit").Y));
+            exitButton = new TextButton(font, game, Strings.stringForKey("Exit"), new Vector2(game.width / 10, websiteButton.bottom + gap - (int) font.MeasureString("Exit").Y));
             
 
             mainMenu = new InterfaceMenu(new TextButton[] { newGameButton, continueButton, optionsButton, exitButton, websiteButton }, new Text[] { }, background, game);

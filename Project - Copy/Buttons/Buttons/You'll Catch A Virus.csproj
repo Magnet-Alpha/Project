@@ -161,6 +161,12 @@
     <Compile Include="Utilities&amp;Stuff\UserSetting.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="English.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="French.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Utilities&amp;Stuff\logo.ico" />
     <Content Include="Utilities&amp;Stuff\lol.ico" />
     <Content Include="Utilities&amp;Stuff\GameThumbnail.png" />
@@ -203,7 +209,7 @@
     <None Include="You%27ll Catch A Virus_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Utilities&amp;Stuff\preferences.txt">
+    <Content Include="preferences.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -11,6 +11,7 @@ namespace Buttons
         public bool fullScreen;
         public float musicVolume;
         float soundEffectVolume;
+        public Language language;
 
         public UserSetting()
         {
@@ -18,6 +19,7 @@ namespace Buttons
             readFullScreen();
             readMusicVolume();
             readSoundEffectVolume();
+            readLanguage();
         }
 
         public float SoundEffectVolume
@@ -48,7 +50,35 @@ namespace Buttons
             fullScreen = preferences[0] == 't';
             reader.Close();
         }
+        void readLanguage()
+        {
+            StreamReader reader = new StreamReader("preferences.txt");
+            string preferences;
+            do
+            {
+                preferences = reader.ReadLine();
+            } while (!preferences.Contains("language"));
 
+            while (preferences[0] != '\"')
+            {
+                preferences = preferences.Substring(1);
+            }
+            preferences = preferences.Substring(1,preferences.Length - 2);
+            switch (preferences)
+            {
+                case "English" :
+                    language = Language.English;
+                    break;
+                case "French" :
+                    language = Language.French;
+                    break;
+                default :
+                    throw new Exception("Language " + preferences + " is invalid.");
+                    
+            }
+            reader.Close();
+            Strings.Language = language;
+        }
         void readMusicVolume()
         {
             StreamReader reader = new StreamReader("preferences.txt");
@@ -102,6 +132,7 @@ namespace Buttons
             string fs = "fullScreen = \"" + fullScreen + "\"";
             string musicV = "musicVolume = \"" + musicVolume + "\"";
             string effectV = "soundEffectVolume = \"" + soundEffectVolume + "\"";
+            string lang = "language = \"" + language.ToString() + "\"";
 
             System.IO.File.WriteAllLines(@"preferences.txt", new string[3]{fs, musicV, effectV});
 
@@ -112,8 +143,10 @@ namespace Buttons
             musicVolume = 0.5f;
             soundEffectVolume = 0.5f;
             fullScreen = false;
+            language = Language.English;
             saveSettings();
-        }
+            Strings.Language = Language.English;
+         }
     
 
 

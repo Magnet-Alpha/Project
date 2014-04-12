@@ -1,3 +1,0 @@
-fullScreen = "false"
-musicVolume = "0,0"
-soundEffectVolume = "0,4"

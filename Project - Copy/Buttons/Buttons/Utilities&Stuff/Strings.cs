@@ -14,11 +14,20 @@ namespace Buttons
 
     static class Strings
     {
-        public static Language language;
+        static Language language;
         static string file;
 
+        static public Language Language
+        {
+            get { return language; }
+            set
+            {
+                language = value;
+                file = value.ToString() + ".txt";
+            }
+        }
 
-        public string stringForKey(string key)
+        public static string stringForKey(string key)
         {
             StreamReader reader = new StreamReader(file);
             string str;
@@ -35,7 +44,7 @@ namespace Buttons
             
             reader.Close();
 
-            return str;
+            return str.Substring(0, str.Length - 1);
         }
 
 
