@@ -27,7 +27,7 @@ namespace Buttons
 
         public Projectile(Vector2 position, CustomSpriteBatch sb, Vector2 futpos, ContentManager content, Virus target, int speed, int attack)
         {
-            this.position = new Vector2(position.X - 16 * (float)Math.Cos(Math.Atan2(direction.Y, direction.X)), position.Y - 8 * (float)Math.Sin(Math.Atan2(direction.Y, direction.X)));
+            this.position = new Vector2(position.X + (float)(16 * (Math.Cos(Math.Atan2(direction.Y, direction.X)) - 1)), position.Y + (float)(16 * (Math.Sin(Math.Atan2(direction.Y, direction.X)) - 1)));
             this.sb = sb;
             this.futpos = futpos;
             this.direction = new Vector2((futpos.X - position.X), (futpos.Y - position.Y));
@@ -52,7 +52,7 @@ namespace Buttons
 
         public void Destruction()
         {
-            if (this.life == 30)
+            if (this.life == 22)
             {
                 target.Hp = target.Hp - this.attack;
                 this.isalive = false;
@@ -61,7 +61,7 @@ namespace Buttons
 
         public void Draw(float w, float h)
         {
-            sb.Draw(imgs[0], new Rectangle((int)this.position.X, (int)this.position.Y, 32 * (int)w, 32 * (int)h), new Rectangle(0, 18, 292, 195), Color.White, (float)Math.Atan2(direction.Y, direction.X) - 3*(float)Math.PI/4, new Vector2(0, 0), SpriteEffects.None, 0);
+            sb.Draw(imgs[0], new Rectangle((int)this.position.X , (int)this.position.Y, 32 * (int)w, 32 * (int)h), new Rectangle(0, 18, 292, 195), Color.White, (float)Math.Atan2(direction.Y, direction.X) - 3*(float)Math.PI/4, new Vector2(0, 0), SpriteEffects.None, 0);
         }
     }
 }
