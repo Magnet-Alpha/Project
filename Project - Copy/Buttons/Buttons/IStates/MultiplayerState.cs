@@ -14,6 +14,9 @@ using System.Net.Sockets;
 using System.Diagnostics;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Runtime;
+
+
 
 
 namespace Buttons
@@ -27,6 +30,7 @@ namespace Buttons
         string localIp, remoteIp = "192.168.137.2";
         int localPort = 80, remotePort = 80;
         KeyboardState olKS = new KeyboardState();
+        byte[] buffer;
 
         public MultiplayerState(Game1 game)
         {
@@ -35,8 +39,7 @@ namespace Buttons
             sck.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             localIp = GetLocalIP();
             remoteIp = localIp;
-            epLocal = new IPEndPoint(IPAddress.Any, localPort);
-            epRemote = new IPEndPoint(IPAddress.Parse(remoteIp), remotePort);
+           
             //Console.WriteLine(localIp);
             connect();
             //sendMessage("Hello");
@@ -55,11 +58,14 @@ namespace Buttons
 
         void connect()
         {
+            epLocal = new IPEndPoint(IPAddress.Any, localPort);
+            epRemote = new IPEndPoint(IPAddress.Parse(remoteIp), remotePort);
             sck.Bind(epLocal);
 
             sck.Connect(epRemote);
+            
 
-            byte[] buffer = new byte[1500];
+            buffer = new byte[1500];
             sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(MessageCallBack), buffer);
 
             //Console.WriteLine("Connected to " + remoteIp);
@@ -86,10 +92,6 @@ namespace Buttons
         {
             Console.WriteLine("Message received");
 
-            byte[] buffer = new byte[1500];
-
-            epRemote = new IPEndPoint(IPAddress.Parse(remoteIp), remotePort);
-
             int size = sck.EndReceiveFrom(aResult, ref epRemote);
 
 
@@ -103,26 +105,21 @@ namespace Buttons
                 Console.WriteLine("received message:" + receivedMessage);
             }
 
-
+            
             sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(MessageCallBack), buffer);
         }
 
         public void Update(GameTime gameTime)
         {
-            
+
             KeyboardState ks = Keyboard.GetState();
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
-
-
-                //sck.EndReceiveFrom(, ref epRemote);
-                game.gameState = new MenuState(game);
+                ChangeState(new MenuState(game));
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) && olKS.IsKeyUp(Keys.Enter))
             {
                 sendMessage("Hello");
-                byte[] buffer = new byte[1500];
-                sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(MessageCallBack), buffer);
             }
             olKS = ks;
 
@@ -130,7 +127,12 @@ namespace Buttons
         public void Draw(GameTime gameTime) { }
         public void Initialize() { }
         public void LoadContent() { }
-        public void ChangeState(IState state) { }
+        public void ChangeState(IState state)
+        {
+
+            sck.Close();
+            game.gameState = state;
+        }
         public void Window_ClientSizeChanged() { }
 
     }

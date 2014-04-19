@@ -25,7 +25,7 @@ namespace Buttons
         bool clickable = true;
         SoundEffectInstance click;
         SoundEffectInstance mouseOver;
-
+        public Color color = Color.White;
 
         public TextButton(SpriteFont font, Game1 game, string t, Vector2 textLoc)
         {
@@ -162,7 +162,7 @@ namespace Buttons
 
             if (!textRectangle.Contains(new Point(mouse.X, mouse.Y)))
             {
-                color = Color.White;
+                color = this.color;
             }
             else
             {

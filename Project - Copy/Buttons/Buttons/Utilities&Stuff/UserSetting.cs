@@ -12,6 +12,8 @@ namespace Buttons
         public float musicVolume;
         float soundEffectVolume;
         public Language language;
+        List<HighScore> scores;
+
 
         public UserSetting()
         {
@@ -20,16 +22,37 @@ namespace Buttons
             readMusicVolume();
             readSoundEffectVolume();
             readLanguage();
+            readHighScores();
+        }
+
+
+        public List<HighScore> Scores
+        {
+            get { return scores; }
+        }
+
+        public void addScore(HighScore score)
+        {
+            if(scores.Count > 10)
+                return;
+
+            int i = 0;
+            while (scores[i].score > score.score)
+            {
+                i++;
+            }
+            scores.Insert(i, score);
         }
 
         public float SoundEffectVolume
-        { 
-         get{return soundEffectVolume; }
-         set { 
-            if (value > 1 || value < 0)
-                throw new Exception();
-    
-            soundEffectVolume = value;
+        {
+            get { return soundEffectVolume; }
+            set
+            {
+                if (value > 1 || value < 0)
+                    throw new Exception();
+
+                soundEffectVolume = value;
             }
         }
 
@@ -63,18 +86,18 @@ namespace Buttons
             {
                 preferences = preferences.Substring(1);
             }
-            preferences = preferences.Substring(1,preferences.Length - 2);
+            preferences = preferences.Substring(1, preferences.Length - 2);
             switch (preferences)
             {
-                case "English" :
+                case "English":
                     language = Language.English;
                     break;
-                case "French" :
+                case "French":
                     language = Language.French;
                     break;
-                default :
+                default:
                     throw new Exception("Language " + preferences + " is invalid.");
-                    
+
             }
             reader.Close();
             Strings.Language = language;
@@ -99,8 +122,41 @@ namespace Buttons
                     volume += c;
             }
 
-            musicVolume = (float)Convert.ToDouble(volume);
+            volume = volume.Replace(',', '.');
+
+            try
+            {
+
+                soundEffectVolume = (float)Convert.ToDouble(volume);
+            }
+            catch
+            {
+
+                soundEffectVolume = (float)Convert.ToDouble(volume.Replace(".", ","));
+
+            }
             reader.Close();
+        }
+
+        void readHighScores()
+        {
+            scores = new List<HighScore>();
+            string file = "scores.txt";
+            StreamReader reader = new StreamReader(file);
+            while (!reader.EndOfStream)
+            {
+                string currentScore = reader.ReadLine();
+                string name = "";
+                int i;
+                for (i = 0; currentScore[i] != ' '; i++)
+                {
+                    name += currentScore[i];
+                }
+                scores.Add(new HighScore(name, Convert.ToInt64(currentScore.Substring(i + 1))));
+            }
+            reader.Close();
+            foreach (HighScore score in scores)
+                Console.WriteLine(score.name + " : " + score.score);
         }
 
         void readSoundEffectVolume()
@@ -123,7 +179,19 @@ namespace Buttons
                     volume += c;
             }
 
-            soundEffectVolume = (float)Convert.ToDouble(volume);
+            volume = volume.Replace(',', '.');
+
+            try
+            {
+                
+                soundEffectVolume = (float)Convert.ToDouble(volume);
+            }
+            catch
+            {
+
+                soundEffectVolume = (float)Convert.ToDouble(volume.Replace(".", ","));
+
+            }
             reader.Close();
         }
 
@@ -134,7 +202,7 @@ namespace Buttons
             string effectV = "soundEffectVolume = \"" + soundEffectVolume + "\"";
             string lang = "language = \"" + language.ToString() + "\"";
 
-            System.IO.File.WriteAllLines(@"preferences.txt", new string[3]{fs, musicV, effectV});
+            System.IO.File.WriteAllLines(@"preferences.txt", new string[3] { fs, musicV, effectV });
 
         }
 
@@ -146,8 +214,19 @@ namespace Buttons
             language = Language.English;
             saveSettings();
             Strings.Language = Language.English;
-         }
-    
+        }
+
+        public void saveHighScores()
+        {
+            StreamWriter writer = new StreamWriter("scores.txt");
+            foreach (HighScore highScore in scores)
+            {
+                string line = highScore.name + " " + highScore.score;
+                writer.WriteLine(line);
+            }
+            writer.Close();
+        }
+
 
 
     }

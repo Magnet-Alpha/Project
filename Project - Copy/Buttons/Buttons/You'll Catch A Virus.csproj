@@ -149,6 +149,7 @@
     <Compile Include="Menus-Buttons\Screen.cs" />
     <Compile Include="Menus-Buttons\InterfaceMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities&amp;Stuff\HighScore.cs" />
     <Compile Include="Utilities&amp;Stuff\Program.cs" />
     <Compile Include="Utilities&amp;Stuff\Game1.cs" />
     <Compile Include="Utilities&amp;Stuff\Strings.cs" />
@@ -165,6 +166,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="French.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="scores.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Utilities&amp;Stuff\logo.ico" />
