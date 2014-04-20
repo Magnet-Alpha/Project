@@ -123,6 +123,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IStates\MultiplayerState2.cs" />
     <Compile Include="Units\Coordonnees.cs" />
     <Compile Include="IStates\CreditState.cs" />
     <Compile Include="IStates\IntroState.cs" />

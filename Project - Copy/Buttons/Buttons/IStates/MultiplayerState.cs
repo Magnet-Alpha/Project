@@ -27,10 +27,11 @@ namespace Buttons
         Socket sck;
         EndPoint epLocal, epRemote;
         SpriteFont font;
-        string localIp, remoteIp = "192.168.137.2";
-        int localPort = 80, remotePort = 80;
+        string localIp, remoteIp = "192.168.1.8";
+        int localPort = 1580, remotePort = 1581;
         KeyboardState olKS = new KeyboardState();
         byte[] buffer;
+        bool dc = false;
 
         public MultiplayerState(Game1 game)
         {
@@ -39,7 +40,7 @@ namespace Buttons
             sck.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             localIp = GetLocalIP();
             remoteIp = localIp;
-           
+            remotePort = localPort;
             //Console.WriteLine(localIp);
             connect();
             //sendMessage("Hello");
@@ -58,6 +59,9 @@ namespace Buttons
 
         void connect()
         {
+            if (dc)
+                return;
+
             epLocal = new IPEndPoint(IPAddress.Any, localPort);
             epRemote = new IPEndPoint(IPAddress.Parse(remoteIp), remotePort);
             sck.Bind(epLocal);
@@ -74,22 +78,20 @@ namespace Buttons
 
         void sendMessage(string str)
         {
+            if (dc)
+                return;
 
-            //Console.WriteLine("Sending");
             System.Text.ASCIIEncoding enc = new ASCIIEncoding();
             byte[] msg = new byte[8000];
             msg = enc.GetBytes(str);
-
             sck.Send(msg);
-
-
-            //Console.WriteLine(e.ToString());
-
-
         }
 
         void MessageCallBack(IAsyncResult aResult)
         {
+            if (dc)
+                return;
+
             Console.WriteLine("Message received");
 
             int size = sck.EndReceiveFrom(aResult, ref epRemote);
@@ -129,7 +131,7 @@ namespace Buttons
         public void LoadContent() { }
         public void ChangeState(IState state)
         {
-
+            dc = true;
             sck.Close();
             game.gameState = state;
         }
