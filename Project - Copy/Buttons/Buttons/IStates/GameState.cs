@@ -51,6 +51,9 @@ namespace Buttons
         ImageButton firstbut;
         ImageButton secondbut;
         ImageButton backmenu;
+        public int gold;
+        public int income;
+        public int life;
         InterfaceInGame Interface;
         private int screenHeight;
         private int screenWidth;
@@ -85,22 +88,22 @@ namespace Buttons
             //Menu Interface and image buttons
             font = game.Content.Load<SpriteFont>("Font");
             
-            int gold = 0;
+            gold = 100;
             Text goldText;
             goldText.textValue = "Gold : " + gold;
-            goldText.location = new Vector2(game.width / 2 + game.width / 10, game.height - game.height / 8);
+            goldText.location = new Vector2(game.width / 15, game.height - 110);
             goldText.font = font;
 
-            int income = 0;
+            income = 10;
             Text incomeText;
             incomeText.textValue = "Income : " + income;
-            incomeText.location = new Vector2(game.width / 3, game.height - game.height / 8);
+            incomeText.location = new Vector2(game.width / 15, game.height - 70);
             incomeText.font = font;
 
-            int life = 0;
+            life = 25;
             Text lifeText;
             lifeText.textValue = "Life : " + life;
-            lifeText.location = new Vector2(game.width / 6, game.height - game.height / 8);
+            lifeText.location = new Vector2(game.width / 15, game.height - 30);
             lifeText.font = font;
 
             Texture2D textureimg;
@@ -111,8 +114,9 @@ namespace Buttons
             background = game.Content.Load<Texture2D>("testbackground");
             Texture2D menu;
             menu = game.Content.Load<Texture2D>("menu");
-            firstbut = new ImageButton(game.spriteBatch, textureimg, new Rectangle(game.width - game.width / 12 + game.width / 60, game.width / 60, game.width / 30, game.width / 30), game);
-            secondbut = new ImageButton(game.spriteBatch, textureimg2, new Rectangle(game.width - game.width / 12 + game.width / 60, firstbut.bottom + game.width / 60, game.width / 30, game.width / 30), game);
+
+            firstbut = new ImageButton(game.spriteBatch, textureimg, new Rectangle(game.width - 800 / 12 + 12, game.width / 60, game.width / 30, game.width / 30), game);
+            secondbut = new ImageButton(game.spriteBatch, textureimg2, new Rectangle(game.width - 800 / 12 + 12, firstbut.bottom + game.width / 60, game.width / 30, game.width / 30), game);
             backmenu = new ImageButton(game.spriteBatch, menu, new Rectangle(firstbut.left, game.height - menu.Height, game.width / 30, game.width / 30), game);
             Interface = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu}, game, new Text[3] { goldText, incomeText, lifeText }, background, game.spriteBatch);
             Interface.menuOn = true;
@@ -240,6 +244,8 @@ namespace Buttons
                 v.NewPosition(new Vector2(game.widthFactor, game.heightFactor));                                                                //Virus moving
                 v.Turn(keypoints);                                           //Virus turning and dying at objective
                 v.Death();
+                if (v.Hp <= 0)
+                    gold = gold + 2;
             }
             int m = 0;
             while (m < virus.Count)
@@ -315,6 +321,7 @@ namespace Buttons
                         Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, new Vector2(x * (64 * game.widthFactor) - 16 * game.widthFactor - Camera.Location.X * game.widthFactor, y * (32 * game.heightFactor) -72 * game.heightFactor - Camera.Location.Y * game.heightFactor), choice.range, game.Content, game.spriteBatch, Etat.Alive);
                         tower.Add(create);
                         towers[x, 2 * y - 1] = create;
+                        gold = gold - 10;
                     }
                 }
             }
@@ -325,6 +332,7 @@ namespace Buttons
 
 
             oldMouse = mouse;
+            LoadContent();
 
         }
 
@@ -463,14 +471,8 @@ namespace Buttons
 
         public void Window_ClientSizeChanged()
         {
-            
-            Interface.buttons[0].Location((13 * game.width / 16) + 7, 1);
-            Interface.buttons[1].Location(Interface.buttons[0].ImgRectangle.X + 7 + Interface.buttons[0].Img.Width, 1);
-            Interface.buttons[2].Location(game.width - Interface.buttons[2].Img.Width, game.height - Interface.buttons[2].Img.Height * 3);
-            Interface.texts[0].location = new Vector2 (3 * game.width / 32, 1);
-            Interface.texts[1].location = new Vector2 (13 * game.width / 32, 1);
-            Interface.texts[2].location = new Vector2(24 * game.width / 32, 1);
-            
+            LoadContent();
+
             foreach (Virus v in virus)
             {
                 v.TheFullscreen(game.widthFactor, game.heightFactor);                                                                  //Adapt Fullscreen
