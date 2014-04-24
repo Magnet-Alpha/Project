@@ -90,19 +90,19 @@ namespace Buttons
             
             gold = 100;
             Text goldText;
-            goldText.textValue = "Gold : " + gold;
+            goldText.textValue = Strings.stringForKey("Gold") + " : " + gold;
             goldText.location = new Vector2(game.width / 15, game.height - 110);
             goldText.font = font;
 
             income = 10;
             Text incomeText;
-            incomeText.textValue = "Income : " + income;
+            incomeText.textValue = Strings.stringForKey("Income") + " : " + income;
             incomeText.location = new Vector2(game.width / 15, game.height - 70);
             incomeText.font = font;
 
             life = 25;
             Text lifeText;
-            lifeText.textValue = "Life : " + life;
+            lifeText.textValue = Strings.stringForKey("Life") + " : " + life;
             lifeText.location = new Vector2(game.width / 15, game.height - 30);
             lifeText.font = font;
 
@@ -332,8 +332,6 @@ namespace Buttons
 
 
             oldMouse = mouse;
-            LoadContent();
-
         }
 
       
@@ -472,6 +470,9 @@ namespace Buttons
         public void Window_ClientSizeChanged()
         {
             LoadContent();
+            firstbut.TheFullscreen(Convert.ToInt32(game.widthFactor) / screenWidth, Convert.ToInt32(game.heightFactor) / screenHeight);
+            secondbut.TheFullscreen(Convert.ToInt32(game.widthFactor) / screenWidth, Convert.ToInt32(game.heightFactor) / screenHeight);
+            backmenu.TheFullscreen(Convert.ToInt32(game.widthFactor) / screenWidth, Convert.ToInt32(game.heightFactor) / screenHeight);
 
             foreach (Virus v in virus)
             {

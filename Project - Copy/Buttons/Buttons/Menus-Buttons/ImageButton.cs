@@ -159,5 +159,10 @@ namespace Buttons
             
             game.spriteBatch.Draw(img, ImgRectangle, null, color, rotation, spriteOrigin, spriteEffects, spriteLayer);
         }
+        
+        public void TheFullscreen(int w, int h)
+        {
+            this.ImgLocation = new Rectangle(this.ImgLocation.X * w, this.ImgLocation.Y * h, img.Width, img.Height);
+        }
     }
 }
