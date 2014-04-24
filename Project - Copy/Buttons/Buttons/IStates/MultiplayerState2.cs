@@ -24,8 +24,8 @@ namespace Buttons
     public class MultiplayerState2 : IState
     {
         Game1 game;
-        TcpListener tcpListener;
-        TcpClient tcpClient;
+        TcpListener server;
+        TcpClient client;
         EndPoint epLocal, epRemote;
         SpriteFont font;
         string localIp, remoteIp = "192.168.1.8";
@@ -43,21 +43,24 @@ namespace Buttons
             remoteIp = localIp;
             remotePort = localPort;
 
-            tcpListener = new TcpListener(IPAddress.Any, localPort);
-            tcpListener.Start();
+
+            server = new TcpListener(IPAddress.Parse(localIp), localPort);
             
+            
+            server.Start();
+
             networkingThread = new Thread(getData);
-
-            tcpClient = new TcpClient(remoteIp, remotePort);
             networkingThread.Start();
-
-
+            client = new TcpClient(remoteIp, remotePort);
             
-
-
-            //Console.WriteLine(localIp);
             
-            //sendMessage("Hello");
+        }
+
+        void acceptClient(IAsyncResult aResult)
+        {
+            client = ((TcpListener)aResult.AsyncState).EndAcceptTcpClient(aResult);
+            Console.WriteLine("Connection accepted");
+            networkingThread.Start();
         }
 
         private string GetLocalIP()
@@ -82,7 +85,7 @@ namespace Buttons
 
                 // Perform a blocking call to accept requests. 
                 // You could also user server.AcceptSocket() here.
-                TcpClient client = tcpListener.AcceptTcpClient();
+                TcpClient client = server.AcceptTcpClient();
                 Console.WriteLine("Connected!");
 
                 data = null;
@@ -100,13 +103,14 @@ namespace Buttons
                     Console.WriteLine("Received: {0}", data);
 
                     // Process the data sent by the client.
-                    
 
-                    
+
+
                 }
 
-               
-                
+
+
+
             }
         }
 
@@ -116,7 +120,7 @@ namespace Buttons
             if (dc)
                 return;
 
-            // Create a TcpClient. 
+            // Create a client. 
             // Note, for this client to work you need to have a TcpServer  
             // connected to the same address as specified by the server, port 
             // combination.
@@ -129,17 +133,17 @@ namespace Buttons
             // Get a client stream for reading and writing. 
             //  Stream stream = client.GetStream();
 
-            NetworkStream stream = tcpClient.GetStream();
+            NetworkStream stream = client.GetStream();
 
             // Send the message to the connected TcpServer. 
             stream.Write(data, 0, data.Length);
 
             Console.WriteLine("Sent: {0}", message);
 
-            
-           
 
-            
+
+
+
 
 
         }
@@ -166,7 +170,9 @@ namespace Buttons
         public void ChangeState(IState state)
         {
             dc = true;
-            tcpClient.Close();
+            networkingThread.Abort();
+            client.Close();
+            server.Stop();
             game.gameState = state;
         }
         public void Window_ClientSizeChanged() { }
