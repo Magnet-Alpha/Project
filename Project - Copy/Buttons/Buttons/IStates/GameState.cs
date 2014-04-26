@@ -285,9 +285,9 @@ namespace Buttons
             if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released && choosing && mouse.X < game.width - game.width / 12 && mouse.Y > 0 && mouse.X > 0 && mouse.Y < game.height - game.height / 5 && gold >= choice.cout)
             {
                 float zx = (mouse.X + Camera.Location.X) % (64 * game.widthFactor);
-                float zy = (mouse.Y + Camera.Location.Y - 16) % (32 * game.heightFactor);
+                float zy = (mouse.Y + Camera.Location.Y - 16 * game.heightFactor) % (32 * game.heightFactor);
                 int x = (int)((mouse.X + Camera.Location.X) / (64 * game.widthFactor));
-                int y = (int)((mouse.Y + Camera.Location.Y + 16) / (32 * game.heightFactor));
+                int y = (int)((mouse.Y + Camera.Location.Y + 16 * game.heightFactor) / (32 * game.heightFactor));
                 if (towers[x, 2*y] == null && TheMap(zx, zy))
                 {
                     Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout,
@@ -515,7 +515,7 @@ namespace Buttons
                 else
                     return false;
             }
-            else if (x < 32 && y <= 16)
+            else if (x < 32 && y >= 16)
             {
                 if (x >= y - 16)
                     return true;

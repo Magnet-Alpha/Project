@@ -37,6 +37,7 @@ namespace Buttons
         protected Etat etat;
         protected List<Texture2D> imgs = new List<Texture2D>();
         protected int img;
+        public Vector2 Coordinate { get; set; }
         public virtual Etat State                           //State of the unit (Walking/Attacking/Dead)
         { 
             get

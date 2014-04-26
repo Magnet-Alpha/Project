@@ -39,6 +39,7 @@ namespace Buttons
             imgs.Add(content.Load<Texture2D>("TestSprites\\test attack 1" + this.Name));
             imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
             lifebar = content.Load<Texture2D>("Sprites\\virus\\lifebar");
+            this.Coordinate = new Vector2((int)(this.Position.X - 16) / 64, (int)(this.Position.Y) / 32);
         }
         public void NewPosition(Vector2 E)
         {
@@ -105,6 +106,12 @@ namespace Buttons
         public void HUDDraw(float w, float h)
         {
             unitbatch.Draw(lifebar, new Rectangle((int)this.Position.X, (int)this.Position.Y + 36, 32 * (int)w, 4 * (int)h), new Rectangle((int)(8 - 8 * (float)this.Hp / this.maxhp) * 16, 0, 16, 4), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0);
+        }
+
+        public override void fuckingcamera(Vector2 L, Vector2 E)
+        {
+            base.fuckingcamera(L, E);
+            this.Coordinate = new Vector2((int)(this.Position.X - 16) / 64, (int)this.Position.Y / 32);
         }
     }
 }

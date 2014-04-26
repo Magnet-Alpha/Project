@@ -45,6 +45,7 @@ namespace Buttons
             this.exist = true;
             this.Hitbox = new Rectangle((int)position.X, (int)position.Y, 32, 64);
             this.cout = cout;
+            this.Coordinate = new Vector2((int)this.Position.X / 64, (int)(this.Position.Y + 64) / 32);
         }
 
         public Tower()
