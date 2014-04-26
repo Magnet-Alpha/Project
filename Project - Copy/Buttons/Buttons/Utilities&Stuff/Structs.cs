@@ -38,5 +38,6 @@ namespace Buttons
         public int attack;
         public int cooldown;
         public double range;
+        public int cout;
     }
  }

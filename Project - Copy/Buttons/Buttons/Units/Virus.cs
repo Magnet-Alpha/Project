@@ -45,11 +45,12 @@ namespace Buttons
             this.Position = this.Position + this.moving * (float)this.Speed * E;
             this.Center = new Vector2(this.Position.X + 16, this.Position.Y + 16);
         }
-        public void Death()
+        public void Death(ref int gold)
         {
             if (this.Hp <= 0)
             {
                 this.State = Etat.Dead;
+                gold += 2;
             }
         }
         public void Turn(List<Keypoint> keypoints)
@@ -99,6 +100,10 @@ namespace Buttons
                     break;
             }
             unitbatch.Draw(imgs[img], new Rectangle((int)this.Position.X, (int)this.Position.Y, 32 * (int)w , 32 * (int)h), new Rectangle(((int)x/30) * 132 , y*133, 132, 133), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0);
+        }
+
+        public void HUDDraw(float w, float h)
+        {
             unitbatch.Draw(lifebar, new Rectangle((int)this.Position.X, (int)this.Position.Y + 36, 32 * (int)w, 4 * (int)h), new Rectangle((int)(8 - 8 * (float)this.Hp / this.maxhp) * 16, 0, 16, 4), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0);
         }
     }

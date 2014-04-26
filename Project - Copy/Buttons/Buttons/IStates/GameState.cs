@@ -61,6 +61,7 @@ namespace Buttons
         MouseState oldMouse = Mouse.GetState();
         bool choosing;
         TType choice;
+        int timer;
         
         public GameState(Game1 game)
         {
@@ -152,6 +153,7 @@ namespace Buttons
             test14.Fill(ref towers);
             test15.Fill(ref towers);
             test16.Fill(ref towers);
+            timer = 0;
         }
 
 
@@ -208,10 +210,11 @@ namespace Buttons
 
             Interface.Update();
 
-            if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0))
+            if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0) || timer == 600)
             {
                 test = new Virus("b", 100, 10, 5, new Vector2( 176 -Camera.Location.X * game.widthFactor + difL.X, 126 -Camera.Location.Y * game.heightFactor + difL.Y), 1, game.Content, game.spriteBatch, Etat.Alive);
                 virus.Add(test);
+                timer = 0;
             }
             if (Interface.buttonWithIndexPressed(1))
             {
@@ -220,6 +223,7 @@ namespace Buttons
                 choice.attack = 10;
                 choice.cooldown = 20;
                 choice.range = 200;
+                choice.cout = 10;
             }
             //-----------------------------------------------------------------
 
@@ -243,9 +247,7 @@ namespace Buttons
                 v.fuckingcamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                          //Correcting Camera location problems
                 v.NewPosition(new Vector2(game.widthFactor, game.heightFactor));                                                                //Virus moving
                 v.Turn(keypoints);                                           //Virus turning and dying at objective
-                v.Death();
-                if (v.Hp <= 0)
-                    gold = gold + 2;
+                v.Death(ref gold);
             }
             int m = 0;
             while (m < virus.Count)
@@ -280,7 +282,7 @@ namespace Buttons
 
 
 
-            if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released && choosing && mouse.X < game.width - game.width / 12 && mouse.Y > 0 && mouse.X > 0 && mouse.Y < game.height - game.height / 5)
+            if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released && choosing && mouse.X < game.width - game.width / 12 && mouse.Y > 0 && mouse.X > 0 && mouse.Y < game.height - game.height / 5 && gold >= choice.cout)
             {
                 float zx = (mouse.X + Camera.Location.X) % (64 * game.widthFactor);
                 float zy = (mouse.Y + Camera.Location.Y - 16) % (32 * game.heightFactor);
@@ -288,7 +290,7 @@ namespace Buttons
                 int y = (int)((mouse.Y + Camera.Location.Y + 16) / (32 * game.heightFactor));
                 if (towers[x, 2*y] == null && TheMap(zx, zy))
                 {
-                    Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, 
+                    Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout,
                         new Vector2(x * (64 * game.widthFactor) + 16 * game.widthFactor - Camera.Location.X * game.widthFactor, 
                         y * (32 * game.heightFactor) - 56 * game.heightFactor - Camera.Location.Y * game.heightFactor),
                         choice.range, 
@@ -297,6 +299,7 @@ namespace Buttons
                         Etat.Alive);
                     tower.Add(create);
                     towers[x, 2*y] = create;
+                    gold -= create.cout;
                 }
                 else
                 {
@@ -318,10 +321,10 @@ namespace Buttons
                     }
                     if (y >= 1 && towers[x, 2 * y -1] == null)
                     {
-                        Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, new Vector2(x * (64 * game.widthFactor) - 16 * game.widthFactor - Camera.Location.X * game.widthFactor, y * (32 * game.heightFactor) -72 * game.heightFactor - Camera.Location.Y * game.heightFactor), choice.range, game.Content, game.spriteBatch, Etat.Alive);
+                        Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout, new Vector2(x * (64 * game.widthFactor) - 16 * game.widthFactor - Camera.Location.X * game.widthFactor, y * (32 * game.heightFactor) -72 * game.heightFactor - Camera.Location.Y * game.heightFactor), choice.range, game.Content, game.spriteBatch, Etat.Alive);
                         tower.Add(create);
                         towers[x, 2 * y - 1] = create;
-                        gold = gold - 10;
+                        gold -= create.cout;
                     }
                 }
             }
@@ -329,7 +332,7 @@ namespace Buttons
             if (mouse.RightButton == ButtonState.Pressed)
                 choosing = false;
 
-
+            timer++;
 
             oldMouse = mouse;
         }
@@ -350,6 +353,7 @@ namespace Buttons
             foreach (Virus v in virus)
             {
                 v.StateDraw(game.widthFactor, game.heightFactor);                                                                  //Draw all active viruses
+                v.HUDDraw(game.widthFactor, game.heightFactor);
             }
             foreach (Projectile p in projs)
             {
