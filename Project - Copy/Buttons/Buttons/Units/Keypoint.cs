@@ -34,7 +34,7 @@ namespace Buttons
 
         public void TheFullscreen(float w, float h)
         {
-            this.position = new Vector2(this.position.X * w, this.position.Y * h);
+            this.position = new Vector2((int)this.position.X * w, (int)this.position.Y * h);
         }
     }
 }
