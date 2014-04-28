@@ -55,14 +55,17 @@ namespace Buttons
         public int income;
         public int life;
         InterfaceInGame Interface;
+        InterfaceInGame Interface2;
         private int screenHeight;
         private int screenWidth;
         SpriteFont font;
+        SpriteFont fontGO;
         MouseState oldMouse = Mouse.GetState();
         bool choosing;
         TType choice;
         int timer;
-        
+        int timerInc;
+
         public GameState(Game1 game)
         {
             myMap = new TileMap(100,100);
@@ -88,6 +91,7 @@ namespace Buttons
         {
             //Menu Interface and image buttons
             font = game.Content.Load<SpriteFont>("Font");
+            fontGO = game.Content.Load<SpriteFont>("FontGO");
             
             gold = 100;
             Text goldText;
@@ -101,7 +105,7 @@ namespace Buttons
             incomeText.location = new Vector2(game.width / 15, game.height - 70);
             incomeText.font = font;
 
-            life = 25;
+            life = 10;
             Text lifeText;
             lifeText.textValue = Strings.stringForKey("Life") + " : " + life;
             lifeText.location = new Vector2(game.width / 15, game.height - 30);
@@ -121,6 +125,15 @@ namespace Buttons
             backmenu = new ImageButton(game.spriteBatch, menu, new Rectangle(firstbut.left, game.height - menu.Height, game.width / 30, game.width / 30), game);
             Interface = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu}, game, new Text[3] { goldText, incomeText, lifeText }, background, game.spriteBatch);
             Interface.menuOn = true;
+
+            Text GameOverText;
+            GameOverText.textValue = Strings.stringForKey("GAME OVER");
+            GameOverText.location = new Vector2(game.width / 2, game.height / 2);
+            GameOverText.font = fontGO;
+            TextButton Retry = new TextButton(font, game, Strings.stringForKey("Retry"), new Vector2(game.width / 2 + 10, game.height / 2 + 10));
+            TextButton Back = new TextButton(font, game, Strings.stringForKey("BackToMainMenu"), new Vector2(game.width / 2 + 10, game.height / 2 + 10));
+            Interface2 = new InterfaceInGame(new TextButton[] { Retry, Back }, game, new Text[] { GameOverText }, background, game.spriteBatch);
+            //Interface2.TMenuOn = true;
 
             //things about the map ^^
             Tile.TileSetTexture = game.Content.Load<Texture2D>(@"sprites//map//maptexture");
@@ -154,6 +167,7 @@ namespace Buttons
             test15.Fill(ref towers);
             test16.Fill(ref towers);
             timer = 0;
+            timerInc = 0;
         }
 
 
@@ -208,22 +222,39 @@ namespace Buttons
 
             //-------------------- Gestion Boutons InGame ---------------------
 
-            Interface.Update();
+            if (life > 0)
+            {
+                Interface.Update();
 
-            if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0) || timer == 600)
-            {
-                test = new Virus("b", 100, 10, 5, new Vector2( 176 -Camera.Location.X * game.widthFactor + difL.X, 126 -Camera.Location.Y * game.heightFactor + difL.Y), 1, game.Content, game.spriteBatch, Etat.Alive);
-                virus.Add(test);
-                timer = 0;
+                if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0) || timer == 600)
+                {
+                    test = new Virus("b", 100, 10, 5, new Vector2(176 - Camera.Location.X * game.widthFactor + difL.X, 126 - Camera.Location.Y * game.heightFactor + difL.Y), 1, game.Content, game.spriteBatch, Etat.Alive);
+                    virus.Add(test);
+                    timer = 0;
+                }
+                if (Interface.buttonWithIndexPressed(1))
+                {
+                    choosing = true;
+                    choice.name = "b";
+                    choice.attack = 10;
+                    choice.cooldown = 20;
+                    choice.range = 200;
+                    choice.cout = 10;
+                }
+
+                if (timerInc == 600) 
+                {
+                    gold += income;
+                    timerInc = 0;
+                }
             }
-            if (Interface.buttonWithIndexPressed(1))
+            else 
             {
-                choosing = true;
-                choice.name = "b";
-                choice.attack = 10;
-                choice.cooldown = 20;
-                choice.range = 200;
-                choice.cout = 10;
+                //status = GameStateStatus.Pause;
+                choosing = false;
+                Interface.menuOn = false;
+                Interface2.TMenuOn = true;
+                Interface2.TUpdate();
             }
             //-----------------------------------------------------------------
 
@@ -333,6 +364,7 @@ namespace Buttons
                 choosing = false;
 
             timer++;
+            timerInc++;
             Interface.texts[0].textValue = Strings.stringForKey("Gold") + " : " + gold;
             Interface.texts[1].textValue = Strings.stringForKey("Income") + " : " + income;
             Interface.texts[2].textValue = Strings.stringForKey("Life") + " : " + life;
@@ -374,10 +406,16 @@ namespace Buttons
                 }
                 x++;
             }
-            
-            
-            Interface.Draw();                  // Affichage de l'interface par dessus la map et les virus et les tours
-            game.spriteBatch.Draw(game.Content.Load<Texture2D>("whit"), new Rectangle(Interface.buttons[0].left + 2, Interface.buttons[0].bottom + 3, (int)((float)timer / 600 * 36), 3), Color.Blue); 
+
+            if (life > 0)
+            {
+                Interface.Draw();                  // Affichage de l'interface par dessus la map et les virus et les tours
+                game.spriteBatch.Draw(game.Content.Load<Texture2D>("whit"), new Rectangle(Interface.buttons[0].left + 2, Interface.buttons[0].bottom + 3, (int)((float)timer / 600 * 36), 3), Color.Blue);
+            }
+            else
+            {
+                Interface2.TDraw();
+            }
 
             //---------------------------------------------------------------------------------------
 

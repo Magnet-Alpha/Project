@@ -16,6 +16,7 @@ namespace Buttons
     {
         private CustomSpriteBatch spriteBatch;
         public ImageButton[] buttons;
+        public TextButton[] Tbuttons;
         private Game1 game;
         public Text[] texts;
         public Texture2D background;
@@ -90,6 +91,80 @@ namespace Buttons
             int n = 0;
             for (int i = 0; i < buttons.Length; i++)
                 if (buttons[i].TakingAction())
+                    n++;
+
+            return n;
+        }
+
+        public InterfaceInGame(TextButton[] buttonArray, Game1 game, Text[] t, Texture2D bg, CustomSpriteBatch sBatch)
+        {
+            this.game = game;
+            Tbuttons = buttonArray;
+            texts = t;
+            spriteBatch = sBatch;
+            background = bg;
+        }
+
+        public bool TMenuOn
+        {
+
+            get { return menuOn; }
+
+            set
+            {
+                for (int i = 0; i < Tbuttons.Length; i++)
+                {
+                    Tbuttons[i].Clickable = value;
+                    Tbuttons[i].clicked = false;
+                }
+                menuOn = value;
+                Draw();
+            }
+        }
+        public void TUpdate()
+        {
+            for (int i = 0; i < Tbuttons.Length; i++)
+            {
+                Tbuttons[i].Update();
+            }
+
+        }
+
+        public void TDraw()
+        {
+
+            if (!menuOn)
+            {
+                return;
+            }
+            else
+            {
+                game.spriteBatch.Draw(background, new Rectangle(game.width - 800 / 12, 0, 800 / 12, game.height - game.height / 10), Color.White);
+                game.spriteBatch.Draw(background, new Rectangle(0, game.height - 120, game.width, 120), Color.White);
+            }
+            for (int i = 0; i < Tbuttons.Length; i++)
+            {
+                Tbuttons[i].Clickable = true;
+                Tbuttons[i].Update();
+                Tbuttons[i].Draw();
+            }
+            for (int i = 0; i < texts.Length; i++)
+            {
+                game.spriteBatch.DrawString(texts[i].font, texts[i].textValue, texts[i].location, Color.White);
+            }
+            game.spriteBatch.Draw(game.Content.Load<Texture2D>("Sprites\\virus\\lifebar"), new Rectangle(Tbuttons[0].left, Tbuttons[0].bottom + 1, 40, 8), new Rectangle(112, 0, 16, 4), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0);
+        }
+
+        public bool TbuttonWithIndexPressed(int n)
+        {
+            return Tbuttons[n].clicked && Tbuttons[n].takingAction;
+        }
+
+        private int TbuttonsTakingAction()
+        {
+            int n = 0;
+            for (int i = 0; i < Tbuttons.Length; i++)
+                if (Tbuttons[i].TakingAction())
                     n++;
 
             return n;
