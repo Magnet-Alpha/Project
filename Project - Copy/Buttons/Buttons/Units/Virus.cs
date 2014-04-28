@@ -35,7 +35,7 @@ namespace Buttons
             dir = 3;
             x = 0;
             this.Center = new Vector2(this.Position.X + 16, this.Position.Y + 16);
-            imgs.Add(content.Load<Texture2D>("Sprites\\virus\\virus"));
+            imgs.Add(content.Load<Texture2D>("Sprites\\virus\\virus-sprite1"));
             imgs.Add(content.Load<Texture2D>("TestSprites\\test attack 1" + this.Name));
             imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
             lifebar = content.Load<Texture2D>("Sprites\\virus\\lifebar");
@@ -43,23 +43,28 @@ namespace Buttons
         }
         public void NewPosition(Vector2 E)
         {
-            this.Position = this.Position + this.moving * (float)this.Speed * E;
+            this.Position = this.Position + this.moving * (float)this.Speed * new Vector2((int)E.X, (int)E.Y);
             this.Center = new Vector2(this.Position.X + 16, this.Position.Y + 16);
         }
-        public void Death(ref int gold)
+        public void Death(ref int gold, List<Keypoint> k)
         {
             if (this.Hp <= 0)
             {
                 this.State = Etat.Dead;
                 gold += 2;
+                foreach (Keypoint ke in k)
+                {
+                    ke.Check(this);
+                }
             }
         }
         public void Turn(List<Keypoint> keypoints, ref int life)
         {
             foreach (Keypoint k in keypoints)
             {
-                if (this.Position == k.position)
+                if (k.position == this.Position && !k.list.Contains(this))
                 {
+                    k.list.Add(this);
                     if (k.objectif)
                     {
                         this.Hp = 0;
@@ -101,7 +106,7 @@ namespace Buttons
                 default: y = 0;
                     break;
             }
-            unitbatch.Draw(imgs[img], new Rectangle((int)this.Position.X, (int)this.Position.Y, 32 * (int)w , 32 * (int)h), new Rectangle(((int)x/30) * 132 , y*133, 132, 133), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0);
+            unitbatch.Draw(imgs[img], new Rectangle((int)this.Position.X, (int)this.Position.Y, 32 * (int)w , 32 * (int)h), new Rectangle(((int)x/30) * 32 + 2 , y*32, 32, 32), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0);
         }
 
         public void HUDDraw(float w, float h)
@@ -112,7 +117,7 @@ namespace Buttons
         public override void fuckingcamera(Vector2 L, Vector2 E)
         {
             base.fuckingcamera(L, E);
-            this.Coordinate = new Vector2((int)(this.Position.X - 16) / 64, (int)this.Position.Y / 32);
+            this.Coordinate = new Vector2((int)(this.Position.X - 16 + Camera.Location.X) / 64, (int)(this.Position.Y + Camera.Location.Y) / 32);
         }
     }
 }

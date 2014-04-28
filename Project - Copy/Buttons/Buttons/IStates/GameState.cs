@@ -230,7 +230,7 @@ namespace Buttons
 
                 if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0) || timer == 600)
                 {
-                    test = new Virus("b", 100, 10, 5, new Vector2(176 - Camera.Location.X * game.widthFactor + difL.X, 126 - Camera.Location.Y * game.heightFactor + difL.Y), 1, game.Content, game.spriteBatch, Etat.Alive);
+                    test = new Virus("b", 100, 10, 5, new Vector2((176 - Camera.Location.X + difL.X) * game.widthFactor, (126 - Camera.Location.Y + difL.Y) * game.heightFactor), 1, game.Content, game.spriteBatch, Etat.Alive);
                     virus.Add(test);
                     timer = 0;
                 }
@@ -288,7 +288,7 @@ namespace Buttons
                 v.fuckingcamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                          //Correcting Camera location problems
                 v.NewPosition(new Vector2(game.widthFactor, game.heightFactor));                                                                //Virus moving
                 v.Turn(keypoints, ref life);                                           //Virus turning and dying at objective
-                v.Death(ref gold);
+                v.Death(ref gold, keypoints);
             }
             int m = 0;
             while (m < virus.Count)
