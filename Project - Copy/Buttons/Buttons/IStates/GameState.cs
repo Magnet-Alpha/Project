@@ -246,7 +246,7 @@ namespace Buttons
             {
                 v.fuckingcamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                          //Correcting Camera location problems
                 v.NewPosition(new Vector2(game.widthFactor, game.heightFactor));                                                                //Virus moving
-                v.Turn(keypoints);                                           //Virus turning and dying at objective
+                v.Turn(keypoints, ref life);                                           //Virus turning and dying at objective
                 v.Death(ref gold);
             }
             int m = 0;
@@ -377,6 +377,7 @@ namespace Buttons
             
             
             Interface.Draw();                  // Affichage de l'interface par dessus la map et les virus et les tours
+            game.spriteBatch.Draw(game.Content.Load<Texture2D>("whit"), new Rectangle(Interface.buttons[0].left + 2, Interface.buttons[0].bottom + 3, (int)((float)timer / 600 * 36), 3), Color.Blue); 
 
             //---------------------------------------------------------------------------------------
 

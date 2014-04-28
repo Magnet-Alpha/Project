@@ -54,7 +54,7 @@ namespace Buttons
                 gold += 2;
             }
         }
-        public void Turn(List<Keypoint> keypoints)
+        public void Turn(List<Keypoint> keypoints, ref int life)
         {
             foreach (Keypoint k in keypoints)
             {
@@ -64,6 +64,7 @@ namespace Buttons
                     {
                         this.Hp = 0;
                         this.moving = new Vector2(0, 0);
+                        life -= 1;
                     }
                     if (k.vers_g)
                     {

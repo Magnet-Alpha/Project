@@ -137,7 +137,8 @@ namespace Buttons
             }
 
             test.NewPosition(new Vector2(game.widthFactor, game.heightFactor));
-            test.Turn(keypoints);
+            int life = 0;
+            test.Turn(keypoints, ref life);
         }
 
         /// <summary>
