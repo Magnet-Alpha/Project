@@ -28,8 +28,8 @@ namespace Buttons
         TcpClient client;
         EndPoint epLocal, epRemote;
         SpriteFont font;
-        string localIp, remoteIp = "192.168.1.8";
-        int localPort = 1580, remotePort = 1581;
+        string localIp, remoteIp = "192.168.1.6";
+        int localPort = 1581, remotePort = 1580;
         KeyboardState olKS = new KeyboardState();
         bool dc = false;
         Byte[] bytes = new Byte[256];
@@ -40,8 +40,7 @@ namespace Buttons
         {
             this.game = game;
             localIp = GetLocalIP();
-            remoteIp = localIp;
-            remotePort = localPort;
+
 
 
             server = new TcpListener(IPAddress.Parse(localIp), localPort);

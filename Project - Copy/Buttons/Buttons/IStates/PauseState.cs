@@ -85,7 +85,7 @@ namespace Buttons
         public void Window_ClientSizeChanged()
         {
             gameState.Window_ClientSizeChanged();
-            Initialize();
+            LoadContent();
         }
 
         public void ChangeState(IState state) {

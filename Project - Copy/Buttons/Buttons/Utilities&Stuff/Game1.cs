@@ -157,7 +157,7 @@ namespace Buttons
             height = GraphicsDevice.PresentationParameters.BackBufferHeight;
             width = GraphicsDevice.PresentationParameters.BackBufferWidth;
             widthFactor = width / 800f;
-            heightFactor = height / 460f;
+            heightFactor = height / 400f;
             gameState.Window_ClientSizeChanged();
             //Console.WriteLine(widthFactor.ToString() + "x" + heightFactor.ToString() + "   " + width + "x" + height);
         }

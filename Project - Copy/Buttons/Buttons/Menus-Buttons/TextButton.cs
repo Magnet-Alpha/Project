@@ -34,7 +34,7 @@ namespace Buttons
             text = t;
 
             textLocation = textLoc;
-            textRectangle = new Rectangle((int)textLocation.X,(int) textLocation.Y, (int) font.MeasureString(text).X, (int) font.MeasureString(text).Y);
+            textRectangle = new Rectangle((int)textLocation.X, (int)textLocation.Y, (int)font.MeasureString(text).X, (int)font.MeasureString(text).Y);
             click = game.Content.Load<SoundEffect>("Sounds\\click").CreateInstance();
             mouseOver = game.Content.Load<SoundEffect>("Sounds\\mouseover").CreateInstance();
             click.Volume = game.settings.SoundEffectVolume;
@@ -62,25 +62,25 @@ namespace Buttons
         public bool TakingAction()
         {
             return takingAction;
-           
+
         }
         public int bottom
         {
-             get
-             {
+            get
+            {
                 return textRectangle.Height + textRectangle.Y;
-             }
+            }
         }
 
         public int top
         {
-            get { return textRectangle.Y;  }
+            get { return textRectangle.Y; }
         }
         public int right
         {
             get { return textRectangle.X + textRectangle.Width; }
         }
-        public int left 
+        public int left
         {
             get { return textRectangle.X; }
         }
@@ -97,6 +97,8 @@ namespace Buttons
             if (!clickable)
                 return;
 
+
+
             click.Volume = game.settings.SoundEffectVolume;
             mouseOver.Volume = game.settings.SoundEffectVolume;
 
@@ -112,7 +114,7 @@ namespace Buttons
                     takingAction = true;
 
                     click.Play();
-                } 
+                }
                 else
                 {
                     clicked = false;
@@ -124,9 +126,9 @@ namespace Buttons
             {
                 //Console.WriteLine("Action!");
                 takingAction = true;
-                
+
             }
-            
+
 
             oldMouse = mouse;
         }
@@ -167,11 +169,11 @@ namespace Buttons
             else
             {
                 color = Color.Chocolate;
-                if(!textRectangle.Contains(new Point(oldMouse.X, oldMouse.Y)))
-                     mouseOver.Play();
+                if (!textRectangle.Contains(new Point(oldMouse.X, oldMouse.Y)))
+                    mouseOver.Play();
             }
             game.spriteBatch.DrawString(font, text, position, color);
-            
+
         }
     }
 }
