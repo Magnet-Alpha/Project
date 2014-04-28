@@ -333,6 +333,9 @@ namespace Buttons
                 choosing = false;
 
             timer++;
+            Interface.texts[0].textValue = Strings.stringForKey("Gold") + " : " + gold;
+            Interface.texts[1].textValue = Strings.stringForKey("Income") + " : " + income;
+            Interface.texts[2].textValue = Strings.stringForKey("Life") + " : " + life;
 
             oldMouse = mouse;
         }
