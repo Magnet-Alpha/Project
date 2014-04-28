@@ -129,7 +129,7 @@ namespace Buttons
             Interface.menuOn = true;
 
             Text GameOverText;
-            GameOverText.textValue = Strings.stringForKey("GAME OVER");
+            GameOverText.textValue = Strings.stringForKey("GAMEOVER");
             GameOverText.location = new Vector2(game.width / 4, 5);
             GameOverText.font = fontGO;
             Retry = new TextButton(font, game, Strings.stringForKey("Retry"), new Vector2(game.width / 2, game.height / 2));
