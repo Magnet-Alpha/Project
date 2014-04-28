@@ -21,6 +21,7 @@ namespace Buttons
         public Text[] texts;
         public Texture2D background;
         public bool menuOn;
+        public bool TmenuOn;
 
         public InterfaceInGame(ImageButton[] buttonArray, Game1 game, Text[] t, Texture2D bg, CustomSpriteBatch sBatch)
         {
@@ -108,7 +109,7 @@ namespace Buttons
         public bool TMenuOn
         {
 
-            get { return menuOn; }
+            get { return TmenuOn; }
 
             set
             {
@@ -117,7 +118,7 @@ namespace Buttons
                     Tbuttons[i].Clickable = value;
                     Tbuttons[i].clicked = false;
                 }
-                menuOn = value;
+                TmenuOn = value;
                 Draw();
             }
         }
@@ -133,7 +134,7 @@ namespace Buttons
         public void TDraw()
         {
 
-            if (!menuOn)
+            if (!TmenuOn)
             {
                 return;
             }
@@ -152,7 +153,6 @@ namespace Buttons
             {
                 game.spriteBatch.DrawString(texts[i].font, texts[i].textValue, texts[i].location, Color.White);
             }
-            game.spriteBatch.Draw(game.Content.Load<Texture2D>("Sprites\\virus\\lifebar"), new Rectangle(Tbuttons[0].left, Tbuttons[0].bottom + 1, 40, 8), new Rectangle(112, 0, 16, 4), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0);
         }
 
         public bool TbuttonWithIndexPressed(int n)

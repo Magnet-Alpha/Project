@@ -51,6 +51,8 @@ namespace Buttons
         ImageButton firstbut;
         ImageButton secondbut;
         ImageButton backmenu;
+        TextButton Back;
+        TextButton Retry;
         public int gold;
         public int income;
         public int life;
@@ -128,12 +130,12 @@ namespace Buttons
 
             Text GameOverText;
             GameOverText.textValue = Strings.stringForKey("GAME OVER");
-            GameOverText.location = new Vector2(game.width / 2, game.height / 2);
+            GameOverText.location = new Vector2(game.width / 4, 5);
             GameOverText.font = fontGO;
-            TextButton Retry = new TextButton(font, game, Strings.stringForKey("Retry"), new Vector2(game.width / 2 + 10, game.height / 2 + 10));
-            TextButton Back = new TextButton(font, game, Strings.stringForKey("BackToMainMenu"), new Vector2(game.width / 2 + 10, game.height / 2 + 10));
+            Retry = new TextButton(font, game, Strings.stringForKey("Retry"), new Vector2(game.width / 2, game.height / 2));
+            Back = new TextButton(font, game, Strings.stringForKey("BackToMainMenu"), new Vector2(Retry.left, Retry.bottom));
             Interface2 = new InterfaceInGame(new TextButton[] { Retry, Back }, game, new Text[] { GameOverText }, background, game.spriteBatch);
-            //Interface2.TMenuOn = true;
+            Interface2.TmenuOn = false;
 
             //things about the map ^^
             Tile.TileSetTexture = game.Content.Load<Texture2D>(@"sprites//map//maptexture");
@@ -253,8 +255,16 @@ namespace Buttons
                 //status = GameStateStatus.Pause;
                 choosing = false;
                 Interface.menuOn = false;
-                Interface2.TMenuOn = true;
+                Interface2.TmenuOn = true;
                 Interface2.TUpdate();
+
+                if (oldMouse.LeftButton == ButtonState.Released && Interface2.TbuttonWithIndexPressed(0)) 
+                {
+                    ChangeState(new OSState(game));
+                }
+
+                if (oldMouse.LeftButton == ButtonState.Released && Interface2.TbuttonWithIndexPressed(1))
+                    ChangeState(new MenuState(game));
             }
             //-----------------------------------------------------------------
 
@@ -368,6 +378,7 @@ namespace Buttons
             Interface.texts[0].textValue = Strings.stringForKey("Gold") + " : " + gold;
             Interface.texts[1].textValue = Strings.stringForKey("Income") + " : " + income;
             Interface.texts[2].textValue = Strings.stringForKey("Life") + " : " + life;
+            Interface2.texts[0].textValue = Strings.stringForKey("GAMEOVER");
 
             oldMouse = mouse;
         }
