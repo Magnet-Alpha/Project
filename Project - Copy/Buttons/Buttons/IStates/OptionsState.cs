@@ -152,14 +152,15 @@ namespace Buttons
             if (optionsMenu.buttonWithIndexPressed(7) && !game.graphics.IsFullScreen)
             {
                 game.settings.fullScreen = true;
-                game.graphics.IsFullScreen = true;
+                /*game.graphics.IsFullScreen = true;
                 game.graphics.PreferredBackBufferWidth = game.graphics.GraphicsDevice.DisplayMode.Width;
                 game.graphics.PreferredBackBufferHeight = game.graphics.GraphicsDevice.DisplayMode.Height; 
                 game.graphics.ApplyChanges();
                 game.width = game.graphics.PreferredBackBufferWidth;
                 game.height = game.graphics.PreferredBackBufferHeight;
                 previousState.Window_ClientSizeChanged();
-                game.Window_ClientSizeChanged(null, null);
+                game.Window_ClientSizeChanged(null, null);*/
+                game.graphics.ToggleFullScreen();
             }
             //fullscreen off
             if (optionsMenu.buttonWithIndexPressed(8))
@@ -173,6 +174,7 @@ namespace Buttons
                 game.height = game.graphics.PreferredBackBufferHeight;
                 previousState.Window_ClientSizeChanged();
                 game.Window_ClientSizeChanged(null, null);
+               
             }
             // Back
             if (optionsMenu.buttonWithIndexPressed(0))

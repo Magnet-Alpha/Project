@@ -28,8 +28,8 @@ namespace Buttons
         TcpClient client;
         EndPoint epLocal, epRemote;
         SpriteFont font;
-        string localIp, remoteIp = "192.168.1.6";
-        int localPort = 1581, remotePort = 1580;
+        string localIp, remoteIp = "192.168.1.8";
+        int localPort = 1580, remotePort = 1581;
         KeyboardState olKS = new KeyboardState();
         bool dc = false;
         Byte[] bytes = new Byte[256];
@@ -40,26 +40,24 @@ namespace Buttons
         {
             this.game = game;
             localIp = GetLocalIP();
+            remoteIp = localIp;
+            remotePort = localPort;
 
-
-
-            server = new TcpListener(IPAddress.Parse(localIp), localPort);
-            
-            
+            server = new TcpListener(IPAddress.Any, localPort);
             server.Start();
 
             networkingThread = new Thread(getData);
-            networkingThread.Start();
-            client = new TcpClient(remoteIp, remotePort);
-            
-            
-        }
 
-        void acceptClient(IAsyncResult aResult)
-        {
-            client = ((TcpListener)aResult.AsyncState).EndAcceptTcpClient(aResult);
-            Console.WriteLine("Connection accepted");
+            client = new TcpClient(remoteIp, remotePort);
             networkingThread.Start();
+
+
+
+
+
+            //Console.WriteLine(localIp);
+
+            //sendMessage("Hello");
         }
 
         private string GetLocalIP()
@@ -109,7 +107,6 @@ namespace Buttons
 
 
 
-
             }
         }
 
@@ -119,7 +116,7 @@ namespace Buttons
             if (dc)
                 return;
 
-            // Create a client. 
+            // Create a TcpClient. 
             // Note, for this client to work you need to have a TcpServer  
             // connected to the same address as specified by the server, port 
             // combination.
@@ -166,12 +163,14 @@ namespace Buttons
         public void Draw(GameTime gameTime) { }
         public void Initialize() { }
         public void LoadContent() { }
+
         public void ChangeState(IState state)
         {
             dc = true;
             networkingThread.Abort();
             client.Close();
             server.Stop();
+
             game.gameState = state;
         }
         public void Window_ClientSizeChanged() { }
