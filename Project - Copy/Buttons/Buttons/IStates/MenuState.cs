@@ -121,7 +121,7 @@ namespace Buttons
             }
 
             if (mainMenu.buttonWithIndexPressed(1))
-                game.gameState = new MultiplayerState2(game);
+                game.gameState = new MultiplayerState3(game);
 
 
             if (mainMenu.buttonWithIndexPressed(2)) // Options

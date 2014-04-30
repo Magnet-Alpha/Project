@@ -75,6 +75,9 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Lidgren.Network">
+      <HintPath>..\..\..\..\..\..\Downloads\lidgren-network-gen3-2013-05-07\Lidgren-network-gen3\Lidgren.Network\bin\Debug\Lidgren.Network.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
@@ -124,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IStates\MultiplayerState2.cs" />
+    <Compile Include="IStates\MultiplayerState3.cs" />
     <Compile Include="Units\Coordonnees.cs" />
     <Compile Include="IStates\CreditState.cs" />
     <Compile Include="IStates\IntroState.cs" />

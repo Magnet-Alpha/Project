@@ -28,36 +28,35 @@ namespace Buttons
         TcpClient client;
         EndPoint epLocal, epRemote;
         SpriteFont font;
-        string localIp, remoteIp = "192.168.1.8";
+        string localIp, remoteIp = "192.168.1.7";
         int localPort = 1580, remotePort = 1581;
         KeyboardState olKS = new KeyboardState();
         bool dc = false;
         Byte[] bytes = new Byte[256];
         String data = null;
-        Thread networkingThread;
+        Thread networkingThread, clientThread;
 
         public MultiplayerState2(Game1 game)
         {
             this.game = game;
             localIp = GetLocalIP();
-            remoteIp = localIp;
-            remotePort = localPort;
 
-            server = new TcpListener(IPAddress.Any, localPort);
+            server = new TcpListener(IPAddress.Parse(localIp), localPort);
             server.Start();
 
             networkingThread = new Thread(getData);
 
+            
+            server.BeginAcceptTcpClient(new AsyncCallback(acceptClient), null);
             client = new TcpClient(remoteIp, remotePort);
+            //networkingThread.Start();
+        }
+
+        void acceptClient(IAsyncResult aResult)
+        {
+            client = ((TcpListener)aResult.AsyncState).EndAcceptTcpClient(aResult);
+            Console.WriteLine("Connection accepted");
             networkingThread.Start();
-
-
-
-
-
-            //Console.WriteLine(localIp);
-
-            //sendMessage("Hello");
         }
 
         private string GetLocalIP()
@@ -82,7 +81,7 @@ namespace Buttons
 
                 // Perform a blocking call to accept requests. 
                 // You could also user server.AcceptSocket() here.
-                TcpClient client = server.AcceptTcpClient();
+                client = server.AcceptTcpClient();
                 Console.WriteLine("Connected!");
 
                 data = null;
@@ -101,11 +100,7 @@ namespace Buttons
 
                     // Process the data sent by the client.
 
-
-
                 }
-
-
 
             }
         }
@@ -113,7 +108,7 @@ namespace Buttons
 
         void sendMessage(string message)
         {
-            if (dc)
+            if (client == null)
                 return;
 
             // Create a TcpClient. 
@@ -135,13 +130,6 @@ namespace Buttons
             stream.Write(data, 0, data.Length);
 
             Console.WriteLine("Sent: {0}", message);
-
-
-
-
-
-
-
         }
 
 
@@ -160,6 +148,7 @@ namespace Buttons
             olKS = ks;
 
         }
+
         public void Draw(GameTime gameTime) { }
         public void Initialize() { }
         public void LoadContent() { }
