@@ -51,15 +51,16 @@ namespace ChatServer
 						case NetIncomingMessageType.ErrorMessage:
 						case NetIncomingMessageType.WarningMessage:
 						case NetIncomingMessageType.VerboseDebugMessage:
-							string text = im.ReadString();
-							Output(text);
-							break;
 						case NetIncomingMessageType.StatusChanged:
 							NetConnectionStatus status = (NetConnectionStatus)im.ReadByte();
-							string reason = im.ReadString();
-							Output(NetUtility.ToHexString(im.SenderConnection.RemoteUniqueIdentifier) + " " + status + ": " + reason);
-
-							UpdateConnectionsList();
+                            if (status == NetConnectionStatus.Disconnected && s_server.Connections.Count > 0) //disconnection
+                            {
+                                NetOutgoingMessage msg = s_server.CreateMessage();
+                                msg.Write("dc");
+                                Output("Broadcasting 'dc'");
+                                s_server.SendMessage(msg, s_server.Connections, NetDeliveryMethod.ReliableOrdered, 0);
+                            }
+							
 							break;
 						case NetIncomingMessageType.Data:
 							// incoming chat message from a client
@@ -84,17 +85,6 @@ namespace ChatServer
 					}
 				}
 				Thread.Sleep(1);
-			}
-		}
-
-		private static void UpdateConnectionsList()
-		{
-			s_form.listBox1.Items.Clear();
-
-			foreach (NetConnection conn in s_server.Connections)
-			{
-				string str = NetUtility.ToHexString(conn.RemoteUniqueIdentifier) + " from " + conn.RemoteEndPoint.ToString() + " [" + conn.Status + "]";
-				s_form.listBox1.Items.Add(str);
 			}
 		}
 

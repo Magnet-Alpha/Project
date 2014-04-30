@@ -32,6 +32,7 @@ namespace Buttons
 
         public MultiplayerState3(Game1 game)
         {
+            this.game = game;
             NetPeerConfiguration config = new NetPeerConfiguration("YCAV");
             client = new NetClient(config);
             client.RegisterReceivedCallback(new SendOrPostCallback(GotMessage));
