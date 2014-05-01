@@ -53,7 +53,7 @@ namespace Buttons
         {
             // TODO: Add your initialization logic here
 
-            
+            game.music.Play();
             mainMenu.MenuOn = true;
         }
 

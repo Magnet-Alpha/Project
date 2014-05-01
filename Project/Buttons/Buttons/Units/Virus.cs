@@ -39,7 +39,6 @@ namespace Buttons
             imgs.Add(content.Load<Texture2D>("TestSprites\\test attack 1" + this.Name));
             imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
             lifebar = content.Load<Texture2D>("Sprites\\virus\\lifebar");
-            this.Coordinate = new Vector2((int)(this.Position.X - 16) / 64, (int)(this.Position.Y) / 32);
         }
         public void NewPosition(Vector2 E)
         {
@@ -52,19 +51,14 @@ namespace Buttons
             {
                 this.State = Etat.Dead;
                 gold += 2;
-                foreach (Keypoint ke in k)
-                {
-                    ke.Check(this);
-                }
             }
         }
         public void Turn(List<Keypoint> keypoints, ref int life)
         {
             foreach (Keypoint k in keypoints)
             {
-                if (k.position == this.Position && !k.list.Contains(this))
+                if (k.position == this.Position)
                 {
-                    k.list.Add(this);
                     if (k.objectif)
                     {
                         this.Hp = 0;
@@ -117,7 +111,6 @@ namespace Buttons
         public override void fuckingcamera(Vector2 L, Vector2 E)
         {
             base.fuckingcamera(L, E);
-            this.Coordinate = new Vector2((int)(this.Position.X - 16 + Camera.Location.X) / 64, (int)(this.Position.Y + Camera.Location.Y) / 32);
         }
     }
 }

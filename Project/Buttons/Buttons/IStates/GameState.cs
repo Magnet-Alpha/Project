@@ -65,6 +65,7 @@ namespace Buttons
         MouseState oldMouse = Mouse.GetState();
         bool choosing;
         TType choice;
+        Tower todraw;
         int timer;
         int timerInc;
 
@@ -323,55 +324,87 @@ namespace Buttons
 
 
 
-            if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released && choosing && mouse.X < game.width - game.width / 12 && mouse.Y > 0 && mouse.X > 0 && mouse.Y < game.height - game.height / 5 && gold >= choice.cout)
+            if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released && mouse.X < game.width - game.width / 12 && mouse.Y > 0 && mouse.X > 0 && mouse.Y < game.height - game.height / 5)
             {
-                float zx = (mouse.X + Camera.Location.X) % (64 * game.widthFactor);
-                float zy = (mouse.Y + Camera.Location.Y - 16 * game.heightFactor) % (32 * game.heightFactor);
-                int x = (int)((mouse.X + Camera.Location.X) / (64 * game.widthFactor));
-                int y = (int)((mouse.Y + Camera.Location.Y + 16 * game.heightFactor) / (32 * game.heightFactor));
-                if (towers[x, 2*y] == null && TheMap(zx, zy))
+                if (choosing && gold >= choice.cout)
                 {
-                    Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout,
-                        new Vector2(x * (64 * game.widthFactor) + 16 * game.widthFactor - Camera.Location.X * game.widthFactor, 
-                        y * (32 * game.heightFactor) - 56 * game.heightFactor - Camera.Location.Y * game.heightFactor),
-                        choice.range, 
-                        game.Content, 
-                        game.spriteBatch, 
-                        Etat.Alive);
-                    tower.Add(create);
-                    towers[x, 2*y] = create;
-                    gold -= create.cout;
+                    float zx = (mouse.X + Camera.Location.X) % (64 * game.widthFactor);
+                    float zy = (mouse.Y + Camera.Location.Y - 16 * game.heightFactor) % (32 * game.heightFactor);
+                    int x = (int)((mouse.X + Camera.Location.X) / (64 * game.widthFactor));
+                    int y = (int)((mouse.Y + Camera.Location.Y + 16 * game.heightFactor) / (32 * game.heightFactor));
+                    if (towers[x, 2 * y] == null && TheMap(zx, zy))
+                    {
+                        Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout,
+                            new Vector2(x * (64 * game.widthFactor) + 16 * game.widthFactor - Camera.Location.X * game.widthFactor,
+                            y * (32 * game.heightFactor) - 56 * game.heightFactor - Camera.Location.Y * game.heightFactor),
+                            choice.range,
+                            game.Content,
+                            game.spriteBatch,
+                            Etat.Alive);
+                        tower.Add(create);
+                        towers[x, 2 * y] = create;
+                        gold -= create.cout;
+                        todraw = create;
+                    }
+                    else
+                    {
+                        int pr = TheMap2(zx, zy);
+                        switch (pr)
+                        {
+                            case 1:
+                                break;
+                            case 2:
+                                x++;
+                                break;
+                            case 3:
+                                x++;
+                                y++;
+                                break;
+                            default:
+                                y++;
+                                break;
+                        }
+                        if (y >= 1 && towers[x, 2 * y - 1] == null)
+                        {
+                            Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout, new Vector2(x * (64 * game.widthFactor) - 16 * game.widthFactor - Camera.Location.X * game.widthFactor, y * (32 * game.heightFactor) - 72 * game.heightFactor - Camera.Location.Y * game.heightFactor), choice.range, game.Content, game.spriteBatch, Etat.Alive);
+                            tower.Add(create);
+                            towers[x, 2 * y - 1] = create;
+                            gold -= create.cout;
+                            todraw = create;
+                        }
+                    }
                 }
                 else
                 {
-                    int pr = TheMap2(zx, zy);
-                    switch (pr)
+                    Point p = new Point(mouse.X, mouse.Y);
+                    int x = (int)((mouse.X + Camera.Location.X) / (64 * game.widthFactor));
+                    int y = (int)((mouse.Y + Camera.Location.Y + 16 * game.heightFactor) / (32 * game.heightFactor));
+                    int zx = x;
+                    while (zx <= x + 1)
                     {
-                        case 1 :
-                            break;
-                        case 2:
-                            x++;
-                            break;
-                        case 3:
-                            x++;
-                            y++;
-                            break;
-                        default:
-                            y++;
-                            break;
-                    }
-                    if (y >= 1 && towers[x, 2 * y -1] == null)
-                    {
-                        Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout, new Vector2(x * (64 * game.widthFactor) - 16 * game.widthFactor - Camera.Location.X * game.widthFactor, y * (32 * game.heightFactor) -72 * game.heightFactor - Camera.Location.Y * game.heightFactor), choice.range, game.Content, game.spriteBatch, Etat.Alive);
-                        tower.Add(create);
-                        towers[x, 2 * y - 1] = create;
-                        gold -= create.cout;
+                        int zy = y + 3;
+                        while (zy >= y - 1)
+                        {
+                            if (zx >= 0 && zy >= 0 && towers[zx, zy] != null && towers[zx, zy].exist && towers[zx, zy].Hitbox.Contains(p))
+                            {
+                                todraw = towers[zx, zy];
+                                zy = y - 1;
+                                zx = x + 1;
+                            }
+                            else
+                                todraw = null;
+                            zy--;
+                        }
+                        zx++;
                     }
                 }
             }
 
             if (mouse.RightButton == ButtonState.Pressed)
+            {
                 choosing = false;
+                todraw = null;
+            }
 
             timer++;
             timerInc++;

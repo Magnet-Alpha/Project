@@ -163,17 +163,18 @@ namespace Buttons
                 game.graphics.ToggleFullScreen();
             }
             //fullscreen off
-            if (optionsMenu.buttonWithIndexPressed(8))
+            if (optionsMenu.buttonWithIndexPressed(8) && game.graphics.IsFullScreen)
             {
                 game.settings.fullScreen = false;
-                game.graphics.IsFullScreen = false;
+                /*game.graphics.IsFullScreen = false;
                 game.graphics.PreferredBackBufferWidth = 800;
                 game.graphics.PreferredBackBufferHeight = 600;
                 game.graphics.ApplyChanges();
                 game.width = game.graphics.PreferredBackBufferWidth;
                 game.height = game.graphics.PreferredBackBufferHeight;
                 previousState.Window_ClientSizeChanged();
-                game.Window_ClientSizeChanged(null, null);
+                game.Window_ClientSizeChanged(null, null);*/
+                game.graphics.ToggleFullScreen();
                
             }
             // Back
