@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
-
+using System.Net.Sockets;
 using Lidgren.Network;
-
+using System.Net;
 using SamplesCommon;
 
 namespace ChatServer
@@ -14,7 +14,9 @@ namespace ChatServer
 		private static Form1 s_form;
 		private static NetServer s_server;
 		private static NetPeerSettingsWindow s_settingsWindow;
-		
+        static int con = 0;
+
+
 		[STAThread]
 		static void Main()
 		{
@@ -34,11 +36,20 @@ namespace ChatServer
 
 		private static void Output(string text)
 		{
-			NativeMethods.AppendText(s_form.richTextBox1, text);
+            DateTime now = DateTime.Now;
+            NativeMethods.AppendText(s_form.richTextBox1, now.ToString() + ": " + text);
 		}
 
 		private static void Application_Idle(object sender, EventArgs e)
 		{
+            if (s_server.Connections.Count != con)
+            {
+                for (int i = con; i < s_server.Connections.Count; i++)
+                {
+                    Output(s_server.Connections[i].Peer.Configuration.LocalAddress.ToString() + " connected");
+                }
+                con = s_server.Connections.Count;
+            }
 			while (NativeMethods.AppStillIdle)
 			{
 				NetIncomingMessage im;
@@ -58,26 +69,33 @@ namespace ChatServer
                                 NetOutgoingMessage msg = s_server.CreateMessage();
                                 msg.Write("dc");
                                 Output("Broadcasting 'dc'");
-                                s_server.SendMessage(msg, s_server.Connections, NetDeliveryMethod.ReliableOrdered, 0);
+                                if(s_server.Connections.Count > 0)
+                                    s_server.SendMessage(msg, s_server.Connections, NetDeliveryMethod.ReliableOrdered, 0);
                             }
 							
 							break;
 						case NetIncomingMessageType.Data:
 							// incoming chat message from a client
 							string chat = im.ReadString();
+                            if (chat[0] == '#')
+                            {
+                                Output("Broadcasting '" + chat.Substring(1) + "'");
 
-							Output("Broadcasting '" + chat + "'");
+                                // broadcast this to all connections, except sender
+                                List<NetConnection> all = s_server.Connections; // get copy
+                                all.Remove(im.SenderConnection);
 
-							// broadcast this to all connections, except sender
-							List<NetConnection> all = s_server.Connections; // get copy
-							all.Remove(im.SenderConnection);
-
-							if (all.Count > 0)
-							{
-								NetOutgoingMessage om = s_server.CreateMessage();
-								om.Write(NetUtility.ToHexString(im.SenderConnection.RemoteUniqueIdentifier) + " said: " + chat);
-								s_server.SendMessage(om, all, NetDeliveryMethod.ReliableOrdered, 0);
-							}
+                                if (all.Count > 0)
+                                {
+                                    NetOutgoingMessage om = s_server.CreateMessage();
+                                    om.Write(NetUtility.ToHexString(im.SenderConnection.RemoteUniqueIdentifier) + " said: " + chat.Substring(1));
+                                    s_server.SendMessage(om, all, NetDeliveryMethod.ReliableOrdered, 0);
+                                }
+                            }
+                            else
+                            {
+                                Output(chat);
+                            }
 							break;
 						default:
 							Output("Unhandled type: " + im.MessageType + " " + im.LengthBytes + " bytes " + im.DeliveryMethod + "|" + im.SequenceChannel);
@@ -87,16 +105,28 @@ namespace ChatServer
 				Thread.Sleep(1);
 			}
 		}
-
+        static string GetLocalIP()
+        {
+            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (IPAddress ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                    return ip.ToString();
+            }
+            return "127.0.0.1";
+        }
 		// called by the UI
 		public static void StartServer()
 		{
+            Output("Server running with IP " + GetLocalIP());
+
 			s_server.Start();
 		}
 
 		// called by the UI
 		public static void Shutdown()
 		{
+            Output("Server shut down");
 			s_server.Shutdown("Requested by user");
 		}
 

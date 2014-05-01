@@ -69,7 +69,7 @@ namespace Buttons
         void sendEvent(Event evt, int x, int y)
         {
             NetOutgoingMessage msg = client.CreateMessage();
-            msg.Write(evt.ToString());
+            msg.Write("#" + evt.ToString());
             switch (evt)
             {
                 case Event.TowerAdded:
@@ -100,12 +100,14 @@ namespace Buttons
             client.Start();
             NetOutgoingMessage hail = client.CreateMessage("This is the hail message");
             client.Connect(host, port, hail);
-
+            sendMessage(GetLocalIP() + " connected");
+            
         }
 
         // called by the UI
         void Shutdown()
         {
+            sendMessage(GetLocalIP() + " disconnected");
             client.Disconnect("Requested by user");
             // s_client.Shutdown("Requested by user");
         }
