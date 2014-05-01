@@ -24,10 +24,10 @@ namespace ChatServer
 
 			// set up network
 			NetPeerConfiguration config = new NetPeerConfiguration("YCAV");
-			config.MaximumConnections = 100;
+			config.MaximumConnections = 2;
 			config.Port = 14242;
 			s_server = new NetServer(config);
-
+            
 			Application.Idle += new EventHandler(Application_Idle);
 			Application.Run(s_form);
 		}
@@ -100,19 +100,6 @@ namespace ChatServer
 			s_server.Shutdown("Requested by user");
 		}
 
-		// called by the UI
-		public static void DisplaySettings()
-		{
-			if (s_settingsWindow != null && s_settingsWindow.Visible)
-			{
-				s_settingsWindow.Hide();
-			}
-			else
-			{
-				if (s_settingsWindow == null || s_settingsWindow.IsDisposed)
-					s_settingsWindow = new NetPeerSettingsWindow("Chat server settings", s_server);
-				s_settingsWindow.Show();
-			}
-		}
+		
 	}
 }

@@ -31,7 +31,7 @@ namespace Buttons
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-
+            
             Content.RootDirectory = "Content";
             
             this.Window.Title = "You'll Catch A Virus";
@@ -112,7 +112,7 @@ namespace Buttons
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            if (this.IsActive)
+            /*if (this.IsActive)
             {
                 MouseState ms = Mouse.GetState();
                 if (ms.X < 0)
@@ -123,7 +123,7 @@ namespace Buttons
                     Mouse.SetPosition(ms.X, 10);
                 if (ms.Y > height)
                     Mouse.SetPosition(ms.X, height - 10);
-            }
+            }*/
             gameState.Update(gameTime);
 
             Draw(gameTime);

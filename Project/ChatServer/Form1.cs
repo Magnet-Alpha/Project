@@ -27,11 +27,6 @@ namespace ChatServer
 			}
 		}
 
-		private void button2_Click(object sender, EventArgs e)
-		{
-			Program.DisplaySettings();
-		}
-
         private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
         {
 

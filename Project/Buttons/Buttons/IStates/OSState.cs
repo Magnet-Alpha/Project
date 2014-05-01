@@ -23,9 +23,8 @@ namespace Buttons
         MouseState oldMs;
         int n = 0;
         KeyboardState oldKS;
-        string[] macStrings = { "A long time ago, in the late 70's, a great mind had the idea of creating\nan easy to use personal computer and operating system. He named it Macintosh.\nThis computer line continued until today and became one of the most\npopular computers in the world. As technology advanced, hackers tried\nto create viruses for the operating system which had a great security.\nThey never succeeded.",
-                                    "All viruses eliminated, you won the game.\nJust kidding, starting the game with Windows."};
-        string windowsStory = "A long time ago, in the mid-80's, engineers have created the operating\nsystem that would change the future of the world: Windows. This\noperating system is now being used by more then the half of\ncomputers. But there was thing the creators never tought about: viruses.";
+        string[] macStrings = { Strings.stringForKey("MacStory1").Replace("\\n","\n"), Strings.stringForKey("MacStory2").Replace("\\n","\n") };
+        string windowsStory = Strings.stringForKey("WindowsStory").Replace("\\n","\n");
 
         TextButton nextButton;
         
@@ -43,7 +42,7 @@ namespace Buttons
             apple = new ImageButton(appleLogo, new Rectangle(game.width / 3, 100, 50, 50), game);
             windows = new ImageButton(game.Content.Load<Texture2D>("Sprites\\os\\windows"), new Rectangle(2 * game.width / 3, 100, 50, 50), game);
             font = game.Content.Load<SpriteFont>("font");
-            nextButton = new TextButton(font, game, "Next", new Vector2(game.width - 100, game.height - 80));
+            nextButton = new TextButton(font, game, Strings.stringForKey("Next"), new Vector2(game.width - 100, game.height - 80));
             nextButton.Clickable = false;
             nextButton.color = Color.Black;
 
@@ -129,7 +128,7 @@ namespace Buttons
 
             if (os == OS.Null)
             {
-                game.spriteBatch.DrawString(font, "Choose your OS", new Vector2(game.width / 2 - font.MeasureString("Choose your OS").X / 2, 50), Color.White);
+                game.spriteBatch.DrawString(font, Strings.stringForKey("ChooseOS"), new Vector2(game.width / 2 - font.MeasureString("Choose your OS").X / 2, 50), Color.White);
                 apple.Draw();
                 windows.Draw();
             }

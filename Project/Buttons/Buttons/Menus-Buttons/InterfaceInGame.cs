@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Buttons
 {
-    class InterfaceInGame
+    public class InterfaceInGame
     {
         private CustomSpriteBatch spriteBatch;
         public ImageButton[] buttons;

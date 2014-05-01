@@ -56,7 +56,7 @@ namespace Buttons
         public int gold;
         public int income;
         public int life;
-        InterfaceInGame Interface;
+        public InterfaceInGame Interface;
         InterfaceInGame Interface2;
         private int screenHeight;
         private int screenWidth;

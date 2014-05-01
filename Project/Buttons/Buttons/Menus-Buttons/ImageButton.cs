@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Buttons
 {
-    class ImageButton : Button
+    public class ImageButton : Button
     {
         private Texture2D img;
         private CustomSpriteBatch spriteBatch;

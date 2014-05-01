@@ -21,14 +21,27 @@ using Lidgren.Network;
 
 namespace Buttons
 {
+    public enum Event
+    {
+        TowerAdded,
+        TowerSold,
+        VirusCall,
+    }
+
+    
+
     public class MultiplayerState3 : IState
     {
-        Game1 game;
+        public Game1 game;
         NetClient client;
-        int port = 14242;
+        public int port = 14242;
         KeyboardState oldKS = new KeyboardState();
-        string localIp, remoteIp = "192.168.1.7";
-
+        public string remoteIp = "192.168.1.7";
+        GameState gameState;
+        bool connected = false;
+        NetConnectionStatus status = NetConnectionStatus.Disconnected;
+        GetIPForm IPform;
+        bool showDc = true;
 
         public MultiplayerState3(Game1 game)
         {
@@ -36,10 +49,42 @@ namespace Buttons
             NetPeerConfiguration config = new NetPeerConfiguration("YCAV");
             client = new NetClient(config);
             client.RegisterReceivedCallback(new SendOrPostCallback(GotMessage));
-
+            gameState = new GameState(game);
             remoteIp = GetLocalIP();
 
+            IPform = new GetIPForm(this);
+            IPform.Show();
+            
+            
+
+           
+        }
+
+        public void formClosed()
+        {
+            remoteIp = IPform.ip.ToString();
             Connect(remoteIp, port);
+        }
+
+        void sendEvent(Event evt, int x, int y)
+        {
+            NetOutgoingMessage msg = client.CreateMessage();
+            msg.Write(evt.ToString());
+            switch (evt)
+            {
+                case Event.TowerAdded:
+                    msg.Write(x);
+                    msg.Write(y);
+                    break;
+                case Event.TowerSold:
+                    msg.Write(x);
+                    msg.Write(y);
+                    break;
+                case Event.VirusCall:
+                    break;
+            }
+
+            client.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
         }
 
         void sendMessage(string text)
@@ -50,11 +95,12 @@ namespace Buttons
             client.FlushSendQueue();
         }
 
-        void Connect(string host, int port)
+        public void Connect(string host, int port)
         {
             client.Start();
             NetOutgoingMessage hail = client.CreateMessage("This is the hail message");
             client.Connect(host, port, hail);
+
         }
 
         // called by the UI
@@ -82,27 +128,84 @@ namespace Buttons
                     case NetIncomingMessageType.StatusChanged:
                         NetConnectionStatus status = (NetConnectionStatus)im.ReadByte();
 
-                        if (status == NetConnectionStatus.Connected)
-                        {}
-                        else{}
+                        
 
-
-                        if (status == NetConnectionStatus.Disconnected)
-                        { }
-
+                        this.status = status;
+                        connected = status == NetConnectionStatus.Connected;
                         string reason = im.ReadString();
+                        if (status == NetConnectionStatus.Disconnected && showDc)
+                        {
+                            new DCForm(status.ToString() + ": " + reason, this).Show();
+                        }
                         Console.WriteLine(status.ToString() + ": " + reason);
 
                         break;
                     case NetIncomingMessageType.Data:
-                        string chat = im.ReadString();
-                        Console.WriteLine("Received : " + chat);
+                        string evt = im.ReadString();
+                        Console.WriteLine("Received : " + evt);
+                        int x, y;
+                        switch (evt)
+                        {
+                            case "TowerAdded":
+
+                                x = im.ReadInt32();
+                                y = im.ReadInt32();
+                                // tower added at (x,y) to be handled
+                                Console.WriteLine("Tower added at " + x + "," + y);
+                                break;
+                            case "TowerSold":
+                                x = im.ReadInt32();
+                                y = im.ReadInt32();
+                                // tower sold at (x,y) to be handled
+                                Console.WriteLine("Tower sold at " + x + "," + y);
+                                break;
+                            case "VirusCall":
+                                // virus call to be handled
+                                Console.WriteLine("Viruses called");
+                                break;
+                            default:
+                                Console.WriteLine("Event type unhandled :" + evt.ToString());
+                                break;
+                        }
+
+
                         break;
                     default:
                         Console.WriteLine("Unhandled type: " + im.MessageType + " " + im.LengthBytes + " bytes");
                         break;
                 }
             }
+        }
+
+
+        public void Update(GameTime gameTime)
+        {
+            if (IPform.shown)
+                return;
+
+            if (connected)
+            {
+                gameState.Update(gameTime);
+                if (gameState.Interface.buttonWithIndexPressed(0))
+                    sendEvent(Event.VirusCall, 0, 0);
+                
+            }
+
+
+
+            KeyboardState ks = Keyboard.GetState();
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                ChangeState(new MenuState(game));
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter) && oldKS.IsKeyUp(Keys.Enter))
+            {
+                sendMessage("Hello");
+                sendEvent(Event.TowerAdded, 5, 4);
+                sendEvent(Event.VirusCall, 0, 0);
+            }
+            oldKS = ks;
+
         }
         private string GetLocalIP()
         {
@@ -114,29 +217,21 @@ namespace Buttons
             }
             return "127.0.0.1";
         }
-
-        public void Update(GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
+            if (IPform.shown)
+                return;
 
-            KeyboardState ks = Keyboard.GetState();
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
-                ChangeState(new MenuState(game));
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter) && oldKS.IsKeyUp(Keys.Enter))
-            {
-                sendMessage("Hello");
-            }
-            oldKS = ks;
+            if (connected)
+                gameState.Draw(gameTime);
 
         }
-
-        public void Draw(GameTime gameTime) { }
         public void Initialize() { }
         public void LoadContent() { }
 
         public void ChangeState(IState state)
         {
+            showDc = false;
             Shutdown();
             game.gameState = state;
         }

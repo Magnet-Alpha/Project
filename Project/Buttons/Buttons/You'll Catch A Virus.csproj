@@ -108,10 +108,15 @@
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
+    <Reference Include="SamplesCommon">
+      <HintPath>..\..\SamplesCommon.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -126,6 +131,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DCForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DCForm.Designer.cs">
+      <DependentUpon>DCForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
     <Compile Include="IStates\MultiplayerState2.cs" />
     <Compile Include="IStates\MultiplayerState3.cs" />
     <Compile Include="Units\Coordonnees.cs" />
@@ -143,12 +160,10 @@
     <Compile Include="Units\Keypoint.cs" />
     <Compile Include="Map\MapCell.cs" />
     <Compile Include="IStates\MenuState.cs" />
-    <Compile Include="Networking\Message.cs" />
     <Compile Include="IStates\MultiplayerState.cs" />
     <Compile Include="IStates\OptionsState.cs" />
     <Compile Include="IStates\PauseState.cs" />
     <Compile Include="Units\Projectile.cs" />
-    <Compile Include="Networking\TestClass.cs" />
     <Compile Include="Menus-Buttons\TextButton.cs" />
     <Compile Include="Menus-Buttons\Menu.cs" />
     <Compile Include="Menus-Buttons\Screen.cs" />
@@ -222,7 +237,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="DCForm.resx">
+      <DependentUpon>DCForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

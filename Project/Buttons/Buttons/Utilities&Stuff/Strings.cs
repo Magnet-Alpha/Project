@@ -34,6 +34,8 @@ namespace Buttons
             do
             {
                 str = reader.ReadLine();
+                if (str == null)
+                    throw new Exception("Value for key '" + key + "' not found");
             } while (!str.Contains(key));
 
             while (str[0] != '\"')
