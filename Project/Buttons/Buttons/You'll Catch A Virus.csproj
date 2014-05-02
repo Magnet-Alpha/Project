@@ -131,17 +131,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DCForm.cs">
+    <Compile Include="WinForms\AddScoreForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DCForm.Designer.cs">
+    <Compile Include="WinForms\AddScoreForm.Designer.cs">
+      <DependentUpon>AddScoreForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\DCForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\DCForm.Designer.cs">
       <DependentUpon>DCForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="WinForms\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="WinForms\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\HighScores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\HighScores.Designer.cs">
+      <DependentUpon>HighScores.cs</DependentUpon>
     </Compile>
     <Compile Include="IStates\MultiplayerState3.cs" />
     <Compile Include="Units\Coordonnees.cs" />
@@ -236,11 +248,17 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DCForm.resx">
+    <EmbeddedResource Include="WinForms\AddScoreForm.resx">
+      <DependentUpon>AddScoreForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\DCForm.resx">
       <DependentUpon>DCForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="WinForms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\HighScores.resx">
+      <DependentUpon>HighScores.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

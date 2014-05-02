@@ -45,13 +45,15 @@ namespace Buttons
             this.Position = this.Position + this.moving * (float)this.Speed * new Vector2((int)E.X, (int)E.Y);
             this.Center = new Vector2(this.Position.X + 16, this.Position.Y + 16);
         }
-        public void Death(ref int gold, List<Keypoint> k)
+        public void Death(ref int gold, List<Keypoint> k, ref int score)
         {
             if (this.Hp <= 0)
             {
                 this.State = Etat.Dead;
                 gold += 2;
             }
+            if (this.State == Etat.Dead)
+                score += 5;
         }
         public void Turn(List<Keypoint> keypoints, ref int life)
         {

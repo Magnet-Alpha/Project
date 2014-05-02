@@ -69,6 +69,8 @@ namespace Buttons
         int timer;
         int timerInc;
         public MultiplayerState3 multiState;
+        int score = 0;
+        AddScoreForm form;
 
         public GameState(Game1 game)
         {
@@ -83,6 +85,8 @@ namespace Buttons
             oldKs = Keyboard.GetState();
             screenHeight = game.Window.ClientBounds.Height;
             screenWidth = game.Window.ClientBounds.Width;
+            form = new AddScoreForm(game);
+
         }
 
         public GameState(Game1 game, MultiplayerState3 multi)
@@ -99,6 +103,7 @@ namespace Buttons
             oldKs = Keyboard.GetState();
             screenHeight = game.Window.ClientBounds.Height;
             screenWidth = game.Window.ClientBounds.Width;
+            form = new AddScoreForm(game);
         }
 
         public void Initialize()
@@ -291,7 +296,13 @@ namespace Buttons
                 Interface2.TUpdate();
                 if (multiState != null)
                     multiState.sendEvent(Event.GameOver, 0, 0);
-
+                else
+                {
+                    if (game.settings.Scores.Count == 0 || game.settings.Scores.Count < 10 || score > game.settings.Scores[game.settings.Scores.Count - 1].score)
+                    {
+                        form.ShowWithScore(score);
+                    }
+                }
                 if (oldMouse.LeftButton == ButtonState.Released && Interface2.TbuttonWithIndexPressed(0)) 
                 {
                     ChangeState(new OSState(game));
@@ -320,9 +331,9 @@ namespace Buttons
             foreach (Virus v in virus)
             {
                 v.fuckingcamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                          //Correcting Camera location problems
-                v.NewPosition(new Vector2(game.widthFactor, game.heightFactor));                                                                //Virus moving
+                v.NewPosition(new Vector2(game.widthFactor, game.heightFactor));                                                                  //Virus moving
                 v.Turn(keypoints, ref life);                                           //Virus turning and dying at objective
-                v.Death(ref gold, keypoints);
+                v.Death(ref gold, keypoints, ref score);
             }
             int m = 0;
             while (m < virus.Count)

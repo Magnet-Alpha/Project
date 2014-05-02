@@ -28,16 +28,31 @@ namespace Buttons
 
         public List<HighScore> Scores
         {
-            get { return scores; }
+            get
+            {
+                for(int i = 0; i < scores.Count; i++)
+                    for (int j = 0; j < i; j++)
+                    {
+                        if (scores[i].score > scores[j].score)
+                        {
+                            HighScore s = scores[i];
+                            scores[i] = scores[j];
+                            scores[j] = s;
+                        }
+                    }
+                return scores;
+            }
         }
 
         public void addScore(HighScore score)
         {
-            if(scores.Count > 10)
+            if (scores.Count > 10)
+            {
+                scores[scores.Count - 1] = score;
                 return;
-
+            }
             int i = 0;
-            while (scores[i].score > score.score)
+            while (i < scores.Count || scores[i].score > score.score)
             {
                 i++;
             }
@@ -70,7 +85,7 @@ namespace Buttons
                 preferences = preferences.Substring(1);
             }
             preferences = preferences.Substring(1);
-            fullScreen = preferences[0] == 't';
+            fullScreen = preferences[0] == 'T';
             reader.Close();
         }
         void readLanguage()
@@ -155,8 +170,8 @@ namespace Buttons
                 scores.Add(new HighScore(name, Convert.ToInt64(currentScore.Substring(i + 1))));
             }
             reader.Close();
-            foreach (HighScore score in scores)
-                Console.WriteLine(score.name + " : " + score.score);
+            
+
         }
 
         void readSoundEffectVolume()
@@ -202,7 +217,7 @@ namespace Buttons
             string effectV = "soundEffectVolume = \"" + soundEffectVolume + "\"";
             string lang = "language = \"" + language.ToString() + "\"";
 
-            System.IO.File.WriteAllLines(@"preferences.txt", new string[3] { fs, musicV, effectV });
+            System.IO.File.WriteAllLines(@"preferences.txt", new string[] { fs, musicV, effectV, lang });
 
         }
 

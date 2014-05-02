@@ -19,6 +19,7 @@ namespace Buttons
         TextButton optionsButton;
         TextButton exitButton;
         TextButton websiteButton;
+        TextButton highScoresButton;
         SpriteFont font;
         Texture2D background = Textures.background;
         InterfaceMenu mainMenu;
@@ -34,6 +35,7 @@ namespace Buttons
         Keypoint test8;
         List<Virus> virus = new List<Virus>();
         List<int> indexs = new List<int>();
+        HighScores highScoresFrom;
 
         public MenuState(Game1 game)
         {
@@ -55,6 +57,7 @@ namespace Buttons
 
             game.music.Play();
             mainMenu.MenuOn = true;
+            highScoresFrom = new HighScores(game);
         }
 
         /// <summary>
@@ -71,15 +74,18 @@ namespace Buttons
             gap = (int)font.MeasureString("L").Y;
             //menu general
             
-            continueButton = new TextButton(font, game, Strings.stringForKey("Multiplayer"), new Vector2(game.width /20 , game.height/2 - gap/2));
+            continueButton = new TextButton(font, game, Strings.stringForKey("Multiplayer"), new Vector2(game.width /10 , game.height/2 - gap/2));
 
-            newGameButton = new TextButton(font, game, Strings.stringForKey("NewGame"), new Vector2(game.width / 27, continueButton.top - gap));
-            optionsButton = new TextButton(font, game, Strings.stringForKey("Options"), new Vector2(game.width /16 , game.height/2 + gap/2));
-            websiteButton = new TextButton(font, game, "GeekHub", new Vector2(game.width / 12, optionsButton.bottom + gap - (int)font.MeasureString("GeekHub").Y));
-            exitButton = new TextButton(font, game, Strings.stringForKey("Exit"), new Vector2(game.width / 10, websiteButton.bottom + gap - (int) font.MeasureString("Exit").Y));
+            highScoresButton = new TextButton(font, game, Strings.stringForKey("HighScore"), new Vector2(game.width / 15, continueButton.top - gap));
+
+
+            newGameButton = new TextButton(font, game, Strings.stringForKey("NewGame"), new Vector2(game.width / 26, highScoresButton.top - gap));
+            optionsButton = new TextButton(font, game, Strings.stringForKey("Options"), new Vector2(game.width /10 , game.height/2 + gap/2));
+            websiteButton = new TextButton(font, game, "GeekHub", new Vector2(game.width / 15, optionsButton.bottom + gap - (int)font.MeasureString("GeekHub").Y));
+            exitButton = new TextButton(font, game, Strings.stringForKey("Exit"), new Vector2(game.width / 26 + 20, websiteButton.bottom + gap - (int) font.MeasureString("Exit").Y));
             
 
-            mainMenu = new InterfaceMenu(new TextButton[] { newGameButton, continueButton, optionsButton, exitButton, websiteButton }, new Text[] { }, background, game);
+            mainMenu = new InterfaceMenu(new TextButton[] { newGameButton, continueButton, optionsButton, exitButton, websiteButton, highScoresButton }, new Text[] { }, background, game);
             mainMenu.MenuOn = true;
 
             test = new Virus("b", 10, 10, 5, new Vector2(500, 100), 1, game.Content, game.spriteBatch, Etat.Alive);
@@ -139,6 +145,9 @@ namespace Buttons
                 ChangeState(new CreditState(game));
             }
 
+            if (mainMenu.buttonWithIndexPressed(5)) // High scores
+                highScoresFrom.Show();
+
             test.NewPosition(new Vector2(game.widthFactor, game.heightFactor));
             int life = 0;
             test.Turn(keypoints, ref life);
@@ -164,6 +173,7 @@ namespace Buttons
 
         public void ChangeState(IState state)
         {
+            highScoresFrom.Close();
             game.gameState = state;
         }
 

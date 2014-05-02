@@ -46,18 +46,18 @@ namespace Buttons
             this.Window.Title = "You'll Catch A Virus";
             music = Content.Load<SoundEffect>("music").CreateInstance();
             graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 600; 
+            graphics.PreferredBackBufferHeight = 600;
+            width = 800;
+            height = 600;
             music.IsLooped = true;
             settings = new UserSetting();
             
             
             
             Strings.Language = settings.language;
-            
-            graphics.IsFullScreen = settings.fullScreen;
-            graphics.ApplyChanges();
-            widthFactor = GraphicsDevice.PresentationParameters.BackBufferWidth/800;
-            heightFactor = GraphicsDevice.PresentationParameters.BackBufferHeight/460;
+
+            if (settings.fullScreen)
+                graphics.ToggleFullScreen();
         }
 
 
@@ -73,7 +73,12 @@ namespace Buttons
 
             IsMouseVisible = false;
             SoundEffect.MasterVolume = 1;
-            
+
+            graphics.IsFullScreen = settings.fullScreen;
+            graphics.ApplyChanges();
+            widthFactor = GraphicsDevice.PresentationParameters.BackBufferWidth / 800;
+            heightFactor = GraphicsDevice.PresentationParameters.BackBufferHeight / 460;
+
             height = GraphicsDevice.PresentationParameters.BackBufferHeight;
             width = GraphicsDevice.PresentationParameters.BackBufferWidth;
             
@@ -84,7 +89,6 @@ namespace Buttons
             gameState = new IntroState(this);
 
             cursor = Content.Load<Texture2D>("sprites\\cursor");
-
             
 
             base.Initialize();
