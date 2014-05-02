@@ -17,6 +17,7 @@ using System.IO;
 using System.Runtime;
 using System.Threading;
 using Lidgren.Network;
+using System.Windows.Forms;
 
 
 namespace Buttons
@@ -26,7 +27,7 @@ namespace Buttons
         TowerAdded,
         TowerSold,
         VirusCall,
-        GameOver
+        GameOver,
     }
 
     
@@ -42,6 +43,7 @@ namespace Buttons
         NetConnectionStatus status = NetConnectionStatus.Disconnected;
         public GetIPForm IPform;
         bool showDc = true;
+        
 
         public MultiplayerState3(Game1 game)
         {
@@ -108,7 +110,7 @@ namespace Buttons
         }
 
         // called by the UI
-        void Shutdown()
+        public void Shutdown()
         {
             //sendMessage(GetLocalIP() + " disconnected");
             client.Disconnect("Requested by user");
@@ -182,6 +184,15 @@ namespace Buttons
                             case "GameOver" :
                                 // game over to handle (player wins)
                                 break;
+                            case "#dc" :
+                                MessageBox.Show(Strings.stringForKey("Dc"));
+                                ChangeState(new MenuState(game));
+                                break;
+                            case "Server down" :
+                                showDc = false;
+                                MessageBox.Show(Strings.stringForKey("ServerDown"));
+                                ChangeState(new MenuState(game));
+                                break;
                             default:
                                 Console.WriteLine("Event type unhandled :" + evt.ToString());
                                 break;
@@ -213,11 +224,11 @@ namespace Buttons
 
 
             KeyboardState ks = Keyboard.GetState();
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
             {
                 ChangeState(new MenuState(game));
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter) && oldKS.IsKeyUp(Keys.Enter))
+            if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Enter) && oldKS.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Enter))
             {
                 sendMessage("Hello");
                 sendEvent(Event.TowerAdded, 5, 4);

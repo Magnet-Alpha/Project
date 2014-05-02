@@ -12,7 +12,13 @@ namespace ChatServer
 		{
 			InitializeComponent();
             Text = "You'll Catch A Virus Server";
+            FormClosed += new FormClosedEventHandler(formClosed);
 		}
+
+        void formClosed(object sender, FormClosedEventArgs e)
+        {
+            Program.formClosed();
+        }
 
 		private void button1_Click(object sender, EventArgs e)
 		{
@@ -23,8 +29,10 @@ namespace ChatServer
 			}
 			else
 			{
+                Program.formClosed();
 				Program.Shutdown();
 				button1.Text = "Start";
+                
 			}
 		}
 

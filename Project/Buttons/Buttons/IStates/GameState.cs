@@ -209,9 +209,6 @@ namespace Buttons
             if (status == GameStateStatus.Pause && multiState == null)
                 return;
 
-            if (multiState != null)
-                multiState.Update(gameTime);
-
             //--------------------Gestion de la caméra-------------------
             //Modifier la coordonnée "4" pour accélérer ou deccélérer la vitesse de déplacement de la caméra
             KeyboardState ks = Keyboard.GetState();
@@ -617,6 +614,10 @@ namespace Buttons
 
         public void ChangeState(IState state)
         {
+            if (multiState != null)
+            {
+                multiState.Shutdown();
+            }
             game.gameState = state;
             
         }
