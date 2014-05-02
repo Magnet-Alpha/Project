@@ -85,6 +85,21 @@ namespace Buttons
             screenWidth = game.Window.ClientBounds.Width;
         }
 
+        public GameState(Game1 game, MultiplayerState3 multi)
+        {
+            multiState = multi;
+            myMap = new TileMap(100, 100);
+            squaresAcross = game.width / 256 + 12;
+            squaresDown = game.height / 32 + 20;
+
+            this.game = game;
+            Initialize();
+            LoadContent();
+            status = GameStateStatus.InGame;
+            oldKs = Keyboard.GetState();
+            screenHeight = game.Window.ClientBounds.Height;
+            screenWidth = game.Window.ClientBounds.Width;
+        }
 
         public void Initialize()
         {
@@ -174,6 +189,13 @@ namespace Buttons
             timerInc = 0;
         }
 
+
+        public void addVirus()
+        {
+            test = new Virus("b", 100, 10, 5, new Vector2((176 - Camera.Location.X + difL.X) * game.widthFactor, (126 - Camera.Location.Y + difL.Y) * game.heightFactor), 1, game.Content, game.spriteBatch, Etat.Alive);
+            virus.Add(test);
+            timer = 0;
+        }
 
         int abs(int a)
         {
