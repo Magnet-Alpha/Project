@@ -51,9 +51,8 @@ namespace Buttons
             {
                 this.State = Etat.Dead;
                 gold += 2;
-            }
-            if (this.State == Etat.Dead)
                 score += 5;
+            }
         }
         public void Turn(List<Keypoint> keypoints, ref int life)
         {
@@ -63,7 +62,7 @@ namespace Buttons
                 {
                     if (k.objectif)
                     {
-                        this.Hp = 0;
+                        this.State = Etat.Dead;
                         this.moving = new Vector2(0, 0);
                         life -= 1;
                     }
