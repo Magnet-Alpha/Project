@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
-using System.Windows.Forms;
 
 namespace Buttons
 {
@@ -37,8 +36,12 @@ namespace Buttons
                 form.WindowState = FormWindowState.Minimized
                     ;
             }
-
+            StartPosition = FormStartPosition.CenterScreen;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             ControlBox = false;
+
+            ipField.KeyDown += new KeyEventHandler(keyDown);
+            KeyDown += new KeyEventHandler(keyDown);
         }
 
         protected override CreateParams CreateParams
@@ -110,6 +113,12 @@ namespace Buttons
         private void ownServer_CheckedChanged(object sender, EventArgs e)
         {
             ipField.Enabled = false;
+        }
+
+        void keyDown(object sender,KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return || e.KeyCode == Keys.Enter)
+                button1_Click(sender, e);
         }
     }
 }

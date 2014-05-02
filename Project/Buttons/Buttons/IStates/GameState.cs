@@ -19,7 +19,7 @@ namespace Buttons
         int squaresDown = 37; //original : 37 max : 60
         int baseOffsetX = -32;
         int baseOffsetY = -64;
-        float heightRowDepthMod = 0.00001f;
+        //float heightRowDepthMod = 0.00001f;
         public GameStateStatus status;
         KeyboardState oldKs;
         List<Virus> virus = new List<Virus>();                                              //List of viruses on the map
@@ -68,6 +68,7 @@ namespace Buttons
         Tower todraw;
         int timer;
         int timerInc;
+        public MultiplayerState3 multiState;
 
         public GameState(Game1 game)
         {
@@ -183,8 +184,11 @@ namespace Buttons
 
         public void Update(GameTime gameTime)
         {
-            if (status == GameStateStatus.Pause)
+            if (status == GameStateStatus.Pause && multiState == null)
                 return;
+
+            if (multiState != null)
+                multiState.Update(gameTime);
 
             //--------------------Gestion de la caméra-------------------
             //Modifier la coordonnée "4" pour accélérer ou deccélérer la vitesse de déplacement de la caméra
@@ -231,9 +235,17 @@ namespace Buttons
 
                 if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0) || timer == 600)
                 {
-                    test = new Virus("b", 100, 10, 5, new Vector2((176 - Camera.Location.X + difL.X) * game.widthFactor, (126 - Camera.Location.Y + difL.Y) * game.heightFactor), 1, game.Content, game.spriteBatch, Etat.Alive);
-                    virus.Add(test);
-                    timer = 0;
+                    if (multiState == null)
+                    {
+                        test = new Virus("b", 100, 10, 5, new Vector2((176 - Camera.Location.X + difL.X) * game.widthFactor, (126 - Camera.Location.Y + difL.Y) * game.heightFactor), 1, game.Content, game.spriteBatch, Etat.Alive);
+                        virus.Add(test);
+                        timer = 0;
+                    }
+                    else
+                    {
+                        multiState.sendEvent(Event.VirusCall, 0, 0);
+
+                    }
                 }
                 if (Interface.buttonWithIndexPressed(1))
                 {
@@ -258,6 +270,8 @@ namespace Buttons
                 Interface.menuOn = false;
                 Interface2.TmenuOn = true;
                 Interface2.TUpdate();
+                if (multiState != null)
+                    multiState.sendEvent(Event.GameOver, 0, 0);
 
                 if (oldMouse.LeftButton == ButtonState.Released && Interface2.TbuttonWithIndexPressed(0)) 
                 {

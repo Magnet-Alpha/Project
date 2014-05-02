@@ -24,7 +24,7 @@ namespace Buttons
             label1.Text = reason;
             label1.Location = new Point(13, 13);
             ControlBox = false;
-            label1.Width = Width - 13;
+            label1.Width = Width - 26;
             Controls.Add(label1);
             this.Name = "Disconnected";
             button1.Text = Strings.stringForKey("Retry");
@@ -37,7 +37,10 @@ namespace Buttons
                 form.WindowState = FormWindowState.Minimized;
 
             }
+            StartPosition = FormStartPosition.CenterScreen;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
         }
+
         protected override CreateParams CreateParams
         {
             get
@@ -52,7 +55,7 @@ namespace Buttons
 
         private void button1_Click(object sender, EventArgs e) // retry connection
         {
-            multiState.Connect(multiState.remoteIp, multiState.port);
+            multiState.Connect(multiState.IPform.ip.ToString(), multiState.port);
             if (multiState.game.settings.fullScreen)
             {
                 var form = (Form)Form.FromHandle(multiState.game.Window.Handle);

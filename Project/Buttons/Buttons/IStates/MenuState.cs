@@ -130,7 +130,10 @@ namespace Buttons
             }
 
             if (mainMenu.buttonWithIndexPressed(3)) // Exit
+            {
+                game.enableClose = true;
                 game.Exit();
+            }
             if (mainMenu.buttonWithIndexPressed(4)) // Credits
             {
                 ChangeState(new CreditState(game));

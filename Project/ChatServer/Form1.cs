@@ -11,6 +11,7 @@ namespace ChatServer
 		public Form1()
 		{
 			InitializeComponent();
+            Text = "You'll Catch A Virus Server";
 		}
 
 		private void button1_Click(object sender, EventArgs e)

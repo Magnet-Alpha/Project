@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace Buttons
 {
@@ -28,8 +30,15 @@ namespace Buttons
         public Texture2D cursor;
         public bool drawMouse = true;
 
+
+        public bool enableClose = false;
+
         public Game1()
         {
+
+           /* IntPtr hSystemMenu = GetSystemMenu(this.Window.Handle, false);
+            EnableMenuItem(hSystemMenu, SC_CLOSE, (uint)(MF_ENABLED | (false ? MF_ENABLED : MF_GRAYED)));*/
+
             graphics = new GraphicsDeviceManager(this);
             
             Content.RootDirectory = "Content";
@@ -90,9 +99,21 @@ namespace Buttons
             // Create a new SpriteBatch, which can be used to draw textures. 
             spriteBatch = new CustomSpriteBatch(GraphicsDevice);
 
+
+
+            Form f = Form.FromHandle(Window.Handle) as Form;
+            if (f != null)
+            {
+                f.FormClosing += f_FormClosing;
+            } 
+
             
         }
-
+        void f_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!enableClose)
+                e.Cancel = true;
+        }  
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// all content.
@@ -110,7 +131,7 @@ namespace Buttons
         protected override void Update(GameTime gameTime)
         {
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
                 this.Exit();
             /*if (this.IsActive)
             {

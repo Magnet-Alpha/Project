@@ -32,6 +32,7 @@ namespace ChatServer
             
 			Application.Idle += new EventHandler(Application_Idle);
 			Application.Run(s_form);
+            new Thread(connectionCheck).Start();
 		}
 
 		private static void Output(string text)
@@ -40,16 +41,26 @@ namespace ChatServer
             NativeMethods.AppendText(s_form.richTextBox1, now.ToString() + ": " + text);
 		}
 
-		private static void Application_Idle(object sender, EventArgs e)
-		{
-            if (s_server.Connections.Count != con)
+        static void connectionCheck()
+        {
+            if (s_server.ConnectionsCount != con)
             {
+                
                 for (int i = con; i < s_server.Connections.Count; i++)
                 {
                     Output(s_server.Connections[i].Peer.Configuration.LocalAddress.ToString() + " connected");
                 }
-                con = s_server.Connections.Count;
+                con = s_server.ConnectionsCount;
             }
+            Thread.Sleep(1);
+            connectionCheck();
+        }
+
+
+		private static void Application_Idle(object sender, EventArgs e)
+		{
+            
+
 			while (NativeMethods.AppStillIdle)
 			{
 				NetIncomingMessage im;
@@ -62,10 +73,12 @@ namespace ChatServer
 						case NetIncomingMessageType.ErrorMessage:
 						case NetIncomingMessageType.WarningMessage:
 						case NetIncomingMessageType.VerboseDebugMessage:
-						case NetIncomingMessageType.StatusChanged:
+                        case NetIncomingMessageType.StatusChanged:
+
 							NetConnectionStatus status = (NetConnectionStatus)im.ReadByte();
                             if (status == NetConnectionStatus.Disconnected && s_server.Connections.Count > 0) //disconnection
                             {
+                                con = s_server.ConnectionsCount;
                                 NetOutgoingMessage msg = s_server.CreateMessage();
                                 msg.Write("dc");
                                 Output("Broadcasting 'dc'");
@@ -114,6 +127,7 @@ namespace ChatServer
                     return ip.ToString();
             }
             return "127.0.0.1";
+            
         }
 		// called by the UI
 		public static void StartServer()

@@ -143,7 +143,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="IStates\MultiplayerState2.cs" />
     <Compile Include="IStates\MultiplayerState3.cs" />
     <Compile Include="Units\Coordonnees.cs" />
     <Compile Include="IStates\CreditState.cs" />
@@ -160,7 +159,6 @@
     <Compile Include="Units\Keypoint.cs" />
     <Compile Include="Map\MapCell.cs" />
     <Compile Include="IStates\MenuState.cs" />
-    <Compile Include="IStates\MultiplayerState.cs" />
     <Compile Include="IStates\OptionsState.cs" />
     <Compile Include="IStates\PauseState.cs" />
     <Compile Include="Units\Projectile.cs" />
@@ -188,7 +186,6 @@
     <Content Include="French.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Lidgren.Network.dll" />
     <Content Include="scores.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

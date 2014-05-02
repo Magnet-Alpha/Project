@@ -66,15 +66,15 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(53, 83);
+            this.button1.Location = new System.Drawing.Point(13, 83);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(211, 23);
+            this.button1.Size = new System.Drawing.Size(251, 23);
             this.button1.TabIndex = 3;
             this.button1.Text = "Ok";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Form1
+            // GetIPForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -83,7 +83,7 @@
             this.Controls.Add(this.connectServer);
             this.Controls.Add(this.ipField);
             this.Controls.Add(this.ownServer);
-            this.Name = "Form1";
+            this.Name = "GetIPForm";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();

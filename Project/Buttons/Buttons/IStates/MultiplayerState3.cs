@@ -26,6 +26,7 @@ namespace Buttons
         TowerAdded,
         TowerSold,
         VirusCall,
+        GameOver
     }
 
     
@@ -36,11 +37,10 @@ namespace Buttons
         NetClient client;
         public int port = 14242;
         KeyboardState oldKS = new KeyboardState();
-        public string remoteIp = "192.168.1.7";
         GameState gameState;
         bool connected = false;
         NetConnectionStatus status = NetConnectionStatus.Disconnected;
-        GetIPForm IPform;
+        public GetIPForm IPform;
         bool showDc = true;
 
         public MultiplayerState3(Game1 game)
@@ -49,24 +49,27 @@ namespace Buttons
             NetPeerConfiguration config = new NetPeerConfiguration("YCAV");
             client = new NetClient(config);
             client.RegisterReceivedCallback(new SendOrPostCallback(GotMessage));
-            gameState = new GameState(game);
-            remoteIp = GetLocalIP();
+            gameState = new GameState(game, this);
 
             IPform = new GetIPForm(this);
             IPform.Show();
-            
-            
+
+            showIPs();
 
            
         }
 
+
+        
+
+
         public void formClosed()
         {
-            remoteIp = IPform.ip.ToString();
-            Connect(remoteIp, port);
+            Console.WriteLine("trying to connect " + IPform.ip.ToString());
+            Connect(IPform.ip.ToString(), port);
         }
 
-        void sendEvent(Event evt, int x, int y)
+        public void sendEvent(Event evt, int x, int y)
         {
             NetOutgoingMessage msg = client.CreateMessage();
             msg.Write("#" + evt.ToString());
@@ -100,18 +103,28 @@ namespace Buttons
             client.Start();
             NetOutgoingMessage hail = client.CreateMessage("This is the hail message");
             client.Connect(host, port, hail);
-            sendMessage(GetLocalIP() + " connected");
+            
             
         }
 
         // called by the UI
         void Shutdown()
         {
-            sendMessage(GetLocalIP() + " disconnected");
+            //sendMessage(GetLocalIP() + " disconnected");
             client.Disconnect("Requested by user");
             // s_client.Shutdown("Requested by user");
+            
         }
-
+        private void showIPs()
+        {
+            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (IPAddress ip in host.AddressList)
+            {
+                if(ip.AddressFamily == AddressFamily.InterNetwork)
+                    Console.WriteLine(ip.ToString());
+            }
+            
+        }
         void GotMessage(object peer)
         {
             NetIncomingMessage im;
@@ -163,7 +176,11 @@ namespace Buttons
                                 break;
                             case "VirusCall":
                                 // virus call to be handled
-                                Console.WriteLine("Viruses called");
+                                gameState.addVirus();
+                                Console.WriteLine("Virus called");
+                                break;
+                            case "GameOver" :
+                                // game over to handle (player wins)
                                 break;
                             default:
                                 Console.WriteLine("Event type unhandled :" + evt.ToString());
