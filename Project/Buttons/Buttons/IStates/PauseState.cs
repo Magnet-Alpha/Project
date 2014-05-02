@@ -19,7 +19,7 @@ namespace Buttons
         InterfaceMenu pauseMenu;
         SpriteFont font;
         KeyboardState oldKs;
-        
+
 
 
         public PauseState(GameState gameState, Game1 game)
@@ -31,25 +31,25 @@ namespace Buttons
             LoadContent();
             oldKs = Keyboard.GetState();
         }
+
         public void Update(GameTime gameTime)
         {
             KeyboardState ks = Keyboard.GetState();
-            if ((ks.IsKeyDown(Keys.Escape) && !oldKs.IsKeyDown(Keys.Escape) || pauseMenu.buttonWithIndexPressed(0)))
+            if ((ks.IsKeyDown(Keys.Escape) && !oldKs.IsKeyDown(Keys.Escape) || pauseMenu.buttonWithIndexPressed(0))) //resume
             {
                 ChangeState(gameState);
-                gameState.status = GameStateStatus.InGame;
             }
-            if (pauseMenu.buttonWithIndexPressed(1))
+            if (pauseMenu.buttonWithIndexPressed(1)) // options
             {
                 pauseMenu.MenuOn = false;
                 ChangeState(new OptionsState(game, this));
             }
-            if (pauseMenu.buttonWithIndexPressed(2))
+            if (pauseMenu.buttonWithIndexPressed(2)) // main menu
             {
                 pauseMenu.MenuOn = false;
                 ChangeState(new MenuState(game));
             }
-           
+
             oldKs = ks;
             pauseMenu.Update();
 
@@ -58,7 +58,7 @@ namespace Buttons
         {
             pauseMenu.Draw();
 
-           
+
         }
         public void Initialize()
         {
@@ -88,8 +88,10 @@ namespace Buttons
             LoadContent();
         }
 
-        public void ChangeState(IState state) {
-           gameState.ChangeState(state);  
+        public void ChangeState(IState state)
+        {
+            gameState.status = GameStateStatus.InGame;
+            gameState.ChangeState(state);
         }
     }
 }

@@ -30,7 +30,11 @@ namespace Buttons
         GameOver,
     }
 
-    
+    public enum Status
+    {
+        Waiting,
+        InGame
+    }
 
     public class MultiplayerState3 : IState
     {
@@ -43,7 +47,8 @@ namespace Buttons
         NetConnectionStatus status = NetConnectionStatus.Disconnected;
         public GetIPForm IPform;
         bool showDc = true;
-        
+        Status gameStatus;
+        MouseState oldMs = new MouseState();
 
         public MultiplayerState3(Game1 game)
         {
@@ -55,14 +60,25 @@ namespace Buttons
 
             IPform = new GetIPForm(this);
             IPform.Show();
-
+            
             showIPs();
-
-           
+            gameStatus = Status.Waiting;
         }
 
 
-        
+        Status GameStatus
+        {
+            get { return gameStatus; }
+            set
+            {
+                if (gameStatus == Status.Waiting && value == Status.InGame)
+                {
+                    MessageBox.Show(Strings.stringForKey("LanGameStarts"));
+                    gameState = new GameState(game, this);
+                }
+                gameStatus = value;
+            }
+        }
 
 
         public void formClosed()
@@ -161,79 +177,90 @@ namespace Buttons
                         string evt = im.ReadString();
                         Console.WriteLine("Received : " + evt);
                         int x, y;
-                        switch (evt)
+                        if (evt[0] == '?')
                         {
-                            case "TowerAdded":
+                            int connections;
+                            try
+                            {
+                                connections = Convert.ToInt32(evt.Substring(1));
+                                if (connections == 2)
+                                {
+                                    GameStatus = Status.InGame;
+                                }
 
-                                x = im.ReadInt32();
-                                y = im.ReadInt32();
-                                // tower added at (x,y) to be handled
-                                Console.WriteLine("Tower added at " + x + "," + y);
-                                break;
-                            case "TowerSold":
-                                x = im.ReadInt32();
-                                y = im.ReadInt32();
-                                // tower sold at (x,y) to be handled
-                                Console.WriteLine("Tower sold at " + x + "," + y);
-                                break;
-                            case "VirusCall":
-                                // virus call to be handled
-                                gameState.addVirus();
-                                Console.WriteLine("Virus called");
-                                break;
-                            case "GameOver" :
-                                // game over to handle (player wins)
-                                break;
-                            case "#dc" :
-                                MessageBox.Show(Strings.stringForKey("Dc"));
-                                ChangeState(new MenuState(game));
-                                break;
-                            case "Server down" :
-                                showDc = false;
-                                MessageBox.Show(Strings.stringForKey("ServerDown"));
-                                ChangeState(new MenuState(game));
-                                break;
-                            default:
-                                Console.WriteLine("Event type unhandled :" + evt.ToString());
-                                break;
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Invalid connection report: " + evt);
+                            }
                         }
+                        else
+                        {
+                            switch (evt)
+                            {
+                                case "TowerAdded":
 
-
-                        break;
+                                    x = im.ReadInt32();
+                                    y = im.ReadInt32();
+                                    // tower added at (x,y) to be handled
+                                    Console.WriteLine("Tower added at " + x + "," + y);
+                                    break;
+                                case "TowerSold":
+                                    x = im.ReadInt32();
+                                    y = im.ReadInt32();
+                                    // tower sold at (x,y) to be handled
+                                    Console.WriteLine("Tower sold at " + x + "," + y);
+                                    break;
+                                case "VirusCall":
+                                    // virus call to be handled
+                                    gameState.addVirus();
+                                    Console.WriteLine("Virus called");
+                                    break;
+                                case "GameOver":
+                                    // game over to handle (player wins)
+                                    break;
+                                case "#dc":
+                                    MessageBox.Show(Strings.stringForKey("Dc"));
+                                    ChangeState(new MenuState(game));
+                                    break;
+                                case "Server down":
+                                    showDc = false;
+                                    MessageBox.Show(Strings.stringForKey("ServerDown"));
+                                    ChangeState(new MenuState(game));
+                                    break;
+                                default:
+                                    Console.WriteLine("Event type unhandled :" + evt.ToString());
+                                    break;
+                            }
+                        }
+                            break;
                     default:
                         Console.WriteLine("Unhandled type: " + im.MessageType + " " + im.LengthBytes + " bytes");
                         break;
-                }
+                        
+                
+            }
             }
         }
 
 
         public void Update(GameTime gameTime)
         {
+            MouseState ms = Mouse.GetState();
             if (IPform.shown)
                 return;
 
             if (connected)
             {
                 gameState.Update(gameTime);
-                if (gameState.Interface.buttonWithIndexPressed(0))
+                if (gameState.Interface.buttonWithIndexPressed(0) && oldMs.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
                     sendEvent(Event.VirusCall, 0, 0);
                 
             }
-
-
-
             KeyboardState ks = Keyboard.GetState();
-            if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
-            {
+            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape) && oldKS.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Escape))
                 ChangeState(new MenuState(game));
-            }
-            if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Enter) && oldKS.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Enter))
-            {
-                sendMessage("Hello");
-                sendEvent(Event.TowerAdded, 5, 4);
-                sendEvent(Event.VirusCall, 0, 0);
-            }
+            
             oldKS = ks;
 
         }
@@ -258,7 +285,6 @@ namespace Buttons
         }
         public void Initialize() { }
         public void LoadContent() { }
-
         public void ChangeState(IState state)
         {
             showDc = false;

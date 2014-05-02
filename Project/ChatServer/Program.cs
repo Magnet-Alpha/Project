@@ -97,6 +97,13 @@ namespace ChatServer
                                     s_server.SendMessage(msg, s_server.Connections, NetDeliveryMethod.ReliableOrdered, 0);
                             }
 
+                            if (status == NetConnectionStatus.Connected && s_server.ConnectionsCount > 0)
+                            {
+                                NetOutgoingMessage msg = s_server.CreateMessage();
+                                msg.Write("?" + s_server.ConnectionsCount);
+                                s_server.SendMessage(msg, s_server.Connections, NetDeliveryMethod.ReliableOrdered,0);
+                            }
+
                             break;
                         case NetIncomingMessageType.Data:
                             // incoming chat message from a client
