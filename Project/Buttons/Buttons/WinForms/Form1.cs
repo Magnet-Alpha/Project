@@ -42,6 +42,7 @@ namespace Buttons
 
             ipField.KeyDown += new KeyEventHandler(keyDown);
             KeyDown += new KeyEventHandler(keyDown);
+            button2.Text = Strings.stringForKey("Cancel");
         }
 
         protected override CreateParams CreateParams
@@ -119,6 +120,17 @@ namespace Buttons
         {
             if (e.KeyCode == Keys.Return || e.KeyCode == Keys.Enter)
                 button1_Click(sender, e);
+        }
+
+        private void GetIPForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            multiState.ChangeState(new MenuState(multiState.game));
+            Close();
         }
     }
 }
