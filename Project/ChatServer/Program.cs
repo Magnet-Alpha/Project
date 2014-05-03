@@ -37,6 +37,8 @@ namespace Server
         {
             DateTime now = DateTime.Now;
             NativeMethods.AppendText(s_form.richTextBox1, now.ToString() + ": " + text);
+            Thread.Sleep(10);
+
         }
 
         static public void formClosed()
