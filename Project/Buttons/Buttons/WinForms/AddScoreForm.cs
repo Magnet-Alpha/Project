@@ -18,7 +18,7 @@ namespace Buttons
             InitializeComponent();
             this.game = game;
             Text = "You'll Catch a Virus - " + Strings.stringForKey("SaveHighScore");
-            label2.Text = Strings.stringForKey("YouScored") + score + " points";
+            
             this.Shown += new EventHandler(shown);
         }
 
@@ -30,8 +30,13 @@ namespace Buttons
         public void ShowWithScore(int score)
         {
             this.score = score;
-            label2.Text = Strings.stringForKey("YouScored") + score + " points";
-            if(!IsDisposed)
+            label2.Text = Strings.stringForKey("YouScored") + " " + score + " points";
+            if (Strings.Language == Language.French)
+            {
+                button1.Text = "Sauvegarder";
+                button2.Text = "Annuler";
+            }
+            if(!IsDisposed && score > 0)
                 Show();
 
         }

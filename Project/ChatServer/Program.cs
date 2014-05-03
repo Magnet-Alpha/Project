@@ -49,6 +49,7 @@ namespace ChatServer
                 msg.Write("Server down");
                 s_server.SendMessage(msg, s_server.Connections, NetDeliveryMethod.ReliableOrdered, 0);
             }
+            Thread.Sleep(10);
         }
 
         static void connectionCheck()

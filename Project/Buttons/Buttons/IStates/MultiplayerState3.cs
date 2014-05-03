@@ -225,8 +225,8 @@ namespace Buttons
                                     break;
                                 case "Server down":
                                     showDc = false;
-                                    MessageBox.Show(Strings.stringForKey("ServerDown"));
                                     ChangeState(new MenuState(game));
+                                    MessageBox.Show(Strings.stringForKey("ServerDown"));
                                     break;
                                 default:
                                     Console.WriteLine("Event type unhandled :" + evt.ToString());
