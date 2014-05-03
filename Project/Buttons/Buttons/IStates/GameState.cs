@@ -326,7 +326,7 @@ namespace Buttons
                     choosing = true;
                     choice.name = "b";
                     choice.attack = 10;
-                    choice.cooldown = 20;
+                    choice.cooldown = 30;
                     choice.range = 200;
                     choice.cout = 10;
                 }
@@ -448,7 +448,8 @@ namespace Buttons
                                 choice.range,
                                 game.Content,
                                 game.spriteBatch,
-                                Etat.Alive);
+                                Etat.Alive,
+                                game);
                             tower.Add(create);
                             towers[x, 2 * y] = create;
                             gold -= create.cout;
@@ -474,7 +475,7 @@ namespace Buttons
                             }
                             if (y >= 1 && towers[x, 2 * y - 1] == null)
                             {
-                                Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout, new Vector2(x * (64 * game.widthFactor) - 16 * game.widthFactor - Camera.Location.X * game.widthFactor, y * (32 * game.heightFactor) - 72 * game.heightFactor - Camera.Location.Y * game.heightFactor), new Point(x, 2 * y - 1), choice.range, game.Content, game.spriteBatch, Etat.Alive);
+                                Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout, new Vector2(x * (64 * game.widthFactor) - 16 * game.widthFactor - Camera.Location.X * game.widthFactor, y * (32 * game.heightFactor) - 72 * game.heightFactor - Camera.Location.Y * game.heightFactor), new Point(x, 2 * y - 1), choice.range, game.Content, game.spriteBatch, Etat.Alive, game);
                                 tower.Add(create);
                                 towers[x, 2 * y - 1] = create;
                                 gold -= create.cout;
