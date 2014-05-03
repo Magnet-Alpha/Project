@@ -8,6 +8,7 @@ namespace Server
 {
 	public partial class Form1 : Form
 	{
+        public bool formShown = false;
 		public Form1()
 		{
 			InitializeComponent();
@@ -43,7 +44,8 @@ namespace Server
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            new StatsForm(this).ShowForm();
+            formShown = true;
         }
 	}
 }

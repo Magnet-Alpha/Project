@@ -23,7 +23,6 @@ namespace Server
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             s_form = new Form1();
-            new StatsForm(s_server).Show();
             // set up network
             NetPeerConfiguration config = new NetPeerConfiguration("YCAV");
             config.MaximumConnections = 2;
@@ -32,7 +31,6 @@ namespace Server
 
             Application.Idle += new EventHandler(Application_Idle);
             Application.Run(s_form);
-            new Thread(connectionCheck).Start();
         }
 
         private static void Output(string text)
@@ -52,21 +50,7 @@ namespace Server
             Thread.Sleep(10);
         }
 
-        static void connectionCheck()
-        {
-            if (s_server.ConnectionsCount != con)
-            {
-
-                for (int i = con; i < s_server.Connections.Count; i++)
-                {
-                    Output(s_server.Connections[i].Peer.Configuration.LocalAddress.ToString() + " connected");
-                }
-                con = s_server.ConnectionsCount;
-            }
-            Thread.Sleep(1);
-            connectionCheck();
-        }
-
+        
 
 
         private static void Application_Idle(object sender, EventArgs e)
