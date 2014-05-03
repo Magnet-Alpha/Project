@@ -9,11 +9,19 @@ namespace Server
 	public partial class Form1 : Form
 	{
         public bool formShown = false;
+        public MyTextBox richTextBox1;
 		public Form1()
 		{
 			InitializeComponent();
             Text = "You'll Catch A Virus Server";
             FormClosed += new FormClosedEventHandler(formClosed);
+            richTextBox1 = new MyTextBox();
+            richTextBox1.Location = new System.Drawing.Point(12, 12);
+            richTextBox1.Width = 570;
+            richTextBox1.Height = 309;
+            richTextBox1.Enabled = false;
+            Controls.Add(richTextBox1);
+            
 		}
 
         void formClosed(object sender, FormClosedEventArgs e)

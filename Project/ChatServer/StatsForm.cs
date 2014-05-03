@@ -20,6 +20,7 @@ namespace Server
             InitializeComponent();
             FormClosed += new FormClosedEventHandler(formClosed);
             mainForm = form;
+            Text = "Statistics";
         }
 
         void formClosed(object sender, FormClosedEventArgs e)
