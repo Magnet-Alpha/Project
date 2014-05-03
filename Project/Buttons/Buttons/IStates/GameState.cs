@@ -89,6 +89,18 @@ namespace Buttons
 
         }
 
+        public int Life
+        {
+            get { return life; }
+            set
+            {
+                life = value;
+                if (multiState != null)
+                    multiState.sendEvent(Event.LifeChanged, value, 0);
+            }
+        }
+
+
         public GameState(Game1 game, MultiplayerState3 multi)
         {
             multiState = multi;

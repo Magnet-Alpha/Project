@@ -28,6 +28,7 @@ namespace Buttons
         TowerSold,
         VirusCall,
         GameOver,
+        LifeChanged
     }
 
     public enum Status
@@ -227,6 +228,10 @@ namespace Buttons
                                     showDc = false;
                                     ChangeState(new MenuState(game));
                                     MessageBox.Show(Strings.stringForKey("ServerDown"));
+                                    break;
+                                case "LifeChanged" :
+                                    int life = im.ReadInt32();
+                                    // life changed to handle 
                                     break;
                                 default:
                                     Console.WriteLine("Event type unhandled :" + evt.ToString());

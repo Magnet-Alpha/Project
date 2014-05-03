@@ -7,7 +7,7 @@ using Lidgren.Network;
 using System.Net;
 using SamplesCommon;
 
-namespace ChatServer
+namespace Server
 {
     static class Program
     {
@@ -23,7 +23,7 @@ namespace ChatServer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             s_form = new Form1();
-
+            new StatsForm(s_server).Show();
             // set up network
             NetPeerConfiguration config = new NetPeerConfiguration("YCAV");
             config.MaximumConnections = 2;

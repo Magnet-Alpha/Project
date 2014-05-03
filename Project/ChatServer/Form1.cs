@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
 
-namespace ChatServer
+namespace Server
 {
 	public partial class Form1 : Form
 	{
@@ -37,6 +37,11 @@ namespace ChatServer
 		}
 
         private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
         {
 
         }
