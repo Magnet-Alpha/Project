@@ -21,6 +21,7 @@ namespace Buttons
         public ContentManager c;
         public Rectangle Hitbox { get; set; }
         public int cout;
+        public Point P;
         public override Etat State
         {
             get
@@ -32,7 +33,7 @@ namespace Buttons
                 this.etat = value;
             }
         }
-        public Tower(string name, int hp, int attack, int cooldown, int cout, Vector2 position, double range, ContentManager content, CustomSpriteBatch sb, Etat e) 
+        public Tower(string name, int hp, int attack, int cooldown, int cout, Vector2 position, Point P, double range, ContentManager content, CustomSpriteBatch sb, Etat e) 
             : base(name, hp, attack, cooldown, position, content, sb, e)
         {
             this.Range = range;
@@ -45,6 +46,7 @@ namespace Buttons
             this.exist = true;
             this.Hitbox = new Rectangle((int)position.X, (int)position.Y, 32, 64);
             this.cout = cout;
+            this.P = P;
         }
 
         public Tower()
