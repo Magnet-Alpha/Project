@@ -51,6 +51,14 @@ namespace Buttons
         ImageButton firstbut;
         ImageButton secondbut;
         ImageButton backmenu;
+        ImageButton sell;
+        Text goldText;
+        Text incomeText;
+        Text lifeText;
+        Text attackText;
+        Text cooldownText;
+        Text coutText;
+        Text rangeText;
         TextButton Back;
         TextButton Retry;
         public int gold;
@@ -133,43 +141,36 @@ namespace Buttons
             
             //Text for gold etc...
             gold = 100;
-            Text goldText;
             goldText.textValue = Strings.stringForKey("Gold") + " : " + gold;
             goldText.location = new Vector2(game.width / 15, game.height - 110);
             goldText.font = font;
 
             income = 10;
-            Text incomeText;
             incomeText.textValue = Strings.stringForKey("Income") + " : " + income;
             incomeText.location = new Vector2(game.width / 15, game.height - 70);
             incomeText.font = font;
 
             life = 10;
-            Text lifeText;
             lifeText.textValue = Strings.stringForKey("Life") + " : " + life;
             lifeText.location = new Vector2(game.width / 15, game.height - 30);
             lifeText.font = font;
 
             //Text for informations 
-            Text attack;
-            attack.textValue = Strings.stringForKey("Attack") + " : " + choice.attack;
-            attack.location = new Vector2(game.width / 2 - (font.MeasureString(Strings.stringForKey("Attack") + " : " + choice.attack).X) / 2, game.height - 110);
-            attack.font = font;
+            attackText.textValue = Strings.stringForKey("Attack") + " : " + choice.attack;
+            attackText.location = new Vector2(game.width / 2 - (font.MeasureString(Strings.stringForKey("Attack") + " : " + choice.attack).X) / 2, game.height - 110);
+            attackText.font = font;
             
-            Text cooldown;
-            cooldown.textValue = Strings.stringForKey("Cooldown") + " : " + choice.cooldown;
-            cooldown.location = new Vector2(game.width / 2 + (font.MeasureString(Strings.stringForKey("Attack") + " : " + choice.attack).X) / 2 + 10, game.height - 110);
-            cooldown.font = font;
+            cooldownText.textValue = Strings.stringForKey("Cooldown") + " : " + choice.cooldown;
+            cooldownText.location = new Vector2(game.width / 2 + (font.MeasureString(Strings.stringForKey("Attack") + " : " + choice.attack).X) / 2 + 20, game.height - 110);
+            cooldownText.font = font;
             
-            Text cout;
-            cout.textValue = Strings.stringForKey("Cout") + " : " + choice.cout;
-            cout.location = new Vector2(game.width / 2 - (font.MeasureString(Strings.stringForKey("Cout") + " : " + choice.cout).X) / 2, game.height - 70);
-            cout.font = font;
+            coutText.textValue = Strings.stringForKey("Cout") + " : " + choice.cout;
+            coutText.location = new Vector2(game.width / 2 - (font.MeasureString(Strings.stringForKey("Cout") + " : " + choice.cout).X) / 2, game.height - 70);
+            coutText.font = font;
             
-            Text range;
-            range.textValue = Strings.stringForKey("Range") + " : " + choice.range;
-            range.location = new Vector2(game.width / 2 + (font.MeasureString(Strings.stringForKey("Cout") + " : " + choice.cout).X) / 2 + 10, game.height - 70);
-            range.font = font;
+            rangeText.textValue = Strings.stringForKey("Range") + " : " + choice.range;
+            rangeText.location = new Vector2(game.width / 2 + (font.MeasureString(Strings.stringForKey("Cout") + " : " + choice.cout).X) / 2 + 20, game.height - 70);
+            rangeText.font = font;
 
             Texture2D textureimg;
             textureimg = game.Content.Load<Texture2D>("W3");
@@ -177,6 +178,8 @@ namespace Buttons
             textureimg2 = game.Content.Load<Texture2D>("DrainYellow");
             Texture2D background;
             background = game.Content.Load<Texture2D>("testbackground");
+            Texture2D sellimg;
+            sellimg = game.Content.Load<Texture2D>("vendre");
             Texture2D menu;
             menu = game.Content.Load<Texture2D>("menu");
 
@@ -195,7 +198,9 @@ namespace Buttons
             Interface2 = new InterfaceInGame(new TextButton[] { Retry, Back }, game, new Text[] { GameOverText }, background, game.spriteBatch);
             Interface2.TmenuOn = false;
 
-            InterfaceInfo = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu}, game, new Text[7] { goldText, incomeText, lifeText, attack, cooldown, cout, range}, background, game.spriteBatch);
+            sell = new ImageButton(game.spriteBatch, sellimg, new Rectangle(game.width / 2, game.height - 30, sellimg.Width, sellimg.Height), game);
+
+            InterfaceInfo = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu, sell}, game, new Text[7] { goldText, incomeText, lifeText, attackText, cooldownText, coutText, rangeText}, background, game.spriteBatch);
             InterfaceInfo.MenuOn = false;
 
             //things about the map ^^
@@ -306,7 +311,7 @@ namespace Buttons
                     }
                     else
                     {
-                        if (gold > 0)
+                        if (gold > cout)
                         {
                             timer = 0;
                             cout = 5;
@@ -501,11 +506,17 @@ namespace Buttons
                     todraw = null;
                 }
 
-                if (todraw != null) 
+                if (todraw != null)
                 {
                     Interface.MenuOn = false;
                     InterfaceInfo.MenuOn = true;
                     InterfaceInfo.Update();
+                }
+                else 
+                {
+                    InterfaceInfo.MenuOn = false;
+                    Interface.MenuOn = true;
+                    Interface.Update();
                 }
 
                 timer++;
@@ -517,6 +528,13 @@ namespace Buttons
             Interface2.texts[0].textValue = Strings.stringForKey("GAMEOVER");
             Interface2.Tbuttons[0].Text = Strings.stringForKey("Retry");
             Interface2.Tbuttons[1].Text = Strings.stringForKey("BackToMainMenu");
+            InterfaceInfo.texts[0].textValue = Strings.stringForKey("Gold") + " : " + gold;
+            InterfaceInfo.texts[1].textValue = Strings.stringForKey("Income") + " : " + income;
+            InterfaceInfo.texts[2].textValue = Strings.stringForKey("Life") + " : " + life;
+            InterfaceInfo.texts[3].textValue = Strings.stringForKey("Attack") + " : " + choice.attack;
+            InterfaceInfo.texts[4].textValue = Strings.stringForKey("Cooldown") + " : " + choice.cooldown;
+            InterfaceInfo.texts[5].textValue = Strings.stringForKey("Cout") + " : " + choice.cout;
+            InterfaceInfo.texts[6].textValue = Strings.stringForKey("Range") + " : " + choice.range;
             oldMouse = mouse;
         }
 
