@@ -58,6 +58,7 @@ namespace Buttons
         public int life;
         public InterfaceInGame Interface;
         InterfaceInGame Interface2;
+        InterfaceInGame InterfaceInfo;
         private int screenHeight;
         private int screenWidth;
         SpriteFont font;
@@ -68,6 +69,7 @@ namespace Buttons
         Tower todraw;
         int timer;
         int timerInc;
+        int cout;
         public MultiplayerState3 multiState;
         int score = 0;
         AddScoreForm form;
@@ -129,6 +131,7 @@ namespace Buttons
             font = game.Content.Load<SpriteFont>("Font");
             fontGO = game.Content.Load<SpriteFont>("FontGO");
             
+            //Text for gold etc...
             gold = 100;
             Text goldText;
             goldText.textValue = Strings.stringForKey("Gold") + " : " + gold;
@@ -147,6 +150,27 @@ namespace Buttons
             lifeText.location = new Vector2(game.width / 15, game.height - 30);
             lifeText.font = font;
 
+            //Text for informations 
+            Text attack;
+            attack.textValue = Strings.stringForKey("Attack") + " : " + choice.attack;
+            attack.location = new Vector2(game.width / 2 - (font.MeasureString(Strings.stringForKey("Attack") + " : " + choice.attack).X) / 2, game.height - 110);
+            attack.font = font;
+            
+            Text cooldown;
+            cooldown.textValue = Strings.stringForKey("Cooldown") + " : " + choice.cooldown;
+            cooldown.location = new Vector2(game.width / 2 + (font.MeasureString(Strings.stringForKey("Attack") + " : " + choice.attack).X) / 2 + 10, game.height - 110);
+            cooldown.font = font;
+            
+            Text cout;
+            cout.textValue = Strings.stringForKey("Cout") + " : " + choice.cout;
+            cout.location = new Vector2(game.width / 2 - (font.MeasureString(Strings.stringForKey("Cout") + " : " + choice.cout).X) / 2, game.height - 70);
+            cout.font = font;
+            
+            Text range;
+            range.textValue = Strings.stringForKey("Range") + " : " + choice.range;
+            range.location = new Vector2(game.width / 2 + (font.MeasureString(Strings.stringForKey("Cout") + " : " + choice.cout).X) / 2 + 10, game.height - 70);
+            range.font = font;
+
             Texture2D textureimg;
             textureimg = game.Content.Load<Texture2D>("W3");
             Texture2D textureimg2;
@@ -164,12 +188,15 @@ namespace Buttons
 
             Text GameOverText;
             GameOverText.textValue = Strings.stringForKey("GAMEOVER");
-            GameOverText.location = new Vector2(game.width / 4, 5);
+            GameOverText.location = new Vector2(game.width / 2 - (font.MeasureString(Strings.stringForKey("GAMEOVER")).X) / 2, 5);
             GameOverText.font = fontGO;
-            Retry = new TextButton(font, game, Strings.stringForKey("Retry"), new Vector2(game.width / 2 - 100, game.height / 2 - 10));
+            Retry = new TextButton(font, game, Strings.stringForKey("Retry"), new Vector2(game.width / 2 - (font.MeasureString(Strings.stringForKey("Retry")).X) / 2, game.height / 2 - 10));
             Back = new TextButton(font, game, Strings.stringForKey("BackToMainMenu"), new Vector2(Retry.left, Retry.bottom));
             Interface2 = new InterfaceInGame(new TextButton[] { Retry, Back }, game, new Text[] { GameOverText }, background, game.spriteBatch);
             Interface2.TmenuOn = false;
+
+            InterfaceInfo = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu}, game, new Text[7] { goldText, incomeText, lifeText, attack, cooldown, cout, range}, background, game.spriteBatch);
+            InterfaceInfo.MenuOn = false;
 
             //things about the map ^^
             Tile.TileSetTexture = game.Content.Load<Texture2D>(@"sprites//map//maptexture");
@@ -209,7 +236,7 @@ namespace Buttons
 
         public void addVirus()
         {
-            test = new Virus("b", 100, 10, 5, new Vector2((176 - Camera.Location.X + difL.X) * game.widthFactor, (126 - Camera.Location.Y + difL.Y) * game.heightFactor), 1, game.Content, game.spriteBatch, Etat.Alive);
+            test = new Virus("b", 100, 10, cout, 5, new Vector2((176 - Camera.Location.X + difL.X) * game.widthFactor, (126 - Camera.Location.Y + difL.Y) * game.heightFactor), 1, game.Content, game.spriteBatch, Etat.Alive);
             virus.Add(test);
         }
 
@@ -272,15 +299,21 @@ namespace Buttons
                 {
                     if (multiState == null)
                     {
-                        test = new Virus("b", 100, 10, 5, new Vector2((176 - Camera.Location.X + difL.X) * game.widthFactor, (126 - Camera.Location.Y + difL.Y) * game.heightFactor), 1, game.Content, game.spriteBatch, Etat.Alive);
+                        cout = 0;
+                        test = new Virus("b", 100, 10, 5, cout, new Vector2((176 - Camera.Location.X + difL.X) * game.widthFactor, (126 - Camera.Location.Y + difL.Y) * game.heightFactor), 1, game.Content, game.spriteBatch, Etat.Alive);
                         virus.Add(test);
                         timer = 0;
                     }
                     else
                     {
-                        timer = 0;
-                        multiState.sendEvent(Event.VirusCall, 0, 0);
-
+                        if (gold > 0)
+                        {
+                            timer = 0;
+                            cout = 5;
+                            multiState.sendEvent(Event.VirusCall, 0, 0);
+                            gold -= cout;
+                            income++;
+                        }
                     }
                 }
                 if (Interface.buttonWithIndexPressed(1))
@@ -301,7 +334,6 @@ namespace Buttons
             }
             else 
             {
-                //status = GameStateStatus.Pause;
                 choosing = false;
                 Interface.menuOn = false;
                 Interface2.TmenuOn = true;
@@ -318,7 +350,7 @@ namespace Buttons
                 if (oldMouse.LeftButton == ButtonState.Released && Interface2.TbuttonWithIndexPressed(0)) 
                 {
                     ChangeState(new OSState(game));
-                    form.Close();
+                    form.Close();   
                 }
 
                 if (oldMouse.LeftButton == ButtonState.Released && Interface2.TbuttonWithIndexPressed(1))
@@ -469,6 +501,13 @@ namespace Buttons
                     todraw = null;
                 }
 
+                if (todraw != null) 
+                {
+                    Interface.MenuOn = false;
+                    InterfaceInfo.MenuOn = true;
+                    InterfaceInfo.Update();
+                }
+
                 timer++;
                 timerInc++;
             }
@@ -518,7 +557,14 @@ namespace Buttons
 
             if (life > 0)
             {
-                Interface.Draw();                  // Affichage de l'interface par dessus la map et les virus et les tours
+                if (todraw != null)
+                {
+                    InterfaceInfo.Draw();                  // Affichage de l'interface par dessus la map et les virus et les tours
+                }
+                else 
+                {
+                    Interface.Draw();
+                }
                 game.spriteBatch.Draw(game.Content.Load<Texture2D>("whit"), new Rectangle(Interface.buttons[0].left + 2, Interface.buttons[0].bottom + 3, (int)((float)timer / 600 * 36), 3), Color.Blue);
             }
             else

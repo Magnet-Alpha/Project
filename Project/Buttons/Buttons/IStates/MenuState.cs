@@ -88,7 +88,7 @@ namespace Buttons
             mainMenu = new InterfaceMenu(new TextButton[] { newGameButton, continueButton, optionsButton, exitButton, websiteButton, highScoresButton }, new Text[] { }, background, game);
             mainMenu.MenuOn = true;
 
-            test = new Virus("b", 10, 10, 5, new Vector2(500, 100), 1, game.Content, game.spriteBatch, Etat.Alive);
+            test = new Virus("b", 10, 10, 5, 0, new Vector2(500, 100), 1, game.Content, game.spriteBatch, Etat.Alive);
             test3 = new Keypoint(new Vector2(500, 100), true, false);
             test4 = new Keypoint(new Vector2(500, 300), true, false);
             test5 = new Keypoint(new Vector2(700, 100), true, false);

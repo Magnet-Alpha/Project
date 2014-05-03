@@ -17,6 +17,7 @@ namespace Buttons
         public double Speed { get; set; }
         private int dir;
         private int x;
+        public int cout;
         private Texture2D lifebar;
         public override Etat State
         {
@@ -29,7 +30,7 @@ namespace Buttons
                 this.etat = value;
             }
         }
-        public Virus(string name, int hp, int attack, int cooldown, Vector2 position, double speed, ContentManager content, CustomSpriteBatch sb, Etat e) : base(name, hp, attack, cooldown, position, content, sb, e)
+        public Virus(string name, int hp, int attack, int cooldown, int cout , Vector2 position, double speed, ContentManager content, CustomSpriteBatch sb, Etat e) : base(name, hp, attack, cooldown, position, content, sb, e)
         {
             this.Speed = speed;
             dir = 3;
@@ -39,6 +40,7 @@ namespace Buttons
             imgs.Add(content.Load<Texture2D>("TestSprites\\test attack 1" + this.Name));
             imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
             lifebar = content.Load<Texture2D>("Sprites\\virus\\lifebar");
+            this.cout = cout;
         }
         public void NewPosition(Vector2 E)
         {
