@@ -180,8 +180,6 @@ namespace Buttons
             game.spriteBatch.DrawString(font, LevelString((int)(game.music.Volume * 10)), new Vector2(optionsMenu.buttons[3].textLocation.X + 60, optionsMenu.buttons[3].textLocation.Y), Color.White);
             game.spriteBatch.DrawString(font, LevelString((int)(game.settings.SoundEffectVolume * 10)), new Vector2(optionsMenu.buttons[1].textLocation.X + 60, optionsMenu.buttons[1].textLocation.Y), Color.White);
             
-
-            
         }
         public void Initialize() { }
 

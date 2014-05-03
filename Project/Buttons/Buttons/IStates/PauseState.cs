@@ -57,15 +57,9 @@ namespace Buttons
         public void Draw(GameTime gameTime)
         {
             pauseMenu.Draw();
-
-
         }
         public void Initialize()
         {
-
-
-
-
         }
 
 
