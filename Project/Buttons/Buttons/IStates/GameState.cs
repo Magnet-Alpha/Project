@@ -217,34 +217,36 @@ namespace Buttons
             //Modifier la coordonnée "4" pour accélérer ou deccélérer la vitesse de déplacement de la caméra
             KeyboardState ks = Keyboard.GetState();
             MouseState mouse = Mouse.GetState();
-            ancientL = Camera.Location;
-            if (ks.IsKeyDown(Keys.Left) || mouse.X < 20 )
+            if (life > 0)
             {
-                Camera.Location.X = MathHelper.Clamp(Camera.Location.X - 4, 0, 
-                    (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
-                difL = Camera.Location - ancientL;
-            }
+                ancientL = Camera.Location;
+                if (ks.IsKeyDown(Keys.Left) || mouse.X < 20 )
+                {
+                    Camera.Location.X = MathHelper.Clamp(Camera.Location.X - 4, 0, 
+                        (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
+                    difL = Camera.Location - ancientL;
+                }
 
-            if (ks.IsKeyDown(Keys.Right) || (mouse.X > game.width - 20))
-            {
-                Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 4, 0, 
-                     (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
-                difL = Camera.Location - ancientL;
-            }
+                if (ks.IsKeyDown(Keys.Right) || (mouse.X > game.width - 20))
+                {
+                    Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 4, 0, 
+                         (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
+                    difL = Camera.Location - ancientL;
+                }
 
-            if (ks.IsKeyDown(Keys.Up) || mouse.Y < 30)
-            {
-                Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y - 4, 0, 
-                    (myMap.MapHeight - squaresDown) * Tile.TileStepY);
-                difL = Camera.Location - ancientL;
-            }
+                if (ks.IsKeyDown(Keys.Up) || mouse.Y < 30)
+                {
+                    Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y - 4, 0, 
+                        (myMap.MapHeight - squaresDown) * Tile.TileStepY);
+                    difL = Camera.Location - ancientL;
+                }
 
-            if (ks.IsKeyDown(Keys.Down) || mouse.Y > game.height - 20)
-            {
-                Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y + 4, 0, 
-                    (myMap.MapHeight - squaresDown) * Tile.TileStepY);
-                difL = Camera.Location - ancientL;
-            }
+                if (ks.IsKeyDown(Keys.Down) || mouse.Y > game.height - 20)
+                {
+                    Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y + 4, 0, 
+                        (myMap.MapHeight - squaresDown) * Tile.TileStepY);
+                    difL = Camera.Location - ancientL;
+                }
 
 
 
@@ -252,8 +254,6 @@ namespace Buttons
 
             //-------------------- Gestion Boutons InGame ---------------------
 
-            if (life > 0)
-            {
                 Interface.Update();
 
                 if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0) || timer == 600)
@@ -324,134 +324,137 @@ namespace Buttons
             oldKs = ks;
 
 
-            foreach (Keypoint k in keypoints)
+            if (life > 0)
             {
-                k.TheCamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                              //Correcting Camera location problems
-            }
-            foreach (Virus v in virus)
-            {
-                v.fuckingcamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                          //Correcting Camera location problems
-                v.NewPosition(new Vector2(game.widthFactor, game.heightFactor));                                                                  //Virus moving
-                v.Turn(keypoints, ref life);                                           //Virus turning and dying at objective
-                v.Death(ref gold, keypoints, ref score);
-            }
-            int m = 0;
-            while (m < virus.Count)
-            {
-                if (virus[m].State == Etat.Dead)
-                    virus.RemoveAt(m);
-                else
-                    m++;
-            }
-            foreach (Projectile p in projs)
-            {
-                p.TheCamera(difL);
-                p.NewPosition();
-                p.Destruction();
-            }
-            int n = 0;
-            while(n < projs.Count)
-            {
-                if (!projs[n].isalive)
-                    projs.RemoveAt(n);
-                else
-                    n++;
-            }
-            // TODO: Add your update logic here
-            foreach (Tower t in tower)
-            {
-                t.fuckingcamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                          //Correcting Camera location problems
-                t.Stating(virus);                                                               //Detecting viruses
-                t.Attacking(ref projs);
-            }
-            difL = new Vector2(0,0);
-
-
-
-            if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released && mouse.X < game.width - game.width / 12 && mouse.Y > 0 && mouse.X > 0 && mouse.Y < game.height - game.height / 5)
-            {
-                if (choosing && gold >= choice.cout)
+                foreach (Keypoint k in keypoints)
                 {
-                    float zx = (mouse.X + Camera.Location.X) % (64 * game.widthFactor);
-                    float zy = (mouse.Y + Camera.Location.Y - 16 * game.heightFactor) % (32 * game.heightFactor);
-                    int x = (int)((mouse.X + Camera.Location.X) / (64 * game.widthFactor));
-                    int y = (int)((mouse.Y + Camera.Location.Y + 16 * game.heightFactor) / (32 * game.heightFactor));
-                    if (towers[x, 2 * y] == null && TheMap(zx, zy))
-                    {
-                        Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout,
-                            new Vector2(x * (64 * game.widthFactor) + 16 * game.widthFactor - Camera.Location.X * game.widthFactor,
-                            y * (32 * game.heightFactor) - 56 * game.heightFactor - Camera.Location.Y * game.heightFactor),
-                            choice.range,
-                            game.Content,
-                            game.spriteBatch,
-                            Etat.Alive);
-                        tower.Add(create);
-                        towers[x, 2 * y] = create;
-                        gold -= create.cout;
-                        todraw = create;
-                    }
+                    k.TheCamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                              //Correcting Camera location problems
+                }
+                foreach (Virus v in virus)
+                {
+                    v.fuckingcamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                          //Correcting Camera location problems
+                    v.NewPosition(new Vector2(game.widthFactor, game.heightFactor));                                                                  //Virus moving
+                    v.Turn(keypoints, ref life);                                           //Virus turning and dying at objective
+                    v.Death(ref gold, keypoints, ref score);
+                }
+                int m = 0;
+                while (m < virus.Count)
+                {
+                    if (virus[m].State == Etat.Dead)
+                        virus.RemoveAt(m);
                     else
+                        m++;
+                }
+                foreach (Projectile p in projs)
+                {
+                    p.TheCamera(difL);
+                    p.NewPosition();
+                    p.Destruction();
+                }
+                int n = 0;
+                while (n < projs.Count)
+                {
+                    if (!projs[n].isalive)
+                        projs.RemoveAt(n);
+                    else
+                        n++;
+                }
+                // TODO: Add your update logic here
+                foreach (Tower t in tower)
+                {
+                    t.fuckingcamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                          //Correcting Camera location problems
+                    t.Stating(virus);                                                               //Detecting viruses
+                    t.Attacking(ref projs);
+                }
+                difL = new Vector2(0, 0);
+
+
+
+                if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released && mouse.X < game.width - game.width / 12 && mouse.Y > 0 && mouse.X > 0 && mouse.Y < game.height - game.height / 5)
+                {
+                    if (choosing && gold >= choice.cout)
                     {
-                        int pr = TheMap2(zx, zy);
-                        switch (pr)
+                        float zx = (mouse.X + Camera.Location.X) % (64 * game.widthFactor);
+                        float zy = (mouse.Y + Camera.Location.Y - 16 * game.heightFactor) % (32 * game.heightFactor);
+                        int x = (int)((mouse.X + Camera.Location.X) / (64 * game.widthFactor));
+                        int y = (int)((mouse.Y + Camera.Location.Y + 16 * game.heightFactor) / (32 * game.heightFactor));
+                        if (towers[x, 2 * y] == null && TheMap(zx, zy))
                         {
-                            case 1:
-                                break;
-                            case 2:
-                                x++;
-                                break;
-                            case 3:
-                                x++;
-                                y++;
-                                break;
-                            default:
-                                y++;
-                                break;
-                        }
-                        if (y >= 1 && towers[x, 2 * y - 1] == null)
-                        {
-                            Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout, new Vector2(x * (64 * game.widthFactor) - 16 * game.widthFactor - Camera.Location.X * game.widthFactor, y * (32 * game.heightFactor) - 72 * game.heightFactor - Camera.Location.Y * game.heightFactor), choice.range, game.Content, game.spriteBatch, Etat.Alive);
+                            Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout,
+                                new Vector2(x * (64 * game.widthFactor) + 16 * game.widthFactor - Camera.Location.X * game.widthFactor,
+                                y * (32 * game.heightFactor) - 56 * game.heightFactor - Camera.Location.Y * game.heightFactor),
+                                choice.range,
+                                game.Content,
+                                game.spriteBatch,
+                                Etat.Alive);
                             tower.Add(create);
-                            towers[x, 2 * y - 1] = create;
+                            towers[x, 2 * y] = create;
                             gold -= create.cout;
                             todraw = create;
                         }
-                    }
-                }
-                else
-                {
-                    Point p = new Point(mouse.X, mouse.Y);
-                    int x = (int)((mouse.X + Camera.Location.X) / (64 * game.widthFactor));
-                    int y = (int)((mouse.Y + Camera.Location.Y + 16 * game.heightFactor) / (32 * game.heightFactor));
-                    int zx = x;
-                    while (zx <= x + 1)
-                    {
-                        int zy = y + 3;
-                        while (zy >= y - 1)
+                        else
                         {
-                            if (zx >= 0 && zy >= 0 && towers[zx, zy] != null && towers[zx, zy].exist && towers[zx, zy].Hitbox.Contains(p))
+                            int pr = TheMap2(zx, zy);
+                            switch (pr)
                             {
-                                todraw = towers[zx, zy];
-                                zy = y - 1;
-                                zx = x + 1;
+                                case 1:
+                                    break;
+                                case 2:
+                                    x++;
+                                    break;
+                                case 3:
+                                    x++;
+                                    y++;
+                                    break;
+                                default:
+                                    y++;
+                                    break;
                             }
-                            else
-                                todraw = null;
-                            zy--;
+                            if (y >= 1 && towers[x, 2 * y - 1] == null)
+                            {
+                                Tower create = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout, new Vector2(x * (64 * game.widthFactor) - 16 * game.widthFactor - Camera.Location.X * game.widthFactor, y * (32 * game.heightFactor) - 72 * game.heightFactor - Camera.Location.Y * game.heightFactor), choice.range, game.Content, game.spriteBatch, Etat.Alive);
+                                tower.Add(create);
+                                towers[x, 2 * y - 1] = create;
+                                gold -= create.cout;
+                                todraw = create;
+                            }
                         }
-                        zx++;
+                    }
+                    else
+                    {
+                        Point p = new Point(mouse.X, mouse.Y);
+                        int x = (int)((mouse.X + Camera.Location.X) / (64 * game.widthFactor));
+                        int y = (int)((mouse.Y + Camera.Location.Y + 16 * game.heightFactor) / (32 * game.heightFactor));
+                        int zx = x;
+                        while (zx <= x + 1)
+                        {
+                            int zy = y + 3;
+                            while (zy >= y - 1)
+                            {
+                                if (zx >= 0 && zy >= 0 && towers[zx, zy] != null && towers[zx, zy].exist && towers[zx, zy].Hitbox.Contains(p))
+                                {
+                                    todraw = towers[zx, zy];
+                                    zy = y - 1;
+                                    zx = x + 1;
+                                }
+                                else
+                                    todraw = null;
+                                zy--;
+                            }
+                            zx++;
+                        }
                     }
                 }
-            }
 
-            if (mouse.RightButton == ButtonState.Pressed)
-            {
-                choosing = false;
-                todraw = null;
-            }
+                if (mouse.RightButton == ButtonState.Pressed)
+                {
+                    choosing = false;
+                    todraw = null;
+                }
 
-            timer++;
-            timerInc++;
+                timer++;
+                timerInc++;
+            }
             Interface.texts[0].textValue = Strings.stringForKey("Gold") + " : " + gold;
             Interface.texts[1].textValue = Strings.stringForKey("Income") + " : " + income;
             Interface.texts[2].textValue = Strings.stringForKey("Life") + " : " + life;
