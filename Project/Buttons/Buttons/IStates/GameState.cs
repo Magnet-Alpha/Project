@@ -199,7 +199,6 @@ namespace Buttons
         {
             test = new Virus("b", 100, 10, 5, new Vector2((176 - Camera.Location.X + difL.X) * game.widthFactor, (126 - Camera.Location.Y + difL.Y) * game.heightFactor), 1, game.Content, game.spriteBatch, Etat.Alive);
             virus.Add(test);
-            timer = 0;
         }
 
         int abs(int a)
@@ -267,6 +266,7 @@ namespace Buttons
                     }
                     else
                     {
+                        timer = 0;
                         multiState.sendEvent(Event.VirusCall, 0, 0);
 
                     }
