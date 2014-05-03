@@ -166,6 +166,8 @@ namespace Buttons
             {
                 ChangeState(previousState);
             }
+            previousState.LoadContent();
+            previousState.Initialize();
             game.settings.saveSettings();
         }
         public void Draw(GameTime gameTime)

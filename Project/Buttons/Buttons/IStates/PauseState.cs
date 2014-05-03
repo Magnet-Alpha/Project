@@ -74,10 +74,10 @@ namespace Buttons
 
             background = game.Content.Load<Texture2D>("background");
 
-            TextButton returnGameButton = new TextButton(font, game, "Resume game", new Vector2(game.width / 2 - font.MeasureString("Resume game").X / 2, 200));
+            TextButton returnGameButton = new TextButton(font, game, Strings.stringForKey("Resume"), new Vector2(game.width / 2 - font.MeasureString("Resume game").X / 2, 200));
             TextButton optionsButton = new TextButton(font, game, "Options", new Vector2(game.width / 2 - font.MeasureString("Options").X / 2, returnGameButton.textLocation.Y + font.MeasureString("Options").Y + 20));
-            TextButton returnMainMenuButton = new TextButton(font, game, "Return to main menu", new Vector2(game.width / 2 - font.MeasureString("Return to main menu").X / 2, optionsButton.textLocation.Y + font.MeasureString("Return to main menu").Y + 20));
-            pauseMenu = new InterfaceMenu(new TextButton[3] { returnGameButton, optionsButton, returnMainMenuButton }, new Text[1] { new Text("Pause Menu", new Vector2(game.width / 2 - font.MeasureString("Pause Menu").X / 2, 50), font) }, background, game);
+            TextButton returnMainMenuButton = new TextButton(font, game, Strings.stringForKey("ReturnToMainMenu"), new Vector2(game.width / 2 - font.MeasureString("Return to main menu").X / 2, optionsButton.textLocation.Y + font.MeasureString("Return to main menu").Y + 20));
+            pauseMenu = new InterfaceMenu(new TextButton[3] { returnGameButton, optionsButton, returnMainMenuButton }, new Text[1] { new Text("Pause", new Vector2(game.width / 2 - font.MeasureString("Pause").X / 2, 50), font) }, background, game);
 
             pauseMenu.MenuOn = true;
 
