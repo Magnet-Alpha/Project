@@ -198,6 +198,8 @@
     <Content Include="French.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Lidgren.Network.dll" />
+    <Content Include="SamplesCommon.dll" />
     <Content Include="scores.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
