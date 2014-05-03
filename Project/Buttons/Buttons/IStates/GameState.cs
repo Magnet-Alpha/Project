@@ -490,7 +490,7 @@ namespace Buttons
                         int zx = x;
                         while (zx <= x + 1)
                         {
-                            int zy = y + 3;
+                            int zy = 2 * y + 3;
                             while (zy >= y - 1)
                             {
                                 if (zx >= 0 && zy >= 0 && towers[zx, zy] != null && towers[zx, zy].exist && towers[zx, zy].Hitbox.Contains(p))
