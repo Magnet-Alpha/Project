@@ -52,7 +52,7 @@ namespace Buttons
                 return;
             }
             int i = 0;
-            while (i < scores.Count || scores[i].score > score.score)
+            while (i < scores.Count && scores[i].score > score.score)
             {
                 i++;
             }

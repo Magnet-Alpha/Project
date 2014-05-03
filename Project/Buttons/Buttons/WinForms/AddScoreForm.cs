@@ -31,7 +31,8 @@ namespace Buttons
         {
             this.score = score;
             label2.Text = Strings.stringForKey("YouScored") + score + " points";
-            Show();
+            if(!IsDisposed)
+                Show();
 
         }
 
