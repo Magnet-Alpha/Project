@@ -67,7 +67,7 @@ namespace Buttons
 
                     
                     
-                    if (os == OS.Windows && n == 1)
+                    if (os == OS.Windows)
                         ChangeState(new GameState(game));
 
                     if (os == OS.Windows)
