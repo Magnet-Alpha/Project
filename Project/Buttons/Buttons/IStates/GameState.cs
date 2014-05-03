@@ -154,7 +154,7 @@ namespace Buttons
             GameOverText.textValue = Strings.stringForKey("GAMEOVER");
             GameOverText.location = new Vector2(game.width / 4, 5);
             GameOverText.font = fontGO;
-            Retry = new TextButton(font, game, Strings.stringForKey("Retry"), new Vector2(game.width / 2, game.height / 2));
+            Retry = new TextButton(font, game, Strings.stringForKey("Retry"), new Vector2(game.width / 2 - 100, game.height / 2 - 10));
             Back = new TextButton(font, game, Strings.stringForKey("BackToMainMenu"), new Vector2(Retry.left, Retry.bottom));
             Interface2 = new InterfaceInGame(new TextButton[] { Retry, Back }, game, new Text[] { GameOverText }, background, game.spriteBatch);
             Interface2.TmenuOn = false;
@@ -306,10 +306,15 @@ namespace Buttons
                 if (oldMouse.LeftButton == ButtonState.Released && Interface2.TbuttonWithIndexPressed(0)) 
                 {
                     ChangeState(new OSState(game));
+                    form.Close();
                 }
 
                 if (oldMouse.LeftButton == ButtonState.Released && Interface2.TbuttonWithIndexPressed(1))
+                {
                     ChangeState(new MenuState(game));
+                    form.Close();
+                }
+               
             }
             //-----------------------------------------------------------------
 
@@ -459,7 +464,8 @@ namespace Buttons
             Interface.texts[1].textValue = Strings.stringForKey("Income") + " : " + income;
             Interface.texts[2].textValue = Strings.stringForKey("Life") + " : " + life;
             Interface2.texts[0].textValue = Strings.stringForKey("GAMEOVER");
-
+            Interface2.Tbuttons[0].Text = Strings.stringForKey("Retry");
+            Interface2.Tbuttons[1].Text = Strings.stringForKey("BackToMainMenu");
             oldMouse = mouse;
         }
 
