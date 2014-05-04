@@ -50,6 +50,7 @@ namespace Buttons
         bool showDc = true;
         Status gameStatus;
         MouseState oldMs = new MouseState();
+        int life = 0;
 
         public MultiplayerState3(Game1 game)
         {
@@ -230,7 +231,7 @@ namespace Buttons
                                     MessageBox.Show(Strings.stringForKey("ServerDown"));
                                     break;
                                 case "LifeChanged" :
-                                    int life = im.ReadInt32();
+                                    life = im.ReadInt32();
                                     // life changed to handle 
                                     break;
                                 default:

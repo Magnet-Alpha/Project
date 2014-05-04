@@ -375,7 +375,7 @@ namespace Buttons
             //-----------------------------------------------------------------
 
             //--------------------Gestion Pause -------------------------------
-            if (ks.IsKeyDown(Keys.Escape) && !oldKs.IsKeyDown(Keys.Escape) || Interface.buttonWithIndexPressed(2)) 
+            if ((ks.IsKeyDown(Keys.Escape) && !oldKs.IsKeyDown(Keys.Escape) || Interface.buttonWithIndexPressed(2)) && multiState == null) 
             {
                 status = GameStateStatus.Pause;
                 choosing = false;
