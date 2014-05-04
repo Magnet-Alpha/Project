@@ -58,6 +58,7 @@ namespace Buttons
 
             if (settings.fullScreen)
                 graphics.ToggleFullScreen();
+
         }
 
 

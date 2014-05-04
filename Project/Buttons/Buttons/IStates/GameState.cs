@@ -67,6 +67,7 @@ namespace Buttons
         public InterfaceInGame Interface;
         InterfaceInGame Interface2;
         InterfaceInGame InterfaceInfo;
+        InterfaceInGame InterfaceWin;
         private int screenHeight;
         private int screenWidth;
         SpriteFont font;
@@ -81,6 +82,8 @@ namespace Buttons
         public MultiplayerState3 multiState;
         int score = 0;
         AddScoreForm form;
+        public bool win = false;
+        bool gameOver = false;
 
         public GameState(Game1 game)
         {
@@ -203,6 +206,14 @@ namespace Buttons
             InterfaceInfo = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu, sell}, game, new Text[7] { goldText, incomeText, lifeText, attackText, cooldownText, coutText, rangeText}, background, game.spriteBatch);
             InterfaceInfo.MenuOn = false;
 
+            Text winText;
+            winText.textValue = Strings.stringForKey("Win");
+            winText.location = new Vector2(game.width / 2 - font.MeasureString(winText.textValue).X/2, 5);
+            winText.font = fontGO;
+
+            InterfaceWin = new InterfaceInGame(new TextButton[] { Retry, Back }, game, new Text[] { winText }, background, game.spriteBatch);
+            InterfaceWin.TmenuOn = false;
+
             //things about the map ^^
             Tile.TileSetTexture = game.Content.Load<Texture2D>(@"sprites//map//maptexture");
             test3 = new Keypoint(new Vector2(176 - Camera.Location.X, 542 - Camera.Location.Y), true, false);
@@ -261,42 +272,42 @@ namespace Buttons
             //Modifier la coordonnée "4" pour accélérer ou deccélérer la vitesse de déplacement de la caméra
             KeyboardState ks = Keyboard.GetState();
             MouseState mouse = Mouse.GetState();
-            if (life > 0)
+            if (life > 0 && !win)
             {
                 ancientL = Camera.Location;
-                if (ks.IsKeyDown(Keys.Left) || mouse.X < 20 )
+                if (ks.IsKeyDown(Keys.Left) || mouse.X < 20)
                 {
-                    Camera.Location.X = MathHelper.Clamp(Camera.Location.X - 4, 0, 
+                    Camera.Location.X = MathHelper.Clamp(Camera.Location.X - 4, 0,
                         (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
                     difL = Camera.Location - ancientL;
                 }
 
                 if (ks.IsKeyDown(Keys.Right) || (mouse.X > game.width - 20))
                 {
-                    Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 4, 0, 
+                    Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 4, 0,
                          (myMap.MapWidth - squaresAcross) * Tile.TileStepX);
                     difL = Camera.Location - ancientL;
                 }
 
                 if (ks.IsKeyDown(Keys.Up) || mouse.Y < 30)
                 {
-                    Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y - 4, 0, 
+                    Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y - 4, 0,
                         (myMap.MapHeight - squaresDown) * Tile.TileStepY);
                     difL = Camera.Location - ancientL;
                 }
 
                 if (ks.IsKeyDown(Keys.Down) || mouse.Y > game.height - 20)
                 {
-                    Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y + 4, 0, 
+                    Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y + 4, 0,
                         (myMap.MapHeight - squaresDown) * Tile.TileStepY);
                     difL = Camera.Location - ancientL;
                 }
 
 
 
-            //-----------------------------------------------------------------
+                //-----------------------------------------------------------------
 
-            //-------------------- Gestion Boutons InGame ---------------------
+                //-------------------- Gestion Boutons InGame ---------------------
 
                 Interface.Update();
 
@@ -311,7 +322,7 @@ namespace Buttons
                     }
                     else
                     {
-                        if (gold > cout)
+                        if (gold >= cout)
                         {
                             timer = 0;
                             cout = 5;
@@ -338,39 +349,75 @@ namespace Buttons
                     todraw = null;
                 }
 
-                if (timerInc == 600) 
+                if (timerInc == 600)
                 {
                     gold += income;
                     timerInc = 0;
                 }
             }
-            else 
+            else
             {
-                choosing = false;
-                Interface.menuOn = false;
-                Interface2.TmenuOn = true;
-                Interface2.TUpdate();
-                if (multiState != null)
-                    multiState.sendEvent(Event.GameOver, 0, 0);
-                else
+                if (life <= 0)
                 {
-                    if (game.settings.Scores.Count == 0 || game.settings.Scores.Count < 10 || score > game.settings.Scores[game.settings.Scores.Count - 1].score)
+                    choosing = false;
+                    Interface.menuOn = false;
+                    Interface2.TmenuOn = true;
+                    Interface2.TUpdate();
+                    if (multiState != null && !gameOver)
                     {
-                        form.ShowWithScore(score);
+                        multiState.sendEvent(Event.GameOver, 0, 0);
+                        gameOver = true;
+                    }
+                    else
+                    {
+                        if (game.settings.Scores.Count == 0 || game.settings.Scores.Count < 10 || score > game.settings.Scores[game.settings.Scores.Count - 1].score)
+                        {
+                            form.ShowWithScore(score);
+                        }
+                    }
+                    if (multiState == null && oldMouse.LeftButton == ButtonState.Released && Interface2.TbuttonWithIndexPressed(0))
+                    {
+                        if (multiState != null)
+                        {
+                            multiState.showDc = false;
+                            multiState.Shutdown();
+                        }
+                        ChangeState(new OSState(game));
+                        form.Close();
+                    }
+
+                    if (oldMouse.LeftButton == ButtonState.Released && Interface2.TbuttonWithIndexPressed(1))
+                    {
+                        if (multiState != null)
+                        {
+                            multiState.showDc = false;
+                            multiState.Shutdown();
+                        }
+
+                        ChangeState(new MenuState(game));
+                        form.Close();
+                        
                     }
                 }
-                if (oldMouse.LeftButton == ButtonState.Released && Interface2.TbuttonWithIndexPressed(0)) 
-                {
-                    ChangeState(new OSState(game));
-                    form.Close();   
-                }
 
-                if (oldMouse.LeftButton == ButtonState.Released && Interface2.TbuttonWithIndexPressed(1))
+                else 
                 {
-                    ChangeState(new MenuState(game));
-                    form.Close();
+                    choosing = false;
+                    Interface.menuOn = false;
+                    InterfaceWin.TmenuOn = true;
+                    InterfaceWin.TUpdate();
+                    if (oldMouse.LeftButton == ButtonState.Released && Interface2.TbuttonWithIndexPressed(0))
+                    {
+                        ChangeState(new OSState(game));
+                        form.Close();
+                    }
+
+                    if (oldMouse.LeftButton == ButtonState.Released && Interface2.TbuttonWithIndexPressed(1))
+                    {
+                        ChangeState(new MenuState(game));
+                        form.Close();
+                    }
                 }
-               
             }
             //-----------------------------------------------------------------
 
@@ -385,7 +432,7 @@ namespace Buttons
             oldKs = ks;
 
 
-            if (life > 0)
+            if (life > 0 && !win)
             {
                 foreach (Keypoint k in keypoints)
                 {
@@ -544,6 +591,7 @@ namespace Buttons
             InterfaceInfo.texts[4].textValue = Strings.stringForKey("Cooldown") + " : " + choice.cooldown;
             InterfaceInfo.texts[5].textValue = Strings.stringForKey("Cout") + " : " + choice.cout;
             InterfaceInfo.texts[6].textValue = Strings.stringForKey("Range") + " : " + choice.range;
+
             oldMouse = mouse;
         }
 
@@ -582,7 +630,7 @@ namespace Buttons
                 x++;
             }
 
-            if (life > 0)
+            if (life > 0 && !win)
             {
                 if (todraw != null)
                 {
@@ -594,9 +642,13 @@ namespace Buttons
                 }
                 game.spriteBatch.Draw(game.Content.Load<Texture2D>("whit"), new Rectangle(Interface.buttons[0].left + 2, Interface.buttons[0].bottom + 3, (int)((float)timer / 600 * 36), 3), Color.Blue);
             }
-            else
+            else if (life <= 0)
             {
                 Interface2.TDraw();
+            }
+            else 
+            {
+                InterfaceWin.TDraw();
             }
 
             //---------------------------------------------------------------------------------------

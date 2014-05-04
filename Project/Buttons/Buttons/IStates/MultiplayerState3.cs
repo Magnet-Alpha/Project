@@ -47,7 +47,7 @@ namespace Buttons
         bool connected = false;
         NetConnectionStatus status = NetConnectionStatus.Disconnected;
         public GetIPForm IPform;
-        bool showDc = true;
+        public bool showDc = true;
         Status gameStatus;
         MouseState oldMs = new MouseState();
         int life = 0;
@@ -219,6 +219,7 @@ namespace Buttons
                                     Console.WriteLine("Virus called");
                                     break;
                                 case "GameOver":
+                                    gameState.win = true;
                                     // game over to handle (player wins)
                                     break;
                                 case "#dc":

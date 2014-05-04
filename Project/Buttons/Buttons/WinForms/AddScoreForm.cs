@@ -18,14 +18,11 @@ namespace Buttons
             InitializeComponent();
             this.game = game;
             Text = "You'll Catch a Virus - " + Strings.stringForKey("SaveHighScore");
-            
-            this.Shown += new EventHandler(shown);
+            StartPosition = FormStartPosition.CenterScreen;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
         }
 
-        void shown(object sender, EventArgs e)
-        {
-            Console.WriteLine(score);
-        }
+
 
         public void ShowWithScore(int score)
         {
@@ -46,7 +43,6 @@ namespace Buttons
             game.settings.addScore(new HighScore(textBox1.Text, score));
             game.settings.saveSettings();
             Close();
-            new HighScores(game).Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
