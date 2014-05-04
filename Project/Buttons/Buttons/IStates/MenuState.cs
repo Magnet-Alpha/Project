@@ -56,6 +56,7 @@ namespace Buttons
             // TODO: Add your initialization logic here
 
             game.music.Play();
+            game.music2.Stop();
             mainMenu.MenuOn = true;
             highScoresFrom = new HighScores(game);
         }

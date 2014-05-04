@@ -120,6 +120,7 @@ namespace Buttons
                 try
                 {
                     game.music.Volume -= 0.1f;
+                    game.music2.Volume -= 0.1f;
                 }
                 catch { game.music.Volume = 0; }
                 game.settings.musicVolume = game.music.Volume;
@@ -129,6 +130,7 @@ namespace Buttons
             if (optionsMenu.buttonWithIndexPressed(4) && game.music.Volume + 0.1 <= 1)
             {
                 game.music.Volume += 0.1f;
+                game.music2.Volume += 0.1f;
                 game.settings.musicVolume = game.music.Volume;
                 while (Mouse.GetState().LeftButton == ButtonState.Pressed) { }
             }

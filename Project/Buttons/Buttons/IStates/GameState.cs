@@ -133,6 +133,8 @@ namespace Buttons
 
         public void Initialize()
         {
+            game.music.Stop();
+            game.music2.Play();
         }
 
 

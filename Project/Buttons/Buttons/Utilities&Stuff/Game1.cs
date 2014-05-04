@@ -22,6 +22,7 @@ namespace Buttons
         public CustomSpriteBatch spriteBatch;
         public IState gameState;
         public SoundEffectInstance music;
+        public SoundEffectInstance music2;
         public int height;
         public int width;
         public UserSetting settings;
@@ -45,11 +46,13 @@ namespace Buttons
             
             this.Window.Title = "You'll Catch A Virus";
             music = Content.Load<SoundEffect>("music").CreateInstance();
+            music2 = Content.Load<SoundEffect>("game2").CreateInstance();
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
             width = 800;
             height = 600;
             music.IsLooped = true;
+            music2.IsLooped = true;
             settings = new UserSetting();
             
             
@@ -86,6 +89,7 @@ namespace Buttons
             Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
 
             music.Volume = settings.musicVolume;
+            music2.Volume = settings.musicVolume;
             Textures.Load(Content);
             gameState = new IntroState(this);
 
