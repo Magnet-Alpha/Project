@@ -37,8 +37,6 @@ namespace Buttons
             x = 0;
             this.Center = new Vector2(this.Position.X + 16, this.Position.Y + 16);
             imgs.Add(content.Load<Texture2D>("Sprites\\virus\\virus-sprite1"));
-            imgs.Add(content.Load<Texture2D>("TestSprites\\test attack 1" + this.Name));
-            imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
             lifebar = content.Load<Texture2D>("Sprites\\virus\\lifebar");
             this.cout = cout;
         }
@@ -114,6 +112,14 @@ namespace Buttons
         public override void fuckingcamera(Vector2 L, Vector2 E)
         {
             base.fuckingcamera(L, E);
+        }
+    }
+
+    class Virus1 : Virus
+    {
+        public Virus1(int cout, Vector2 Position, ContentManager content, CustomSpriteBatch sb)
+            : base("Virus1", 100, 10, cout, 5, Position, 1, content, sb, Etat.Alive)
+        {
         }
     }
 }

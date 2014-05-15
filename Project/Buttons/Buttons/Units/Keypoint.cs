@@ -17,21 +17,38 @@ namespace Buttons
         public Vector2 position;
         public bool vers_g;
         public bool objectif;
-        public Keypoint(Vector2 position, bool vers_g, bool objectif)
+        public Keypoint(Vector2 position, bool vers_g)
         {
             this.position = position;
             this.vers_g = vers_g;
-            this.objectif = objectif;
+            this.objectif = false;
         }
 
-        public void TheCamera(Vector2 L, Vector2 E)
+        public void TheCamera(Vector2 L)
         {
-            this.position = this.position - L*E;
+            this.position = this.position - L;
         }
+    }
 
-        public void TheFullscreen(float w, float h)
+    class Objective : Keypoint
+    {
+        public Objective(Vector2 position)
+            : base(position, false)
         {
-            this.position = new Vector2((int)this.position.X * w, (int)this.position.Y * h);
+            this.objectif = true;
+        }
+    }
+
+    class Start
+    {
+        public Vector2 position;
+        public Start(Vector2 position)
+        {
+            this.position = position;
+        }
+        public void TheCamera(Vector2 L)
+        {
+            this.position = this.position - L;
         }
     }
 }

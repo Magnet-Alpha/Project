@@ -131,6 +131,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Units\Wave.cs" />
     <Compile Include="WinForms\AddScoreForm.cs">
       <SubType>Form</SubType>
     </Compile>

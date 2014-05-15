@@ -28,12 +28,13 @@ namespace Buttons
         List<Keypoint> keypoints = new List<Keypoint>();                                    //List of keypoints on the map
         List<Projectile> projs = new List<Projectile>();
         Virus test;                                                                         //All those are tests
+        Start start;
         Keypoint test3;
         Keypoint test4;
         Keypoint test5;
         Keypoint test6;
         Keypoint test7;
-        Keypoint test8;
+        Objective objective;
         Coordonnees test9;
         Coordonnees test10;
         Coordonnees test11;
@@ -78,6 +79,7 @@ namespace Buttons
         Tower todraw;
         int timer;
         int timerInc;
+        int timerwave;
         int cout;
         public MultiplayerState3 multiState;
         int score = 0;
@@ -218,18 +220,19 @@ namespace Buttons
 
             //things about the map ^^
             Tile.TileSetTexture = game.Content.Load<Texture2D>(@"sprites//map//maptexture");
-            test3 = new Keypoint(new Vector2(176 - Camera.Location.X, 542 - Camera.Location.Y), true, false);
-            test4 = new Keypoint(new Vector2(816 - Camera.Location.X, 542 - Camera.Location.Y), true, false);
-            test5 = new Keypoint(new Vector2(816 - Camera.Location.X, 350 - Camera.Location.Y), true, false);
-            test6 = new Keypoint(new Vector2(496 - Camera.Location.X, 350 - Camera.Location.Y), false, false);
-            test7 = new Keypoint(new Vector2(496 - Camera.Location.X, 126 - Camera.Location.Y), false, false);
-            test8 = new Keypoint(new Vector2(880 - Camera.Location.X, 126 - Camera.Location.Y), false, true);
+            start = new Start(new Vector2(176 - Camera.Location.X + difL.X, 126 - Camera.Location.Y + difL.Y));
+            test3 = new Keypoint(new Vector2(176 - Camera.Location.X, 542 - Camera.Location.Y), true);
+            test4 = new Keypoint(new Vector2(816 - Camera.Location.X, 542 - Camera.Location.Y), true);
+            test5 = new Keypoint(new Vector2(816 - Camera.Location.X, 350 - Camera.Location.Y), true);
+            test6 = new Keypoint(new Vector2(496 - Camera.Location.X, 350 - Camera.Location.Y), false);
+            test7 = new Keypoint(new Vector2(496 - Camera.Location.X, 126 - Camera.Location.Y), false);
+            objective = new Objective(new Vector2(880 - Camera.Location.X, 126 - Camera.Location.Y));
             keypoints.Add(test3);
             keypoints.Add(test4);
             keypoints.Add(test5);
             keypoints.Add(test6);
             keypoints.Add(test7);
-            keypoints.Add(test8);
+            keypoints.Add(objective);
             choosing = false;
             test9 = new Coordonnees(3, 9, 6, 13);
             test10 = new Coordonnees(5, 7, 14, 37);
@@ -249,12 +252,14 @@ namespace Buttons
             test16.Fill(ref towers);
             timer = 0;
             timerInc = 0;
+            timerwave = 0;
+            Wave.viruses.Clear();
         }
 
 
         public void addVirus()
         {
-            test = new Virus("b", 100, 10, cout, 5, new Vector2((176 - Camera.Location.X + difL.X) * game.widthFactor, (126 - Camera.Location.Y + difL.Y) * game.heightFactor), 1, game.Content, game.spriteBatch, Etat.Alive);
+            test = new Virus1(cout, start.position, game.Content, game.spriteBatch);
             virus.Add(test);
         }
 
@@ -313,14 +318,14 @@ namespace Buttons
 
                 Interface.Update();
 
-                if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0) || timer == 600)
+                if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0) || timer >= 600)
                 {
                     if (multiState == null)
                     {
                         cout = 0;
-                        test = new Virus("b", 100, 10, 5, cout, new Vector2((176 - Camera.Location.X + difL.X) * game.widthFactor, (126 - Camera.Location.Y + difL.Y) * game.heightFactor), 1, game.Content, game.spriteBatch, Etat.Alive);
-                        virus.Add(test);
+                        Wave.Fillwave(cout, start, game.spriteBatch, game.Content);
                         timer = 0;
+                        timerwave = 60;
                     }
                     else
                     {
@@ -351,10 +356,16 @@ namespace Buttons
                     todraw = null;
                 }
 
-                if (timerInc == 600)
+                if (timerInc >= 600)
                 {
                     gold += income;
                     timerInc = 0;
+                }
+
+                if (timerwave >= 60)
+                {
+                    Wave.Send(ref virus, start);
+                    timerwave = 0;
                 }
             }
             else
@@ -436,9 +447,10 @@ namespace Buttons
 
             if (life > 0 && !win)
             {
+                start.TheCamera(difL);
                 foreach (Keypoint k in keypoints)
                 {
-                    k.TheCamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                              //Correcting Camera location problems
+                    k.TheCamera(difL);                                                              //Correcting Camera location problems
                 }
                 foreach (Virus v in virus)
                 {
@@ -579,6 +591,7 @@ namespace Buttons
 
                 timer++;
                 timerInc++;
+                timerwave++;
             }
             Interface.texts[0].textValue = Strings.stringForKey("Gold") + " : " + gold;
             Interface.texts[1].textValue = Strings.stringForKey("Income") + " : " + income;
@@ -764,11 +777,6 @@ namespace Buttons
             {
                 t.TheFullscreen(game.widthFactor, game.heightFactor);                                                                  //Adapt Fullscreen
             }
-            foreach (Keypoint k in keypoints)
-            {
-                k.TheFullscreen(game.widthFactor, game.heightFactor);
-            }
-
         }
 
         public void ChangeState(IState state)
