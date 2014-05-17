@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Buttons
 {
     public class UserSetting
     {
-        public bool fullScreen;
+        bool fullScreen;
         public float musicVolume;
         float soundEffectVolume;
         public Language language;
         List<HighScore> scores;
+        Game1 game;
 
-
-        public UserSetting()
+        public UserSetting(Game1 game)
         {
-
+            this.game = game;
             readFullScreen();
             readMusicVolume();
             readSoundEffectVolume();
@@ -25,6 +26,26 @@ namespace Buttons
             readHighScores();
         }
 
+        public bool Fullscreen
+        {
+            get { return fullScreen; }
+            set
+            {
+                /*if (!value)
+                {
+                    game.width = 800;
+                    game.height = 600;
+                }
+                else
+                {
+                    game.width = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                    game.height = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                    game.graphics.ApplyChanges();
+                }*/
+                
+                fullScreen = value;
+            }
+        }
 
         public List<HighScore> Scores
         {

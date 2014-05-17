@@ -23,6 +23,17 @@ namespace Buttons
         }
 
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int CS_NOCLOSE = 0x200;
+
+                CreateParams cp = base.CreateParams;
+                cp.ClassStyle |= CS_NOCLOSE;
+                return cp;
+            }
+        }
 
         public void ShowWithScore(int score)
         {
@@ -32,6 +43,12 @@ namespace Buttons
             {
                 button1.Text = "Sauvegarder";
                 button2.Text = "Annuler";
+            }
+            if (game.settings.Fullscreen)
+            {
+                var form = (Form)Form.FromHandle(game.Window.Handle);
+                form.WindowState = FormWindowState.Minimized
+                    ;
             }
             if(!IsDisposed && score > 0)
                 Show();

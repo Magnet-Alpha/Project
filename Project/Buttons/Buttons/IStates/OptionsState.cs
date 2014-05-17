@@ -57,7 +57,7 @@ namespace Buttons
             Text fullScreenText = new Text(Strings.stringForKey("Fullscreen"), new Vector2(game.width / 2 - (int)font.MeasureString("Full Screen :").X - 20, 10 + languageText.location.Y
                                                                                              + (int)font.MeasureString(languageText.textValue).Y), font);
 
-            
+
 
 
             TextButton userNameButton = new TextButton(font, game, "", new Vector2(game.width / 2 - font.MeasureString("Username :").X - 20, fullScreenText.location.Y + font.MeasureString(fullScreenText.textValue).Y + 10));
@@ -69,11 +69,11 @@ namespace Buttons
             TextButton increaseMusicVolume = new TextButton(font, game, "  +  ", new Vector2(font.MeasureString(" | | | | | | | | | | ").X + decreaseSoundEffect.textLocation.X + 50, musicLevelText.location.Y));
 
 
-            TextButton englishButton = new TextButton(font, game, Strings.stringForKey("English"), new Vector2((increaseMusicVolume.right + decreaseMusicVolume.left)/2 - font.MeasureString("English").X - 50, languageText.location.Y));
+            TextButton englishButton = new TextButton(font, game, Strings.stringForKey("English"), new Vector2((increaseMusicVolume.right + decreaseMusicVolume.left) / 2 - font.MeasureString("English").X - 50, languageText.location.Y));
             TextButton frenchButton = new TextButton(font, game, Strings.stringForKey("French"), new Vector2(englishButton.right + 100, languageText.location.Y));
 
-            TextButton toFS = new TextButton(font, game, Strings.stringForKey("On"), new Vector2((englishButton.left + englishButton.right) / 2 - font.MeasureString("On").X/2, fullScreenText.location.Y));
-            TextButton toNS = new TextButton(font, game, Strings.stringForKey("Off"), new Vector2((frenchButton.left + frenchButton.right) / 2 - font.MeasureString("Off").X/2, fullScreenText.location.Y));
+            TextButton toFS = new TextButton(font, game, Strings.stringForKey("On"), new Vector2((englishButton.left + englishButton.right) / 2 - font.MeasureString("On").X / 2, fullScreenText.location.Y));
+            TextButton toNS = new TextButton(font, game, Strings.stringForKey("Off"), new Vector2((frenchButton.left + frenchButton.right) / 2 - font.MeasureString("Off").X / 2, fullScreenText.location.Y));
 
 
             optionsMenu = new InterfaceMenu(new TextButton[10] { backToMainMenuButton, decreaseSoundEffect, increaseSoundEffect, decreaseMusicVolume, increaseMusicVolume, englishButton, frenchButton, toFS, toNS, userNameButton },
@@ -153,15 +153,22 @@ namespace Buttons
             // full screen on
             if (optionsMenu.buttonWithIndexPressed(7) && !game.graphics.IsFullScreen)
             {
-                game.settings.fullScreen = true;
-                game.graphics.ToggleFullScreen();
+                game.settings.Fullscreen = true;
+                game.graphics.IsFullScreen = true;
+                game.graphics.ApplyChanges();
+                //game.graphics.ToggleFullScreen();
+               
+                //fullscreen(true);
             }
             //fullscreen off
             if (optionsMenu.buttonWithIndexPressed(8) && game.graphics.IsFullScreen)
             {
-                game.settings.fullScreen = false;
-                game.graphics.ToggleFullScreen();
-               
+                game.settings.Fullscreen = false;
+                game.graphics.IsFullScreen = false;
+                
+                game.graphics.ApplyChanges();
+                //fullscreen(false);
+
             }
             // Back
             if (optionsMenu.buttonWithIndexPressed(0))
@@ -172,6 +179,30 @@ namespace Buttons
             previousState.Initialize();
             game.settings.saveSettings();
         }
+
+        public void fullscreen(bool b)
+        {
+
+            IntPtr hWnd = game.Window.Handle;
+            var control = System.Windows.Forms.Control.FromHandle(hWnd);
+            var form = control.FindForm();
+            if (b)
+            {
+                form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                form.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+                game.width = form.Width;
+                game.height = form.Height;
+                game.graphics.ApplyChanges();
+            }
+            else
+            {
+                form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+                form.WindowState = System.Windows.Forms.FormWindowState.Normal;
+            }
+            previousState.LoadContent();
+
+        }
+
         public void Draw(GameTime gameTime)
         {
             optionsMenu.Draw();
@@ -181,7 +212,7 @@ namespace Buttons
 
             game.spriteBatch.DrawString(font, LevelString((int)(game.music.Volume * 10)), new Vector2(optionsMenu.buttons[3].textLocation.X + 60, optionsMenu.buttons[3].textLocation.Y), Color.White);
             game.spriteBatch.DrawString(font, LevelString((int)(game.settings.SoundEffectVolume * 10)), new Vector2(optionsMenu.buttons[1].textLocation.X + 60, optionsMenu.buttons[1].textLocation.Y), Color.White);
-            
+
         }
         public void Initialize() { }
 

@@ -24,11 +24,18 @@ namespace Buttons
             {
                 listBox1.Items.Add(hs.name + " " + hs.score);
             }
+
+
         }
-
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        public void ShowScores()
         {
-
+            if (game.settings.Fullscreen)
+            {
+                var form = (Form)Form.FromHandle(game.Window.Handle);
+                form.WindowState = FormWindowState.Minimized
+                    ;
+            }
+            Show();
         }
     }
 }

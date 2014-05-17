@@ -13,7 +13,7 @@ namespace Server
 		public Form1()
 		{
 			InitializeComponent();
-            Text = "You'll Catch A Virus Server";
+            Text = "You'll Catch A Virus Server - Stopped";
             FormClosed += new FormClosedEventHandler(formClosed);
             richTextBox1.Location = new System.Drawing.Point(12, 12);
             richTextBox1.Width = 570;
@@ -35,12 +35,15 @@ namespace Server
 			{
 				Program.StartServer();
 				button1.Text = "Shut down";
+                Text = "You'll Catch A Virus Server - Running";
 			}
 			else
 			{
                 Program.formClosed();
 				Program.Shutdown();
 				button1.Text = "Start";
+                Text = "You'll Catch A Virus Server - Stopped";
+                
                 
 			}
 		}

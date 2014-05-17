@@ -30,12 +30,7 @@ namespace Buttons
             ownServer.Checked = true;
             Text = Strings.stringForKey("ConnectToServer");
 
-            if (multiState.game.settings.fullScreen)
-            {
-                var form = (Form)Form.FromHandle(multiState.game.Window.Handle);
-                form.WindowState = FormWindowState.Minimized
-                    ;
-            }
+
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedDialog;
             ControlBox = false;
@@ -57,6 +52,16 @@ namespace Buttons
             }
         }
 
+        public void showForm()
+        {
+            if(multiState.game.settings.Fullscreen)
+            {
+                Form form = (Form)Form.FromHandle(multiState.game.Window.Handle);
+                form.WindowState = FormWindowState.Minimized;
+                Show();
+                BringToFront();
+            }
+        }
 
         private string GetLocalIP()
         {
@@ -93,11 +98,11 @@ namespace Buttons
 
         void CloseForm()
         {
-            if (multiState.game.settings.fullScreen)
+            if (multiState.game.settings.Fullscreen)
             {
                 var form = (Form)Form.FromHandle(multiState.game.Window.Handle);
-                form.WindowState = FormWindowState.Maximized;
-                    
+                form.WindowState = FormWindowState.Normal;
+                 
             }
             Console.WriteLine("Form closing");
             multiState.formClosed();

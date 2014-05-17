@@ -15,7 +15,7 @@ namespace Server
         public static NetServer s_server;
         private static NetPeerSettingsWindow s_settingsWindow;
         static int con = 0;
-
+        static DateTime startTime;
 
         [STAThread]
         static void Main()
@@ -79,7 +79,7 @@ namespace Server
                                 con = s_server.ConnectionsCount;
                                 NetOutgoingMessage msg = s_server.CreateMessage();
                                 msg.Write("#dc");
-                                Output("Broadcasting 'dc'");
+                                Output(NetUtility.ToHexString(im.SenderConnection.RemoteUniqueIdentifier) + " disconnected");
                                 if (s_server.Connections.Count > 0)
                                     s_server.SendMessage(msg, s_server.Connections, NetDeliveryMethod.ReliableOrdered, 0);
                             }
@@ -89,6 +89,13 @@ namespace Server
                                 NetOutgoingMessage msg = s_server.CreateMessage();
                                 msg.Write("?" + s_server.ConnectionsCount);
                                 s_server.SendMessage(msg, s_server.Connections, NetDeliveryMethod.ReliableOrdered,0);
+                                string str = NetUtility.ToHexString(im.SenderConnection.RemoteUniqueIdentifier) + " connected";
+                                if (s_server.ConnectionsCount == 2)
+                                {
+                                    str += ", starting game";
+                                    startTime = DateTime.Now;
+                                }
+                                Output(str);
                             }
 
                             break;
@@ -97,7 +104,23 @@ namespace Server
                             string chat = im.ReadString();
                             if (chat[0] == '#')
                             {
-                                Output("Broadcasting '" + chat.Substring(1) + "'");
+                                switch (chat)
+                                {
+                                    case "#VirusCall" :
+                                        Output(NetUtility.ToHexString(im.SenderConnection.RemoteUniqueIdentifier) + " sent virus");
+                                        break;
+                                    case "#GameOver" :
+                                        TimeSpan time = DateTime.Now.Subtract(startTime);
+                                        string str = NetUtility.ToHexString(im.SenderConnection.RemoteUniqueIdentifier) + " lost, game ended after ";
+                                        if (time.Hours != 0)
+                                            str += time.Hours + " hours ";
+                                        if (time.Minutes != 0)
+                                            str += time.Minutes + " minutes ";
+                                        if (time.Seconds != 0)
+                                            str += time.Seconds + " seconds";
+                                        Output(str);
+                                        break;
+                                }
 
                                 // broadcast this to all connections, except sender
                                 List<NetConnection> all = s_server.Connections; // get copy

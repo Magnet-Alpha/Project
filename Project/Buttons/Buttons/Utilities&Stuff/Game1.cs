@@ -23,8 +23,8 @@ namespace Buttons
         public IState gameState;
         public SoundEffectInstance music;
         public SoundEffectInstance music2;
-        public int height;
-        public int width;
+        int Height;
+        int Width;
         public UserSetting settings;
         public float widthFactor;
         public float heightFactor;
@@ -33,6 +33,29 @@ namespace Buttons
 
 
         public bool enableClose = false;
+
+        public int width
+        {
+            get { return Width; }
+            set
+            {
+                float withFactor = graphics.PreferredBackBufferWidth / value / 10;
+                graphics.PreferredBackBufferWidth = (int) (graphics.PreferredBackBufferWidth* widthFactor);
+                Console.WriteLine("Width set to" + graphics.PreferredBackBufferWidth);
+                Width = value;
+            }
+        }
+        public int height
+        {
+            get { return Height; }
+            set
+            {
+                float withFactor = graphics.PreferredBackBufferHeight / value / 10;
+                graphics.PreferredBackBufferHeight = (int)(graphics.PreferredBackBufferHeight * widthFactor);
+                Console.WriteLine("Height set to" + graphics.PreferredBackBufferHeight);
+                Height = value;
+            }
+        }
 
         public Game1()
         {
@@ -49,17 +72,15 @@ namespace Buttons
             music2 = Content.Load<SoundEffect>("game2").CreateInstance();
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
-            width = 800;
-            height = 600;
             music.IsLooped = true;
             music2.IsLooped = true;
-            settings = new UserSetting();
+            settings = new UserSetting(this);
             
             
             
             Strings.Language = settings.language;
 
-            if (settings.fullScreen)
+            if (settings.Fullscreen)
                 graphics.ToggleFullScreen();
 
         }
@@ -78,7 +99,7 @@ namespace Buttons
             IsMouseVisible = false;
             SoundEffect.MasterVolume = 1;
 
-            graphics.IsFullScreen = settings.fullScreen;
+            graphics.IsFullScreen = settings.Fullscreen;
             graphics.ApplyChanges();
             widthFactor = GraphicsDevice.PresentationParameters.BackBufferWidth / 800;
             heightFactor = GraphicsDevice.PresentationParameters.BackBufferHeight / 460;
@@ -86,7 +107,6 @@ namespace Buttons
             height = GraphicsDevice.PresentationParameters.BackBufferHeight;
             width = GraphicsDevice.PresentationParameters.BackBufferWidth;
             
-            Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
 
             music.Volume = settings.musicVolume;
             music2.Volume = settings.musicVolume;
@@ -180,17 +200,7 @@ namespace Buttons
             base.Draw(gameTime);
         }
 
-        public void Window_ClientSizeChanged(object sender, EventArgs e)
-        {
-           
-
-            height = GraphicsDevice.PresentationParameters.BackBufferHeight;
-            width = GraphicsDevice.PresentationParameters.BackBufferWidth;
-            widthFactor = width / 800f;
-            heightFactor = height / 400f;
-            gameState.Window_ClientSizeChanged();
-            //Console.WriteLine(widthFactor.ToString() + "x" + heightFactor.ToString() + "   " + width + "x" + height);
-        }
+        
 
     }
 }

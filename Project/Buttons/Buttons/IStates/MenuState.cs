@@ -147,7 +147,7 @@ namespace Buttons
             }
 
             if (mainMenu.buttonWithIndexPressed(5)) // High scores
-                highScoresFrom.Show();
+                highScoresFrom.ShowScores();
 
             test.NewPosition(new Vector2(game.widthFactor, game.heightFactor));
             int life = 0;

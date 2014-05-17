@@ -31,7 +31,7 @@ namespace Buttons
             button2.Text = Strings.stringForKey("ChangeServer");
             button3.Text = Strings.stringForKey("MainMenu");
             Text = Strings.stringForKey("Disconnected");
-            if (multiState.game.settings.fullScreen)
+            if (multiState.game.settings.Fullscreen)
             {
                 var form = (Form)Form.FromHandle(multiState.game.Window.Handle);
                 form.WindowState = FormWindowState.Minimized;
@@ -56,7 +56,7 @@ namespace Buttons
         private void button1_Click(object sender, EventArgs e) // retry connection
         {
             multiState.Connect(multiState.IPform.ip.ToString(), multiState.port);
-            if (multiState.game.settings.fullScreen)
+            if (multiState.game.settings.Fullscreen)
             {
                 var form = (Form)Form.FromHandle(multiState.game.Window.Handle);
                 form.WindowState = FormWindowState.Maximized;
@@ -68,7 +68,7 @@ namespace Buttons
         private void button2_Click(object sender, EventArgs e) //change server
         {
             new GetIPForm(multiState).Show();
-            if (multiState.game.settings.fullScreen)
+            if (multiState.game.settings.Fullscreen)
             {
                 var form = (Form)Form.FromHandle(multiState.game.Window.Handle);
                 form.WindowState = FormWindowState.Maximized;
@@ -80,7 +80,7 @@ namespace Buttons
         private void button3_Click(object sender, EventArgs e) // back to main menu
         {
             multiState.ChangeState(new MenuState(multiState.game));
-            if (multiState.game.settings.fullScreen)
+            if (multiState.game.settings.Fullscreen)
             {
                 var form = (Form)Form.FromHandle(multiState.game.Window.Handle);
                 form.WindowState = FormWindowState.Maximized;

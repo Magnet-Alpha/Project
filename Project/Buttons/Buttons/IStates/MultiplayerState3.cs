@@ -59,11 +59,16 @@ namespace Buttons
             client = new NetClient(config);
             client.RegisterReceivedCallback(new SendOrPostCallback(GotMessage));
             gameState = new GameState(game, this);
-
+            /*if (game.settings.fullScreen)
+            {
+                var form = (Form)Form.FromHandle(game.Window.Handle);
+                form.WindowState = FormWindowState.Minimized;
+            }
+            */
             IPform = new GetIPForm(this);
-            IPform.Show();
+            IPform.showForm();
             
-            showIPs();
+
             gameStatus = Status.Waiting;
         }
 
@@ -131,20 +136,12 @@ namespace Buttons
         public void Shutdown()
         {
             //sendMessage(GetLocalIP() + " disconnected");
+            if(client.ConnectionStatus == NetConnectionStatus.Connected)
             client.Disconnect("Requested by user");
             // s_client.Shutdown("Requested by user");
             
         }
-        private void showIPs()
-        {
-            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (IPAddress ip in host.AddressList)
-            {
-                if(ip.AddressFamily == AddressFamily.InterNetwork)
-                    Console.WriteLine(ip.ToString());
-            }
-            
-        }
+
         void GotMessage(object peer)
         {
             NetIncomingMessage im;
@@ -220,6 +217,7 @@ namespace Buttons
                                     break;
                                 case "GameOver":
                                     gameState.win = true;
+                                    showDc = false;
                                     // game over to handle (player wins)
                                     break;
                                 case "#dc":
