@@ -20,7 +20,7 @@ namespace Buttons
         public static void Fillwave(int cout, Start start, CustomSpriteBatch sb, ContentManager content)
         {
             level += 1;
-            int number = (level + 50) / 10;
+            int number = (level + 25) / 5;
             int x = 0;
             int limite;
             if (level < 5)
@@ -37,9 +37,9 @@ namespace Buttons
                 if (o == 0)
                     v = new Virus1(cout, start.position, content, sb);
                 else if (o == 1)
-                    v = new Virus1(cout, start.position, content, sb);
+                    v = new Virus2(cout, start.position, content, sb);
                 else
-                    v = new Virus1(cout, start.position, content, sb);
+                    v = new Virus3(cout, start.position, content, sb);
                 viruses.Add(v);
                 x++;
             }

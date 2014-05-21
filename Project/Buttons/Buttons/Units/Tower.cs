@@ -16,6 +16,11 @@ namespace Buttons
     {
         protected Virus target;                                 //Target of the tower
         protected double Range { get; set; }                    //Range of attack of the tower
+        public double BRange;
+        public int BAttack;
+        public int BCooldown;
+        public int BCost;
+        public int level;
         private double p2;
         public bool exist;
         public ContentManager c;
@@ -51,6 +56,7 @@ namespace Buttons
             this.P = P;
             thro = content.Load<SoundEffect>("Sounds\\SFX shoot").CreateInstance();
             this.game = game;
+            this.level = 1;
         }
 
         public Tower()
@@ -99,6 +105,15 @@ namespace Buttons
             base.fuckingcamera(L, E);
             this.Center = new Vector2(this.Position.X + 16, this.Position.Y + 56);
             this.Hitbox = new Rectangle((int)this.Position.X, (int)this.Position.Y, 32, 64);
+        }
+
+        public void Upgrade()
+        {
+            this.level++;
+            this.Range = this.BRange * (float)(this.level + 1) / 2;
+            this.Attack = (int)(this.BAttack * (float)(this.level + 1) / 2);
+            this.Cooldown = (int)(this.BCooldown / (float)(this.level + 9) / 10);
+            this.cout = (int)(this.BCost * (float)(this.level + 3) / 4);
         }
     } ///Vector2.Distance(this.Position, unite.Position) <= Range
     ///Math.Pow((unite.Position.X - this.Position.X), 2) + 4 * Math.Pow((-(unite.Position.Y - this.Position.Y)), 2) <= p2 

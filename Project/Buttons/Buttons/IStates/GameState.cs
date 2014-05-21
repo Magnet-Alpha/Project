@@ -345,7 +345,7 @@ namespace Buttons
                     choice.name = "b";
                     choice.attack = 10;
                     choice.cooldown = 30;
-                    choice.range = 200;
+                    choice.range = 3*64;
                     choice.cout = 10;
                 }
                 if (InterfaceInfo.buttonWithIndexPressed(3))
@@ -603,9 +603,9 @@ namespace Buttons
             InterfaceInfo.texts[1].textValue = Strings.stringForKey("Income") + " : " + income;
             InterfaceInfo.texts[2].textValue = Strings.stringForKey("Life") + " : " + life;
             InterfaceInfo.texts[3].textValue = Strings.stringForKey("Attack") + " : " + choice.attack;
-            InterfaceInfo.texts[4].textValue = Strings.stringForKey("Cooldown") + " : " + choice.cooldown;
+            InterfaceInfo.texts[4].textValue = Strings.stringForKey("Cooldown") + " : " + (float)choice.cooldown / 60;
             InterfaceInfo.texts[5].textValue = Strings.stringForKey("Cout") + " : " + choice.cout;
-            InterfaceInfo.texts[6].textValue = Strings.stringForKey("Range") + " : " + choice.range;
+            InterfaceInfo.texts[6].textValue = Strings.stringForKey("Range") + " : " + (float)choice.range / 64;
 
             oldMouse = mouse;
         }

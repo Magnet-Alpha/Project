@@ -118,8 +118,23 @@ namespace Buttons
     class Virus1 : Virus
     {
         public Virus1(int cout, Vector2 Position, ContentManager content, CustomSpriteBatch sb)
-            : base("Virus1", 100, 10, cout, 5, Position, 1, content, sb, Etat.Alive)
+            : base("Virus1", 100, 10, 5, cout, Position, 1, content, sb, Etat.Alive)
         {
         }
+    }
+
+    class Virus2 : Virus
+    {
+        public Virus2(int cout, Vector2 Position, ContentManager content, CustomSpriteBatch sb)
+            : base("Virus1", 200, 5, 5, cout, Position, 0.5, content, sb, Etat.Alive)
+        {
+        }
+    }
+    class Virus3 : Virus
+    {
+        public Virus3(int cout, Vector2 Position, ContentManager content, CustomSpriteBatch sb)
+                : base("Virus1", 50, 10, 5, cout, Position, 2, content, sb, Etat.Alive)
+            {
+            }
     }
 }
