@@ -36,7 +36,7 @@ namespace Buttons
             dir = 3;
             x = 0;
             this.Center = new Vector2(this.Position.X + 16, this.Position.Y + 16);
-            imgs.Add(content.Load<Texture2D>("Sprites\\virus\\virus-sprite1"));
+            imgs.Add(content.Load<Texture2D>("Sprites\\virus\\virus-sprite" + name));
             lifebar = content.Load<Texture2D>("Sprites\\virus\\lifebar");
             this.cout = cout;
         }
@@ -118,7 +118,7 @@ namespace Buttons
     class Virus1 : Virus
     {
         public Virus1(int cout, Vector2 Position, ContentManager content, CustomSpriteBatch sb)
-            : base("Virus1", 100, 10, 5, cout, Position, 1, content, sb, Etat.Alive)
+            : base("1", 100, 10, 5, cout, Position, 1, content, sb, Etat.Alive)
         {
         }
     }
@@ -126,14 +126,14 @@ namespace Buttons
     class Virus2 : Virus
     {
         public Virus2(int cout, Vector2 Position, ContentManager content, CustomSpriteBatch sb)
-            : base("Virus1", 200, 5, 5, cout, Position, 0.5, content, sb, Etat.Alive)
+            : base("1", 200, 5, 5, cout, Position, 0.5, content, sb, Etat.Alive)
         {
         }
     }
     class Virus3 : Virus
     {
         public Virus3(int cout, Vector2 Position, ContentManager content, CustomSpriteBatch sb)
-                : base("Virus1", 50, 10, 5, cout, Position, 2, content, sb, Etat.Alive)
+                : base("1", 50, 10, 5, cout, Position, 2, content, sb, Etat.Alive)
             {
             }
     }

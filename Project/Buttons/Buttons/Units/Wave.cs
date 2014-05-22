@@ -14,7 +14,7 @@ namespace Buttons
 {
     static class Wave
     {
-        public static int level = 0;
+        public static int level;
         public static List<Virus> viruses = new List<Virus>();
 
         public static void Fillwave(int cout, Start start, CustomSpriteBatch sb, ContentManager content)
@@ -53,6 +53,17 @@ namespace Buttons
                 virus.Add(viruses[0]);
                 viruses.RemoveAt(0);
             }
+        }
+    }
+
+    static class Base
+    {
+        public static int level;
+        public static int life;
+
+        public static void Upgrade()
+        {
+            level++;
         }
     }
 }

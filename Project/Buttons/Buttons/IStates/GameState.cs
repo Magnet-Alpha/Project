@@ -254,6 +254,9 @@ namespace Buttons
             timerInc = 0;
             timerwave = 0;
             Wave.viruses.Clear();
+            Wave.level = 0;
+            Base.level = 1;
+            Base.life = 10;
         }
 
 
@@ -318,7 +321,7 @@ namespace Buttons
 
                 Interface.Update();
 
-                if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0) || timer >= 600)
+                if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0) || timer >= 1800)
                 {
                     if (multiState == null)
                     {
@@ -655,7 +658,7 @@ namespace Buttons
                 {
                     Interface.Draw();
                 }
-                game.spriteBatch.Draw(game.Content.Load<Texture2D>("whit"), new Rectangle(Interface.buttons[0].left + 2, Interface.buttons[0].bottom + 3, (int)((float)timer / 600 * 36), 3), Color.Blue);
+                game.spriteBatch.Draw(game.Content.Load<Texture2D>("whit"), new Rectangle(Interface.buttons[0].left + 2, Interface.buttons[0].bottom + 3, (int)((float)timer / 1800 * 36), 3), Color.Blue);
             }
             else if (life <= 0)
             {
