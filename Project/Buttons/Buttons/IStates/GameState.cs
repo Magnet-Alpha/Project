@@ -76,6 +76,8 @@ namespace Buttons
         MouseState oldMouse = Mouse.GetState();
         bool choosing;
         TType choice;
+        Texture2D choice2;
+        Texture2D range;
         Tower todraw;
         int timer;
         int timerInc;
@@ -257,6 +259,7 @@ namespace Buttons
             Wave.level = 0;
             Base.level = 1;
             Base.life = 10;
+            range = game.Content.Load<Texture2D>("Sprites\\tower\\range");
         }
 
 
@@ -350,6 +353,7 @@ namespace Buttons
                     choice.cooldown = 30;
                     choice.range = 3*64;
                     choice.cout = 10;
+                    choice2 = game.Content.Load<Texture2D>("Sprites\\tower\\tour2");
                 }
                 if (InterfaceInfo.buttonWithIndexPressed(3))
                 {
@@ -646,6 +650,11 @@ namespace Buttons
                     y++;
                 }
                 x++;
+            }
+            if (choosing)
+            {
+                game.spriteBatch.Draw(choice2, new Rectangle(oldMouse.X - 18, oldMouse.Y - 56, 32, 64), new Color(255, 255, 255, 200));
+                game.spriteBatch.Draw(range, new Rectangle(oldMouse.X - (int)choice.range, oldMouse.Y - (int)choice.range / 2, (int)choice.range * 2, (int)choice.range), new Color(255, 255, 255, 200));
             }
 
             if (life > 0 && !win)
