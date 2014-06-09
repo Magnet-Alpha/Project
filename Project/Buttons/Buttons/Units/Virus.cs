@@ -126,7 +126,7 @@ namespace Buttons
     class Virus2 : Virus
     {
         public Virus2(int cout, Vector2 Position, ContentManager content, CustomSpriteBatch sb)
-            : base("1", 200, 5, 5, cout, Position, 0.5, content, sb, Etat.Alive)
+            : base("2", 200, 5, 5, cout, Position, 0.5, content, sb, Etat.Alive)
         {
         }
     }
