@@ -25,6 +25,7 @@ namespace Buttons
         KeyboardState oldKs;
         List<Virus> virus = new List<Virus>();                                              //List of viruses on the map
         List<Unit> tower = new List<Unit>();                                              //List of towers on the map
+        public List<Unit> To { get { return tower; } }
         Tower[,] towers = new Tower[30, 60];
         List<Keypoint> keypoints = new List<Keypoint>();                                    //List of keypoints on the map
         List<Projectile> projs = new List<Projectile>();
@@ -567,6 +568,10 @@ namespace Buttons
                                 if (zx >= 0 && zy >= 0 && towers[zx, zy] != null && towers[zx, zy].exist && towers[zx, zy].Hitbox.Contains(p))
                                 {
                                     todraw = towers[zx, zy];
+                                    choice.attack = todraw.Attack;
+                                    choice.cooldown = todraw.basecooldown;
+                                    choice.cout = todraw.cout;
+                                    choice.range = todraw.Range;
                                     zy = y - 1;
                                     zx = x + 1;
                                 }

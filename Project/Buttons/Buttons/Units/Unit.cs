@@ -21,7 +21,7 @@ namespace Buttons
         Moving
     }
 
-    class Unit                                             //In development, DO NOT EDIT WITHOUT PERMISSION
+    public class Unit                                             //In development, DO NOT EDIT WITHOUT PERMISSION
     {
        
         protected CustomSpriteBatch unitbatch;                    //The SpriteBatch
@@ -29,7 +29,7 @@ namespace Buttons
         protected int maxhp;                                //Maximum hp, initialized at the creation of the object, cannot be changed
         public int Hp { get; set; }                         //Actual hp
         public int Attack { get; set; }                     //Unit attack
-        protected int basecooldown;                         //base cooldown
+        public int basecooldown;                         //base cooldown
         public int Cooldown { get; set; }                   //Actual unit cooldown before attacking again
         public Vector2 Position { get; set; }               //Actual position of the unit
         public Vector2 Center { get; set; }                 //Correction of position

@@ -15,7 +15,7 @@ namespace Buttons
     class Tower : Unit
     {
         protected Virus target;                                 //Target of the tower
-        protected double Range { get; set; }                    //Range of attack of the tower
+        public double Range { get; set; }                    //Range of attack of the tower
         public double BRange;
         public int BAttack;
         public int BCooldown;
@@ -57,6 +57,10 @@ namespace Buttons
             thro = content.Load<SoundEffect>("Sounds\\SFX shoot").CreateInstance();
             this.game = game;
             this.level = 1;
+            this.BRange = range;
+            this.BAttack = attack;
+            this.BCooldown = cooldown;
+            this.BCost = cout;
         }
 
         public Tower()
@@ -109,11 +113,14 @@ namespace Buttons
 
         public void Upgrade()
         {
-            this.level++;
-            this.Range = this.BRange * (float)(this.level + 1) / 2;
-            this.Attack = (int)(this.BAttack * (float)(this.level + 1) / 2);
-            this.Cooldown = (int)(this.BCooldown / (float)(this.level + 9) / 10);
-            this.cout = (int)(this.BCost * (float)(this.level + 3) / 4);
+            if (this.level <= 5)
+            {
+                this.level++;
+                this.Range = this.BRange * (float)(this.level + 1) / 2;
+                this.Attack = (int)(this.BAttack * (float)(this.level + 1) / 2);
+                this.basecooldown = (int)(this.BCooldown / (float)(this.level + 19) * 20);
+                this.cout = (int)(this.BCost * (float)(this.level + 3) / 4);
+            }
         }
     } ///Vector2.Distance(this.Position, unite.Position) <= Range
     ///Math.Pow((unite.Position.X - this.Position.X), 2) + 4 * Math.Pow((-(unite.Position.Y - this.Position.Y)), 2) <= p2 

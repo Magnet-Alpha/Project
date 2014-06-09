@@ -24,12 +24,15 @@ namespace Buttons
             string str = textBox1.Text;
             if (str == "upgrade base")
             {
-                // upgrade base
+                Base.level++;
                 return;
             }
             if (str == "upgrade towers")
             {
-                // upgrade towers
+                foreach (Tower T in gameState.To)
+                {
+                    T.Upgrade();
+                }
                 return;
             }
             if (str.Length > 8 && str.Substring(0, 8) == "set life ")
