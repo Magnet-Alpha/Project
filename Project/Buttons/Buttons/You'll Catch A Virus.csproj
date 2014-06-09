@@ -138,6 +138,12 @@
     <Compile Include="WinForms\AddScoreForm.Designer.cs">
       <DependentUpon>AddScoreForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="WinForms\CheatForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\CheatForm.Designer.cs">
+      <DependentUpon>CheatForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="WinForms\DCForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -253,6 +259,9 @@
   <ItemGroup>
     <EmbeddedResource Include="WinForms\AddScoreForm.resx">
       <DependentUpon>AddScoreForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\CheatForm.resx">
+      <DependentUpon>CheatForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\DCForm.resx">
       <DependentUpon>DCForm.cs</DependentUpon>

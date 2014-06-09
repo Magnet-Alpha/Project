@@ -15,6 +15,7 @@ namespace Buttons
     {
         Game1 game;
         TileMap myMap;
+        CheatForm cheatForm;
         int squaresAcross = 17; //17        
         int squaresDown = 37; //original : 37 max : 60
         int baseOffsetX = -32;
@@ -103,7 +104,7 @@ namespace Buttons
             screenHeight = game.Window.ClientBounds.Height;
             screenWidth = game.Window.ClientBounds.Width;
             form = new AddScoreForm(game);
-
+            cheatForm = new CheatForm(this);
         }
 
         public int Life
@@ -133,6 +134,7 @@ namespace Buttons
             screenHeight = game.Window.ClientBounds.Height;
             screenWidth = game.Window.ClientBounds.Width;
             form = new AddScoreForm(game);
+           
         }
 
         public void Initialize()
@@ -614,7 +616,17 @@ namespace Buttons
             InterfaceInfo.texts[5].textValue = Strings.stringForKey("Cout") + " : " + choice.cout;
             InterfaceInfo.texts[6].textValue = Strings.stringForKey("Range") + " : " + (float)choice.range / 64;
 
+            if (ks.IsKeyDown(Keys.C) && cheatForm != null)
+            {
+                cheatForm.Show();
+            }
+
+
             oldMouse = mouse;
+
+           
+
+
         }
 
       
