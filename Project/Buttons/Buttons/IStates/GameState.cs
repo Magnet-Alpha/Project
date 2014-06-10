@@ -53,8 +53,13 @@ namespace Buttons
         List<int> indexP = new List<int>();
         ImageButton firstbut;
         ImageButton secondbut;
+        ImageButton thirdbutton;
         ImageButton backmenu;
         ImageButton sell;
+        ImageButton T_upgrade;
+        ImageButton B_upgrade;
+        int price_upB = 10;
+        int upB = 5;
         Text goldText;
         Text incomeText;
         Text lifeText;
@@ -62,6 +67,7 @@ namespace Buttons
         Text cooldownText;
         Text coutText;
         Text rangeText;
+        Text scoreText;
         TextButton Back;
         TextButton Retry;
         public int gold;
@@ -90,6 +96,7 @@ namespace Buttons
         AddScoreForm form;
         public bool win = false;
         bool gameOver = false;
+        public Texture2D background;
 
         public GameState(Game1 game)
         {
@@ -159,46 +166,57 @@ namespace Buttons
 
             income = 10;
             incomeText.textValue = Strings.stringForKey("Income") + " : " + income;
-            incomeText.location = new Vector2(game.width / 15, game.height - 70);
+            incomeText.location = new Vector2(game.width / 15, game.height - 80);
             incomeText.font = font;
 
             life = 10;
             lifeText.textValue = Strings.stringForKey("Life") + " : " + life;
-            lifeText.location = new Vector2(game.width / 15, game.height - 30);
+            lifeText.location = new Vector2(game.width / 15, game.height - 50);
             lifeText.font = font;
+
+            scoreText.textValue = "Score : " + score ;
+            scoreText.location = new Vector2(game.width / 15, game.height - 25);
+            scoreText.font = font;
 
             //Text for informations 
             attackText.textValue = Strings.stringForKey("Attack") + " : " + choice.attack;
             attackText.location = new Vector2(game.width / 2 - (font.MeasureString(Strings.stringForKey("Attack") + " : " + choice.attack).X) / 2, game.height - 110);
             attackText.font = font;
             
-            cooldownText.textValue = Strings.stringForKey("Cooldown") + " : " + choice.cooldown;
+            cooldownText.textValue = Strings.stringForKey("Cooldown") + " : " + 1/(choice.cooldown + 1);
             cooldownText.location = new Vector2(game.width / 2 + (font.MeasureString(Strings.stringForKey("Attack") + " : " + choice.attack).X) / 2 + 20, game.height - 110);
             cooldownText.font = font;
             
             coutText.textValue = Strings.stringForKey("Cout") + " : " + choice.cout;
-            coutText.location = new Vector2(game.width / 2 - (font.MeasureString(Strings.stringForKey("Cout") + " : " + choice.cout).X) / 2, game.height - 70);
+            coutText.location = new Vector2(game.width / 2 - (font.MeasureString(Strings.stringForKey("Cout") + " : " + choice.cout).X) / 2, game.height - 85);
             coutText.font = font;
             
             rangeText.textValue = Strings.stringForKey("Range") + " : " + choice.range;
-            rangeText.location = new Vector2(game.width / 2 + (font.MeasureString(Strings.stringForKey("Cout") + " : " + choice.cout).X) / 2 + 20, game.height - 70);
+            rangeText.location = new Vector2(game.width / 2 + (font.MeasureString(Strings.stringForKey("Cout") + " : " + choice.cout).X) / 2 + 20, game.height - 85);
             rangeText.font = font;
 
             Texture2D textureimg;
             textureimg = game.Content.Load<Texture2D>("W3");
             Texture2D textureimg2;
             textureimg2 = game.Content.Load<Texture2D>("DrainYellow");
-            Texture2D background;
+            Texture2D virus2img;
+            virus2img = game.Content.Load<Texture2D>("virusBlue");
+            Texture2D upimg;
+            upimg = game.Content.Load<Texture2D>("upgrade");
+            Texture2D upTimg;
+            upTimg = game.Content.Load<Texture2D>("upT");
             background = game.Content.Load<Texture2D>("testbackground");
             Texture2D sellimg;
-            sellimg = game.Content.Load<Texture2D>("vendre");
+            sellimg = game.Content.Load<Texture2D>("sale");
             Texture2D menu;
             menu = game.Content.Load<Texture2D>("menu");
 
             firstbut = new ImageButton(game.spriteBatch, textureimg, new Rectangle(game.width - 800 / 12 + 12, game.width / 60, game.width / 30, game.width / 30), game);
             secondbut = new ImageButton(game.spriteBatch, textureimg2, new Rectangle(game.width - 800 / 12 + 12, firstbut.bottom + game.width / 60, game.width / 30, game.width / 30), game);
             backmenu = new ImageButton(game.spriteBatch, menu, new Rectangle(firstbut.left, game.height - menu.Height, game.width / 30, game.width / 30), game);
-            Interface = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu}, game, new Text[3] { goldText, incomeText, lifeText }, background, game.spriteBatch);
+            B_upgrade = new ImageButton(game.spriteBatch, upimg, new Rectangle(firstbut.left - 7, backmenu.top - 80, game.width / 30, game.width / 30), game);
+            thirdbutton = new ImageButton(game.spriteBatch, textureimg2, new Rectangle(game.width - 800 / 12 + 12, secondbut.bottom + game.width / 60, game.width / 30, game.width / 30), game);
+            Interface = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu, B_upgrade}, game, new Text[4] { goldText, incomeText, lifeText, scoreText}, background, game.spriteBatch);
             Interface.menuOn = true;
 
             Text GameOverText;
@@ -210,9 +228,10 @@ namespace Buttons
             Interface2 = new InterfaceInGame(new TextButton[] { Retry, Back }, game, new Text[] { GameOverText }, background, game.spriteBatch);
             Interface2.TmenuOn = false;
 
-            sell = new ImageButton(game.spriteBatch, sellimg, new Rectangle(game.width / 2, game.height - 30, sellimg.Width, sellimg.Height), game);
+            sell = new ImageButton(game.spriteBatch, sellimg, new Rectangle(game.width / 2, game.height - 60, game.width / 30, game.width / 30), game);
+            T_upgrade = new ImageButton (game.spriteBatch, upTimg, new Rectangle(sell.right + 10, game.height - 60, game.width / 30, game.width / 30), game);
 
-            InterfaceInfo = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu, sell}, game, new Text[7] { goldText, incomeText, lifeText, attackText, cooldownText, coutText, rangeText}, background, game.spriteBatch);
+            InterfaceInfo = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu, B_upgrade, sell, T_upgrade}, game, new Text[8] { goldText, incomeText, lifeText, attackText, cooldownText, coutText, rangeText, scoreText}, background, game.spriteBatch);
             InterfaceInfo.MenuOn = false;
 
             Text winText;
@@ -327,6 +346,15 @@ namespace Buttons
 
                 Interface.Update();
 
+                if (multiState != null) 
+                {
+                    Interface = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu, B_upgrade, thirdbutton }, game, new Text[4] {goldText, incomeText, lifeText, scoreText}, background, game.spriteBatch);
+                    
+                    if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(4)) 
+                    {
+                        //je veux pas faire de conneries alors je te laisse mettre les instructions d'appel du 2e virus
+                    }
+                }
                 if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0) || timer >= 1800)
                 {
                     if (multiState == null)
@@ -348,6 +376,7 @@ namespace Buttons
                         }
                     }
                 }
+
                 if (Interface.buttonWithIndexPressed(1))
                 {
                     choosing = true;
@@ -358,12 +387,26 @@ namespace Buttons
                     choice.cout = 10;
                     choice2 = game.Content.Load<Texture2D>("Sprites\\tower\\tour2");
                 }
-                if (InterfaceInfo.buttonWithIndexPressed(3))
+                if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(3) && gold >= price_upB) 
+                {
+                    gold -= price_upB;
+                    income += upB;
+                    price_upB += 5;
+                    upB++;
+                }
+                if (InterfaceInfo.buttonWithIndexPressed(4))
                 {
                     tower.Remove(todraw);
                     towers[todraw.P.X, todraw.P.Y] = null;
                     gold += todraw.cout / 2;
                     todraw = null;
+                }
+                if (oldMouse.LeftButton == ButtonState.Released && InterfaceInfo.buttonWithIndexPressed(5) && gold >= todraw.cout && todraw.level < 5) //Mettre gold >= au prix de l'amelioration
+                {
+                    //mettre les instructions pur l'amelioration
+                    todraw.Upgrade();
+                    gold -= todraw.cout;
+                    
                 }
 
                 if (timerInc >= 600)
