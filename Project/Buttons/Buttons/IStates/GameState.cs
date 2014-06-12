@@ -797,13 +797,16 @@ namespace Buttons
             }
             if (multiState == null)
             {
-                game.spriteBatch.DrawString(font, "Score : " + score, new Vector2(game.width / 15 + (font.MeasureString(Strings.stringForKey("Gold") + " : " + gold).X + 10), game.height - 110), Color.White);
+                if (life > 0 && !win)
+                    game.spriteBatch.DrawString(font, "Score : " + score, new Vector2(game.width / 15 + (font.MeasureString(Strings.stringForKey("Gold") + " : " + gold).X + 10), game.height - 110), Color.White);
             }
             else 
             {
-                game.spriteBatch.DrawString(font, Strings.stringForKey("Opponent")+ " : " + multiState.life, new Vector2(game.width / 15 + (font.MeasureString(Strings.stringForKey("Gold") + " : " + gold).X + 10), game.height - 110), Color.White);
+                if (life > 0 && !win)
+                    game.spriteBatch.DrawString(font, Strings.stringForKey("Opponent")+ " : " + multiState.life, new Vector2(game.width / 15 + (font.MeasureString(Strings.stringForKey("Gold") + " : " + gold).X + 10), game.height - 110), Color.White);
             }
-            game.spriteBatch.DrawString(font, "Base : " + Base.level, new Vector2(game.width / 15 + (font.MeasureString(Strings.stringForKey("Income") + " : " + income).X + 10), game.height - 80), Color.White);
+            if (life > 0 && !win)            
+                game.spriteBatch.DrawString(font, "Base : " + Base.level, new Vector2(game.width / 15 + (font.MeasureString(Strings.stringForKey("Income") + " : " + income).X + 10), game.height - 80), Color.White);
             //---------------------------------------------------------------------------------------
 
         }
