@@ -58,9 +58,10 @@ namespace Buttons
             {
                 Form form = (Form)Form.FromHandle(multiState.game.Window.Handle);
                 form.WindowState = FormWindowState.Minimized;
+                
+            }
                 Show();
                 BringToFront();
-            }
         }
 
         private string GetLocalIP()

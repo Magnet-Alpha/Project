@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -51,23 +51,26 @@ namespace Buttons
         Vector2 difL;                                                                       //Memorizing difference between camera position when moving it
         List<int> indexs = new List<int>();
         List<int> indexP = new List<int>();
-        ImageButton firstbut;
-        ImageButton secondbut;
-        ImageButton thirdbutton;
+        ImageButton firstvir;
+        ImageButton firsttow;
+        ImageButton secondtow;
+        ImageButton thirdtow;
+        ImageButton secondvir;
+        ImageButton thirdvir;
+        public Texture2D secondtowimg, thirdtowimg;
         ImageButton backmenu;
         ImageButton sell;
         ImageButton T_upgrade;
         ImageButton B_upgrade;
-        int price_upB = 10;
+        int price_upB = 20;
         int upB = 5;
         Text goldText;
         Text incomeText;
-        Text lifeText;
+        Text LifeText;
         Text attackText;
         Text cooldownText;
         Text coutText;
         Text rangeText;
-        Text scoreText;
         TextButton Back;
         TextButton Retry;
         public int gold;
@@ -77,6 +80,10 @@ namespace Buttons
         InterfaceInGame Interface2;
         InterfaceInGame InterfaceInfo;
         InterfaceInGame InterfaceWin;
+        Texture2D textureimg2;
+        Texture2D virus2img;
+        Texture2D texturetow2;
+        Texture2D texturetow3;
         private int screenHeight;
         private int screenWidth;
         SpriteFont font;
@@ -169,14 +176,12 @@ namespace Buttons
             incomeText.location = new Vector2(game.width / 15, game.height - 80);
             incomeText.font = font;
 
-            life = 10;
-            lifeText.textValue = Strings.stringForKey("Life") + " : " + life;
-            lifeText.location = new Vector2(game.width / 15, game.height - 50);
-            lifeText.font = font;
+            Life = 10;
+            LifeText.textValue = Strings.stringForKey("Life") + " : " + Life;
+            LifeText.location = new Vector2(game.width / 15, game.height - 50);
+            LifeText.font = font;
 
-            scoreText.textValue = "Score : " + score ;
-            scoreText.location = new Vector2(game.width / 15, game.height - 25);
-            scoreText.font = font;
+            
 
             //Text for informations 
             attackText.textValue = Strings.stringForKey("Attack") + " : " + choice.attack;
@@ -197,27 +202,51 @@ namespace Buttons
 
             Texture2D textureimg;
             textureimg = game.Content.Load<Texture2D>("W3");
-            Texture2D textureimg2;
             textureimg2 = game.Content.Load<Texture2D>("DrainYellow");
-            Texture2D virus2img;
+            
+            texturetow2 = game.Content.Load<Texture2D>("draingreen");
+       
+            texturetow3 = game.Content.Load<Texture2D>("drainblue");
             virus2img = game.Content.Load<Texture2D>("virusBlue");
+            Texture2D virus3img;
+            virus3img = game.Content.Load<Texture2D>("virusBlue");
             Texture2D upimg;
-            upimg = game.Content.Load<Texture2D>("upgrade");
+            upimg = game.Content.Load<Texture2D>("upgrade2");
             Texture2D upTimg;
             upTimg = game.Content.Load<Texture2D>("upT");
             background = game.Content.Load<Texture2D>("testbackground");
             Texture2D sellimg;
-            sellimg = game.Content.Load<Texture2D>("sale");
+            sellimg = game.Content.Load<Texture2D>("dollar2");
             Texture2D menu;
             menu = game.Content.Load<Texture2D>("menu");
 
-            firstbut = new ImageButton(game.spriteBatch, textureimg, new Rectangle(game.width - 800 / 12 + 12, game.width / 60, game.width / 30, game.width / 30), game);
-            secondbut = new ImageButton(game.spriteBatch, textureimg2, new Rectangle(game.width - 800 / 12 + 12, firstbut.bottom + game.width / 60, game.width / 30, game.width / 30), game);
-            backmenu = new ImageButton(game.spriteBatch, menu, new Rectangle(firstbut.left, game.height - menu.Height, game.width / 30, game.width / 30), game);
-            B_upgrade = new ImageButton(game.spriteBatch, upimg, new Rectangle(firstbut.left - 7, backmenu.top - 80, game.width / 30, game.width / 30), game);
-            thirdbutton = new ImageButton(game.spriteBatch, textureimg2, new Rectangle(game.width - 800 / 12 + 12, secondbut.bottom + game.width / 60, game.width / 30, game.width / 30), game);
-            Interface = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu, B_upgrade}, game, new Text[4] { goldText, incomeText, lifeText, scoreText}, background, game.spriteBatch);
+            firstvir = new ImageButton(game.spriteBatch, textureimg, new Rectangle(game.width - 800 / 12 + 12, game.width / 60, game.width / 30, game.width / 30), game);
+            backmenu = new ImageButton(game.spriteBatch, menu, new Rectangle(firstvir.left, game.height - menu.Height, game.width / 30, game.width / 30), game);
+            B_upgrade = new ImageButton(game.spriteBatch, upimg, new Rectangle(firstvir.left, backmenu.top - 120, game.width / 30, game.width / 30), game);
+            secondvir = new ImageButton(game.spriteBatch, virus2img, new Rectangle(game.width - 800 / 12 + 12, firstvir.bottom + game.width / 60, game.width / 30, game.width / 30), game);
+            thirdvir = new ImageButton(game.spriteBatch, virus2img, new Rectangle(game.width - 800 / 12 + 12, secondvir.bottom + game.width / 60, game.width / 30, game.width / 30), game);
+            
+            sell = new ImageButton(game.spriteBatch, sellimg, new Rectangle(game.width / 2, game.height - 55, game.width / 30, game.width / 30), game);
+            T_upgrade = new ImageButton(game.spriteBatch, upTimg, new Rectangle(sell.right + 10, game.height - 60, game.width / 30, game.width / 30), game);
+
+            if (multiState == null)
+            {
+                firsttow = new ImageButton(game.spriteBatch, textureimg2, new Rectangle(game.width - 800 / 12 + 12, firstvir.bottom + game.width / 60, game.width / 30, game.width / 30), game);
+                secondtow = new ImageButton(game.spriteBatch, texturetow2, new Rectangle(game.width - 800 / 12 + 12, firsttow.bottom + game.width / 60, game.width / 30, game.width / 30), game);
+                thirdtow = new ImageButton(game.spriteBatch, texturetow3, new Rectangle(game.width - 800 / 12 + 12, secondtow.bottom + game.width / 60, game.width / 30, game.width / 30), game);
+                Interface = new InterfaceInGame(new ImageButton[] { firstvir, firsttow, secondtow, thirdtow, backmenu, B_upgrade }, game, new Text[] { goldText, incomeText, LifeText }, background, game.spriteBatch);
+                InterfaceInfo = new InterfaceInGame(new ImageButton[] { firstvir, firsttow, secondtow, thirdtow, backmenu, B_upgrade, sell, T_upgrade }, game, new Text[] { goldText, incomeText, LifeText, attackText, cooldownText, coutText, rangeText }, background, game.spriteBatch);
+            }
+            else 
+            {
+                firsttow = new ImageButton(game.spriteBatch, textureimg2, new Rectangle(game.width - 800 / 12 + 12, thirdvir.bottom + game.width / 60, game.width / 30, game.width / 30), game);
+                secondtow = new ImageButton(game.spriteBatch, texturetow2, new Rectangle(game.width - 800 / 12 + 12, firsttow.bottom + game.width / 60, game.width / 30, game.width / 30), game);
+                thirdtow = new ImageButton(game.spriteBatch, texturetow3, new Rectangle(game.width - 800 / 12 + 12, secondtow.bottom + game.width / 60, game.width / 30, game.width / 30), game);
+                Interface = new InterfaceInGame(new ImageButton[] { firstvir, firsttow, secondtow, thirdtow, backmenu, B_upgrade, secondvir, thirdvir }, game, new Text[] { goldText, incomeText, LifeText }, background, game.spriteBatch);
+                InterfaceInfo = new InterfaceInGame(new ImageButton[] { firstvir, firsttow, secondtow, thirdtow, backmenu, B_upgrade, sell, T_upgrade, secondvir, thirdvir }, game, new Text[] { goldText, incomeText, LifeText, attackText, cooldownText, coutText, rangeText }, background, game.spriteBatch);
+            }
             Interface.menuOn = true;
+            InterfaceInfo.menuOn = false;
 
             Text GameOverText;
             GameOverText.textValue = Strings.stringForKey("GAMEOVER");
@@ -227,12 +256,6 @@ namespace Buttons
             Back = new TextButton(font, game, Strings.stringForKey("BackToMainMenu"), new Vector2(Retry.left, Retry.bottom));
             Interface2 = new InterfaceInGame(new TextButton[] { Retry, Back }, game, new Text[] { GameOverText }, background, game.spriteBatch);
             Interface2.TmenuOn = false;
-
-            sell = new ImageButton(game.spriteBatch, sellimg, new Rectangle(game.width / 2, game.height - 60, game.width / 30, game.width / 30), game);
-            T_upgrade = new ImageButton (game.spriteBatch, upTimg, new Rectangle(sell.right + 10, game.height - 60, game.width / 30, game.width / 30), game);
-
-            InterfaceInfo = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu, B_upgrade, sell, T_upgrade}, game, new Text[8] { goldText, incomeText, lifeText, attackText, cooldownText, coutText, rangeText, scoreText}, background, game.spriteBatch);
-            InterfaceInfo.MenuOn = false;
 
             Text winText;
             winText.textValue = Strings.stringForKey("Win");
@@ -303,11 +326,11 @@ namespace Buttons
             if (status == GameStateStatus.Pause && multiState == null)
                 return;
 
-            //--------------------Gestion de la caméra-------------------
-            //Modifier la coordonnée "4" pour accélérer ou deccélérer la vitesse de déplacement de la caméra
+            //--------------------Gestion de la camÃ©ra-------------------
+            //Modifier la coordonnÃ©e "4" pour accÃ©lÃ©rer ou deccÃ©lÃ©rer la vitesse de dÃ©placement de la camÃ©ra
             KeyboardState ks = Keyboard.GetState();
             MouseState mouse = Mouse.GetState();
-            if (life > 0 && !win)
+            if (Life > 0 && !win)
             {
                 ancientL = Camera.Location;
                 if (ks.IsKeyDown(Keys.Left) || mouse.X < 20)
@@ -348,11 +371,14 @@ namespace Buttons
 
                 if (multiState != null) 
                 {
-                    Interface = new InterfaceInGame(new ImageButton[] { firstbut, secondbut, backmenu, B_upgrade, thirdbutton }, game, new Text[4] {goldText, incomeText, lifeText, scoreText}, background, game.spriteBatch);
                     
-                    if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(4)) 
+                    if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(6)) 
                     {
                         //je veux pas faire de conneries alors je te laisse mettre les instructions d'appel du 2e virus
+                    }
+                    if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(7)) 
+                    {
+                        //3e virus
                     }
                 }
                 if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0) || timer >= 1800)
@@ -387,21 +413,32 @@ namespace Buttons
                     choice.cout = 10;
                     choice2 = game.Content.Load<Texture2D>("Sprites\\tower\\tour2");
                 }
-                if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(3) && gold >= price_upB) 
+
+                if (Interface.buttonWithIndexPressed(2)) 
+                {
+                    //2e tour
+                }
+
+                if (Interface.buttonWithIndexPressed(3)) 
+                {
+                    //3e tour
+                }
+                if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(5) && gold >= price_upB) 
                 {
                     gold -= price_upB;
                     income += upB;
-                    price_upB += 5;
+                    price_upB = (int) (price_upB*1.2);
                     upB++;
+                    Base.Upgrade();
                 }
-                if (InterfaceInfo.buttonWithIndexPressed(4))
+                if (InterfaceInfo.buttonWithIndexPressed(6))
                 {
                     tower.Remove(todraw);
                     towers[todraw.P.X, todraw.P.Y] = null;
                     gold += todraw.cout / 2;
                     todraw = null;
                 }
-                if (oldMouse.LeftButton == ButtonState.Released && InterfaceInfo.buttonWithIndexPressed(5) && gold >= todraw.cout && todraw.level < 5) //Mettre gold >= au prix de l'amelioration
+                if (oldMouse.LeftButton == ButtonState.Released && InterfaceInfo.buttonWithIndexPressed(7) && gold >= todraw.cout && todraw.level < 5) //Mettre gold >= au prix de l'amelioration
                 {
                     //mettre les instructions pur l'amelioration
                     todraw.Upgrade();
@@ -423,7 +460,7 @@ namespace Buttons
             }
             else
             {
-                if (life <= 0)
+                if (Life <= 0)
                 {
                     choosing = false;
                     Interface.menuOn = false;
@@ -488,17 +525,24 @@ namespace Buttons
             //-----------------------------------------------------------------
 
             //--------------------Gestion Pause -------------------------------
-            if ((ks.IsKeyDown(Keys.Escape) && !oldKs.IsKeyDown(Keys.Escape) || Interface.buttonWithIndexPressed(2)) && multiState == null) 
+            if ((ks.IsKeyDown(Keys.Escape) && !oldKs.IsKeyDown(Keys.Escape) || Interface.buttonWithIndexPressed(4))) 
             {
-                status = GameStateStatus.Pause;
-                choosing = false;
-                ChangeState(new PauseState(this, game));
+                if (multiState == null)
+                {
+                    status = GameStateStatus.Pause;
+                    choosing = false;
+                    ChangeState(new PauseState(this, game));
+                }
+                else 
+                {
+                    multiState.ChangeState(new MenuState(game));
+                }
                 
             }
             oldKs = ks;
 
 
-            if (life > 0 && !win)
+            if (Life > 0 && !win)
             {
                 start.TheCamera(difL);
                 foreach (Keypoint k in keypoints)
@@ -509,7 +553,9 @@ namespace Buttons
                 {
                     v.fuckingcamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                          //Correcting Camera location problems
                     v.NewPosition(new Vector2(game.widthFactor, game.heightFactor));                                                                  //Virus moving
-                    v.Turn(keypoints, ref life);                                           //Virus turning and dying at objective
+                    int l = Life;
+                    v.Turn(keypoints, ref l);                                           //Virus turning and dying at objective
+                    Life = l;
                     v.Death(ref gold, keypoints, ref score);
                 }
                 int m = 0;
@@ -652,13 +698,13 @@ namespace Buttons
             }
             Interface.texts[0].textValue = Strings.stringForKey("Gold") + " : " + gold;
             Interface.texts[1].textValue = Strings.stringForKey("Income") + " : " + income;
-            Interface.texts[2].textValue = Strings.stringForKey("Life") + " : " + life;
+            Interface.texts[2].textValue = Strings.stringForKey("Life") + " : " + Life;
             Interface2.texts[0].textValue = Strings.stringForKey("GAMEOVER");
             Interface2.Tbuttons[0].Text = Strings.stringForKey("Retry");
             Interface2.Tbuttons[1].Text = Strings.stringForKey("BackToMainMenu");
             InterfaceInfo.texts[0].textValue = Strings.stringForKey("Gold") + " : " + gold;
             InterfaceInfo.texts[1].textValue = Strings.stringForKey("Income") + " : " + income;
-            InterfaceInfo.texts[2].textValue = Strings.stringForKey("Life") + " : " + life;
+            InterfaceInfo.texts[2].textValue = Strings.stringForKey("Life") + " : " + Life;
             InterfaceInfo.texts[3].textValue = Strings.stringForKey("Attack") + " : " + choice.attack;
             InterfaceInfo.texts[4].textValue = Strings.stringForKey("Cooldown") + " : " + (float)choice.cooldown / 60;
             InterfaceInfo.texts[5].textValue = Strings.stringForKey("Cout") + " : " + choice.cout;
@@ -717,7 +763,7 @@ namespace Buttons
                 game.spriteBatch.Draw(range, new Rectangle(oldMouse.X - (int)choice.range, oldMouse.Y - (int)choice.range / 2, (int)choice.range * 2, (int)choice.range), new Color(255, 255, 255, 200));
             }
 
-            if (life > 0 && !win)
+            if (Life > 0 && !win)
             {
                 if (todraw != null)
                 {
@@ -729,7 +775,7 @@ namespace Buttons
                 }
                 game.spriteBatch.Draw(game.Content.Load<Texture2D>("whit"), new Rectangle(Interface.buttons[0].left + 2, Interface.buttons[0].bottom + 3, (int)((float)timer / 1800 * 36), 3), Color.Blue);
             }
-            else if (life <= 0)
+            else if (Life <= 0)
             {
                 Interface2.TDraw();
             }
@@ -737,7 +783,15 @@ namespace Buttons
             {
                 InterfaceWin.TDraw();
             }
-
+            if (multiState == null)
+            {
+                game.spriteBatch.DrawString(font, "Score : " + score, new Vector2(game.width / 15 + (font.MeasureString(Strings.stringForKey("Gold") + " : " + gold).X + 10), game.height - 110), Color.White);
+            }
+            else 
+            {
+                game.spriteBatch.DrawString(font, Strings.stringForKey("Opponent")+ " : " + multiState.life, new Vector2(game.width / 15 + (font.MeasureString(Strings.stringForKey("Gold") + " : " + gold).X + 10), game.height - 110), Color.White);
+            }
+            game.spriteBatch.DrawString(font, "Base : " + Base.level, new Vector2(game.width / 15 + (font.MeasureString(Strings.stringForKey("Income") + " : " + income).X + 10), game.height - 80), Color.White);
             //---------------------------------------------------------------------------------------
 
         }
@@ -757,7 +811,7 @@ namespace Buttons
             float maxdepth = ((myMap.MapWidth + 1) * ((myMap.MapHeight + 1) * Tile.TileWidth)) / 10;
             float depthOffset;
 
-            // Début de la boucle de boucle pour récupérer les coordonnées
+            // DÃ©but de la boucle de boucle pour rÃ©cupÃ©rer les coordonnÃ©es
             int i = 0;
             for (int y = 0; y < squaresDown; y++)
             {
@@ -771,7 +825,7 @@ namespace Buttons
                     int mapy = (firstY + y);
                     depthOffset = 0.7f - ((mapx + (mapy * Tile.TileWidth)) / maxdepth);
 
-                    // Boucle de la 1ère couche de texture
+                    // Boucle de la 1Ã¨re couche de texture
                     
                     foreach (int tileID in myMap.Rows[mapy].Columns[mapx].BaseTiles)
                     {
@@ -793,7 +847,7 @@ namespace Buttons
                     
                     /*int heightRow = 0;
                     
-                    // Boucle de la 2ème couche de texture
+                    // Boucle de la 2Ã¨me couche de texture
                     foreach (int tileID in myMap.Rows[mapy].Columns[mapx].HeightTiles)
                     {
                         //Interface.Draw();
@@ -812,7 +866,7 @@ namespace Buttons
                         heightRow++;
                     }
 
-                    // Boucle de la 3ème couche de texture
+                    // Boucle de la 3Ã¨me couche de texture
                     foreach (int tileID in myMap.Rows[y + firstY].Columns[x + firstX].TopperTiles)
                     {
                         //Interface.Draw();
@@ -837,8 +891,8 @@ namespace Buttons
         public void Window_ClientSizeChanged()
         {
             LoadContent();
-            firstbut.TheFullscreen(Convert.ToInt32(game.widthFactor) / screenWidth, Convert.ToInt32(game.heightFactor) / screenHeight);
-            secondbut.TheFullscreen(Convert.ToInt32(game.widthFactor) / screenWidth, Convert.ToInt32(game.heightFactor) / screenHeight);
+            firstvir.TheFullscreen(Convert.ToInt32(game.widthFactor) / screenWidth, Convert.ToInt32(game.heightFactor) / screenHeight);
+            firsttow.TheFullscreen(Convert.ToInt32(game.widthFactor) / screenWidth, Convert.ToInt32(game.heightFactor) / screenHeight);
             backmenu.TheFullscreen(Convert.ToInt32(game.widthFactor) / screenWidth, Convert.ToInt32(game.heightFactor) / screenHeight);
 
             foreach (Virus v in virus)

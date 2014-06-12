@@ -50,7 +50,7 @@ namespace Buttons
         public bool showDc = true;
         Status gameStatus;
         MouseState oldMs = new MouseState();
-        int life = 0;
+        public int life = 0;
 
         public MultiplayerState3(Game1 game)
         {
@@ -80,8 +80,8 @@ namespace Buttons
             {
                 if (gameStatus == Status.Waiting && value == Status.InGame)
                 {
-                    MessageBox.Show(Strings.stringForKey("LanGameStarts"));
                     gameState = new GameState(game, this);
+                    MessageBox.Show(Strings.stringForKey("LanGameStarts"));
                 }
                 gameStatus = value;
             }
@@ -107,6 +107,9 @@ namespace Buttons
                 case Event.TowerSold:
                     msg.Write(x);
                     msg.Write(y);
+                    break;
+                case Event.LifeChanged:
+                    msg.Write(x);
                     break;
                 case Event.VirusCall:
                     break;

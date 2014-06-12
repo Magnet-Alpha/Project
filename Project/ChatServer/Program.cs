@@ -130,6 +130,12 @@ namespace Server
                                 {
                                     NetOutgoingMessage om = s_server.CreateMessage();
                                     om.Write(chat.Substring(1));
+                                    if (chat == "LifeChanged")
+                                    {
+                                        om.Write(im.ReadInt32());
+                                        
+                                    }
+                                    
                                     s_server.SendMessage(om, all, NetDeliveryMethod.ReliableOrdered, 0);
                                 }
                             }

@@ -41,8 +41,8 @@ namespace Buttons
             {
                 for (int i = 0; i < buttons.Length; i++)
                 {
-                    buttons[i].Clickable = value;
-                    buttons[i].clicked = false;
+                        buttons[i].Clickable = value;
+                        buttons[i].clicked = false;
                 }
                 menuOn = value;
                 Draw();
@@ -52,7 +52,7 @@ namespace Buttons
         {
             for (int i = 0; i < buttons.Length; i++)
             {
-                buttons[i].Update();
+                    buttons[i].Update();
             }
 
         }
@@ -71,9 +71,9 @@ namespace Buttons
             }
             for (int i = 0; i < buttons.Length; i++)
             {
-                buttons[i].Clickable = true;
-                buttons[i].Update();
-                buttons[i].Draw();
+                    buttons[i].Clickable = true;
+                    buttons[i].Update();
+                    buttons[i].Draw();
             }
             for (int i = 0; i < texts.Length; i++)
             {
@@ -84,7 +84,9 @@ namespace Buttons
 
         public bool buttonWithIndexPressed(int n)
         {
-            return buttons[n].clicked && buttons[n].takingAction;
+            
+                return buttons[n].clicked && buttons[n].takingAction;
+
         }
 
         private int buttonsTakingAction()
