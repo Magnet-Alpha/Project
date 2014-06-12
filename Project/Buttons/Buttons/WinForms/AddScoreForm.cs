@@ -12,11 +12,13 @@ namespace Buttons
     public partial class AddScoreForm : Form
     {
         Game1 game;
+        GameState gameState;
         public int score;
-        public AddScoreForm(Game1 game)
+        public AddScoreForm(GameState gameState)
         {
             InitializeComponent();
-            this.game = game;
+            this.gameState = gameState;
+            this.game = gameState.game;
             Text = "You'll Catch a Virus - " + Strings.stringForKey("SaveHighScore");
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -57,8 +59,8 @@ namespace Buttons
 
         private void button1_Click(object sender, EventArgs e) // save
         {
-            game.settings.addScore(new HighScore(textBox1.Text, score));
-            game.settings.saveSettings();
+            game.settings.addScore(new HighScore(textBox1.Text + (gameState.cheatForm.cheated ? " <Cheated>" : ""), score));
+            game.settings.saveHighScores();
             Close();
         }
 

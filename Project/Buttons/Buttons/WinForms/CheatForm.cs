@@ -12,6 +12,7 @@ namespace Buttons
     public partial class CheatForm : Form
     {
         GameState gameState;
+        public bool cheated = false;
 
         public CheatForm(GameState gameState)
         {
@@ -58,6 +59,7 @@ namespace Buttons
                                 int x = Convert.ToInt32(words[2]);
                                 gameState.gold += x;
                                 label1.Text = "Added " + x + " gold";
+                                cheated = true;
                                 return;
                             }
                             catch
@@ -72,6 +74,7 @@ namespace Buttons
                                 int x = Convert.ToInt32(words[2]);
                                 gameState.income += x;
                                 label1.Text = "Added " + x + " to income";
+                                cheated = true;
                                 return;
                             }
                             catch
@@ -92,6 +95,7 @@ namespace Buttons
                             int x = Convert.ToInt32(words[2]);
                             gameState.Life = x;
                             label1.Text = "Life set to " + x;
+                            cheated = true;
                             return;
                         }
                         catch

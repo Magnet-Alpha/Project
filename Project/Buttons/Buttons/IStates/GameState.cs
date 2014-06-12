@@ -13,9 +13,9 @@ namespace Buttons
 {
     public class GameState : IState
     {
-        Game1 game;
+        public Game1 game;
         TileMap myMap;
-        CheatForm cheatForm;
+        public CheatForm cheatForm;
         int squaresAcross = 17; //17        
         int squaresDown = 37; //original : 37 max : 60
         int baseOffsetX = -32;
@@ -118,7 +118,7 @@ namespace Buttons
             oldKs = Keyboard.GetState();
             screenHeight = game.Window.ClientBounds.Height;
             screenWidth = game.Window.ClientBounds.Width;
-            form = new AddScoreForm(game);
+            form = new AddScoreForm(this);
             cheatForm = new CheatForm(this);
         }
 
@@ -148,7 +148,7 @@ namespace Buttons
             oldKs = Keyboard.GetState();
             screenHeight = game.Window.ClientBounds.Height;
             screenWidth = game.Window.ClientBounds.Width;
-            form = new AddScoreForm(game);
+            form = new AddScoreForm(this);
            
         }
 
