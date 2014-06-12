@@ -101,47 +101,50 @@ namespace Server
                             break;
                         case NetIncomingMessageType.Data:
                             // incoming chat message from a client
-                            string chat = im.ReadString();
-                            if (chat[0] == '#')
+                            try
                             {
-                                switch (chat)
-                                {
-                                    case "#VirusCall" :
-                                        Output(NetUtility.ToHexString(im.SenderConnection.RemoteUniqueIdentifier) + " sent virus");
-                                        break;
-                                    case "#GameOver" :
-                                        TimeSpan time = DateTime.Now.Subtract(startTime);
-                                        string str = NetUtility.ToHexString(im.SenderConnection.RemoteUniqueIdentifier) + " lost, game ended after ";
-                                        if (time.Hours != 0)
-                                            str += time.Hours + " hours ";
-                                        if (time.Minutes != 0)
-                                            str += time.Minutes + " minutes ";
-                                        if (time.Seconds != 0)
-                                            str += time.Seconds + " seconds";
-                                        Output(str);
-                                        break;
-                                }
+                                string chat = im.ReadString();
 
-                                // broadcast this to all connections, except sender
-                                List<NetConnection> all = s_server.Connections; // get copy
-                                all.Remove(im.SenderConnection);
-
-                                if (all.Count > 0)
+                                if (chat[0] == '#')
                                 {
-                                    NetOutgoingMessage om = s_server.CreateMessage();
-                                    om.Write(chat.Substring(1));
-                                    if (chat == "LifeChanged")
+                                    switch (chat)
                                     {
-                                        om.Write(im.ReadInt32());
-                                        
+                                        case "#VirusCall":
+                                            Output(NetUtility.ToHexString(im.SenderConnection.RemoteUniqueIdentifier) + " sent virus");
+                                            break;
+                                        case "#GameOver":
+                                            TimeSpan time = DateTime.Now.Subtract(startTime);
+                                            string str = NetUtility.ToHexString(im.SenderConnection.RemoteUniqueIdentifier) + " lost, game ended after ";
+                                            if (time.Hours != 0)
+                                                str += time.Hours + " hours ";
+                                            if (time.Minutes != 0)
+                                                str += time.Minutes + " minutes ";
+                                            if (time.Seconds != 0)
+                                                str += time.Seconds + " seconds";
+                                            Output(str);
+                                            break;
                                     }
-                                    
-                                    s_server.SendMessage(om, all, NetDeliveryMethod.ReliableOrdered, 0);
+
+                                    // broadcast this to all connections, except sender
+                                    List<NetConnection> all = s_server.Connections; // get copy
+                                    all.Remove(im.SenderConnection);
+
+                                    if (all.Count > 0)
+                                    {
+                                        NetOutgoingMessage om = s_server.CreateMessage();
+                                        om.Write(chat.Substring(1));
+
+                                        s_server.SendMessage(om, all, NetDeliveryMethod.ReliableOrdered, 0);
+                                    }
+                                }
+                                else
+                                {
+                                    Output(chat);
                                 }
                             }
-                            else
+                            catch (Exception ex)
                             {
-                                Output(chat);
+                                Console.WriteLine(ex);
                             }
                             break;
                         default:

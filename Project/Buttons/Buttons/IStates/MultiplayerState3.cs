@@ -97,23 +97,12 @@ namespace Buttons
         public void sendEvent(Event evt, int x, int y)
         {
             NetOutgoingMessage msg = client.CreateMessage();
-            msg.Write("#" + evt.ToString());
-            switch (evt)
+            string str = "#" + evt.ToString();
+            if (evt == Event.LifeChanged)
             {
-                case Event.TowerAdded:
-                    msg.Write(x);
-                    msg.Write(y);
-                    break;
-                case Event.TowerSold:
-                    msg.Write(x);
-                    msg.Write(y);
-                    break;
-                case Event.LifeChanged:
-                    msg.Write(x);
-                    break;
-                case Event.VirusCall:
-                    break;
+                str += x;
             }
+            msg.Write(str);            
 
             client.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
         }
@@ -232,12 +221,22 @@ namespace Buttons
                                     ChangeState(new MenuState(game));
                                     MessageBox.Show(Strings.stringForKey("ServerDown"));
                                     break;
-                                case "LifeChanged" :
-                                    life = im.ReadInt32();
-                                    // life changed to handle 
-                                    break;
                                 default:
-                                    Console.WriteLine("Event type unhandled :" + evt.ToString());
+                                    if (evt.Contains("LifeChanged"))
+                                    {
+                                        string str = "";
+                                        int i;
+                                        for (i = 0; str != "LifeChanged"; i++)
+                                        {
+                                            str += evt[i];
+                                        }
+
+                                        life = Convert.ToInt32(evt.Substring(i));
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Event type unhandled :" + evt.ToString());
+                                    }
                                     break;
                             }
                         }

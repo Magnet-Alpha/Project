@@ -554,8 +554,9 @@ namespace Buttons
                     v.fuckingcamera(difL, new Vector2(game.widthFactor, game.heightFactor));                                                          //Correcting Camera location problems
                     v.NewPosition(new Vector2(game.widthFactor, game.heightFactor));                                                                  //Virus moving
                     int l = Life;
-                    v.Turn(keypoints, ref l);                                           //Virus turning and dying at objective
-                    Life = l;
+                    v.Turn(keypoints, ref l);
+                    if(l != Life)//Virus turning and dying at objective
+                         Life = l;
                     v.Death(ref gold, keypoints, ref score);
                 }
                 int m = 0;
@@ -922,6 +923,7 @@ namespace Buttons
             {
                 multiState.Shutdown();
             }
+            cheatForm.Close();
             game.gameState = state;
             
         }
