@@ -712,7 +712,18 @@ namespace Buttons
 
             if (ks.IsKeyDown(Keys.C) && cheatForm != null)
             {
-                cheatForm.Show();
+                bool open = false;
+                foreach (System.Windows.Forms.Form f in System.Windows.Forms.Application.OpenForms)
+                {
+                    if (f == cheatForm)
+                    {
+                        open = true;
+                        break;
+                    }
+                }
+                if(!open)
+                    cheatForm.ShowDialog();
+                
             }
 
 

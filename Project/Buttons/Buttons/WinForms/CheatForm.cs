@@ -17,14 +17,18 @@ namespace Buttons
         {
             InitializeComponent();
             this.gameState = gameState;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             string str = textBox1.Text;
+           
             if (str == "upgrade base")
             {
                 Base.level++;
+                label1.Text = "Base has been upgraded to level " + Base.level;
                 return;
             }
             if (str == "upgrade towers")
@@ -35,53 +39,103 @@ namespace Buttons
                 }
                 return;
             }
-            if (str.Length > 8 && str.Substring(0, 8) == "set life ")
+
+            List<string> words = getWords(str);
+            if (words.Count != 3)
             {
-                int x;
-                try
-                {
-                    x = Convert.ToInt16(str.Substring(9));
-                    gameState.Life = x;
-                    label1.Text = "Life set to " + x;
-                }
-                catch
-                {
-                    label1.Text = "Invalid argument: argument must be an integer";
-                }
-                return;
-            }
-            if (str.Length > 9 && str.Substring(0, 9) == "add gold ")
-            {
-                int x;
-                try
-                {
-                    x = Convert.ToInt16(str.Substring(10));
-                    gameState.gold += x;
-                    label1.Text = "Added " + x + " gold";
-                }
-                catch
-                {
-                    label1.Text = "Invalid argument: argument must be an integer";
-                }
-                return;
-            }
-            if (str.Length > 11 && str.Substring(0, 10) == "add income ")
-            {
-                int x;
-                try
-                {
-                    x = Convert.ToInt16(str.Substring(11));
-                    gameState.income += x;
-                    label1.Text = "Added " + x + " to income";
-                }
-                catch
-                {
-                    label1.Text = "Invalid argument: argument must be an integer";
-                }
+                label1.Text = "Unknown command " + str;
                 return;
             }
 
-            label1.Text = "Unknown command " + str;
+            switch (words[0])
+            {
+                case "add" :
+                    switch (words[1])
+                    {
+                        case "gold":
+                            try
+                            {
+                                int x = Convert.ToInt32(words[2]);
+                                gameState.gold += x;
+                                label1.Text = "Added " + x + " gold";
+                                return;
+                            }
+                            catch
+                            {
+                                label1.Text = "Argument must be an integer";
+                                return;
+                            }
+                           
+                        case "income":
+                            try
+                            {
+                                int x = Convert.ToInt32(words[2]);
+                                gameState.income += x;
+                                label1.Text = "Added " + x + " to income";
+                                return;
+                            }
+                            catch
+                            {
+                                label1.Text = "Argument must be an integer";
+                                return;
+                            }
+                            
+                        default:
+                            label1.Text = "Unknown command: " + str;
+                            return;
+                    }
+                case "set":
+                    if (words[1] == "life")
+                    {
+                        try
+                        {
+                            int x = Convert.ToInt32(words[2]);
+                            gameState.Life = x;
+                            label1.Text = "Life set to " + x;
+                            return;
+                        }
+                        catch
+                        {
+                            label1.Text = "Argument must be an integer";
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        label1.Text = "Unknown command: " + str;
+                        return;
+                    }
+                default:
+                    label1.Text = "Unknown command: " + str;
+                    return;
+            }
+
+            
+        }
+
+        List<string> getWords(String str)
+        {
+            List<string> words = new List<string>();
+            Console.WriteLine(str);
+            string word = "";
+            foreach (char c in str)
+            {
+                if (c == ' ')
+                {
+                    words.Add(word);
+                    word = "";
+                }
+                else
+                {
+                    word += c;
+                }
+            }
+            words.Add(word);
+            foreach(string s in words)
+            {
+                Console.Write(s + ", ");
+            }
+            return words;
         }
     }
 }
