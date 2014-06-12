@@ -509,13 +509,13 @@ namespace Buttons
                     Interface.menuOn = false;
                     InterfaceWin.TmenuOn = true;
                     InterfaceWin.TUpdate();
-                    if (oldMouse.LeftButton == ButtonState.Released && Interface2.TbuttonWithIndexPressed(0))
+                    if (oldMouse.LeftButton == ButtonState.Released && InterfaceWin.TbuttonWithIndexPressed(0))
                     {
                         ChangeState(new OSState(game));
                         form.Close();
                     }
 
-                    if (oldMouse.LeftButton == ButtonState.Released && Interface2.TbuttonWithIndexPressed(1))
+                    if (oldMouse.LeftButton == ButtonState.Released && InterfaceWin.TbuttonWithIndexPressed(1))
                     {
                         ChangeState(new MenuState(game));
                         form.Close();
