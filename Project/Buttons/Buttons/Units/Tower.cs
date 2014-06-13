@@ -112,14 +112,18 @@ namespace Buttons
 
         public void Upgrade()
         {
-            if (this.level <= 5)
-            {
-                this.level++;
-                this.Range = this.BRange * (float)(this.level + 1) / 2;
-                this.Attack = (int)(this.BAttack * (float)(this.level + 1) / 2);
-                this.basecooldown = (int)(this.BCooldown / (float)(this.level + 19) * 20);
-                this.cout = (int)(this.BCost * (float)(this.level + 3) / 4);
-            }
+            this.level++;
+            this.Range = this.BRange * (float)(this.level + 1) / 2;
+            this.Attack = (int)(this.BAttack * (float)(this.level + 1) / 2);
+            this.basecooldown = (int)(this.BCooldown / (float)(this.level + 19) * 20);
+            this.cout = (int)(this.BCost * (float)(this.level + 3) / 4);
+        }
+        public override void StateDrawing(float w, float h)
+        {
+            if (this.State == Etat.Attack)
+                unitbatch.Draw(imgs[img], new Rectangle((int)this.Position.X, (int)this.Position.Y, 32 * (int)w, 64 * (int)h), new Rectangle(0 + 64 * (level - 1), 0, 64, 177), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+            else
+                base.StateDrawing(w, h);
         }
     } ///Vector2.Distance(this.Position, unite.Position) <= Range
     ///Math.Pow((unite.Position.X - this.Position.X), 2) + 4 * Math.Pow((-(unite.Position.Y - this.Position.Y)), 2) <= p2 

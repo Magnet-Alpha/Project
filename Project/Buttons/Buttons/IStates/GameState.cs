@@ -472,7 +472,7 @@ namespace Buttons
                     gold += todraw.cout / 2;
                     todraw = null;
                 }
-                if (oldMouse.LeftButton == ButtonState.Released && InterfaceInfo.buttonWithIndexPressed(7) && gold >= todraw.cout && todraw.level < 5) //Mettre gold >= au prix de l'amelioration
+                if (oldMouse.LeftButton == ButtonState.Released && InterfaceInfo.buttonWithIndexPressed(7) && gold >= todraw.cout && todraw.level < 3) //Mettre gold >= au prix de l'amelioration
                 {
                     //mettre les instructions pur l'amelioration
                     todraw.Upgrade();
