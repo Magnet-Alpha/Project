@@ -382,7 +382,7 @@ namespace Buttons
                         if (gold >= cout)
                         {
                             timer = 0;
-                            cout = 10;
+                            cout = 5;
                             multiState.sendEvent(Event.VirusCall, 2, 0);
                             gold -= cout;
                             income++;
@@ -393,7 +393,7 @@ namespace Buttons
                         if (gold >= cout)
                         {
                             timer = 0;
-                            cout = 20;
+                            cout = 5;
                             multiState.sendEvent(Event.VirusCall, 3, 0);
                             gold -= cout;
                             income++;
