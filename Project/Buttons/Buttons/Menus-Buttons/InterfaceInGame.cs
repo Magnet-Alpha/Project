@@ -79,7 +79,6 @@ namespace Buttons
             {
                 game.spriteBatch.DrawString(texts[i].font, texts[i].textValue, texts[i].location, Color.White);
             }
-            game.spriteBatch.Draw(game.Content.Load<Texture2D>("Sprites\\virus\\lifebar"), new Rectangle(buttons[0].left, buttons[0].bottom + 1, 40, 8), new Rectangle(112, 0, 16, 4), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0);
         }
 
         public bool buttonWithIndexPressed(int n)

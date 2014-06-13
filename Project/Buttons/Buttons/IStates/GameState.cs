@@ -308,9 +308,14 @@ namespace Buttons
         }
 
 
-        public void addVirus()
+        public void addVirus(int x)
         {
-            test = new Virus1(cout, start.position, game.Content, game.spriteBatch);
+            if (x == 1)
+                test = new Virus1(cout, start.position, game.Content, game.spriteBatch);
+            else if (x == 2)
+                test = new Virus2(cout, start.position, game.Content, game.spriteBatch);
+            else
+                test = new Virus3(cout, start.position, game.Content, game.spriteBatch);
             virus.Add(test);
         }
 
@@ -374,11 +379,25 @@ namespace Buttons
                     
                     if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(6)) 
                     {
-                        //je veux pas faire de conneries alors je te laisse mettre les instructions d'appel du 2e virus
+                        if (gold >= cout)
+                        {
+                            timer = 0;
+                            cout = 10;
+                            multiState.sendEvent(Event.VirusCall, 2, 0);
+                            gold -= cout;
+                            income++;
+                        }
                     }
                     if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(7)) 
                     {
-                        //3e virus
+                        if (gold >= cout)
+                        {
+                            timer = 0;
+                            cout = 20;
+                            multiState.sendEvent(Event.VirusCall, 3, 0);
+                            gold -= cout;
+                            income++;
+                        }
                     }
                 }
                 if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(0) || timer >= 1800)
@@ -396,7 +415,7 @@ namespace Buttons
                         {
                             timer = 0;
                             cout = 5;
-                            multiState.sendEvent(Event.VirusCall, 0, 0);
+                            multiState.sendEvent(Event.VirusCall, 1, 0);
                             gold -= cout;
                             income++;
                         }
@@ -410,18 +429,33 @@ namespace Buttons
                     choice.attack = 10;
                     choice.cooldown = 30;
                     choice.range = 3*64;
-                    choice.cout = 10;
+                    choice.cout = 20;
                     choice2 = game.Content.Load<Texture2D>("Sprites\\tower\\tour2");
+                    todraw = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout, Vector2.Zero, Point.Zero, choice.range, game.Content, game.spriteBatch, Etat.Alive, game);
                 }
 
                 if (Interface.buttonWithIndexPressed(2)) 
                 {
-                    //2e tour
+                    choosing = true;
+                    choice.name = "b";
+                    choice.attack = 20;
+                    choice.cooldown = 60;
+                    choice.range = 4 * 64;
+                    choice.cout = 40;
+                    choice2 = game.Content.Load<Texture2D>("Sprites\\tower\\tour2");
+                    todraw = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout, Vector2.Zero, Point.Zero, choice.range, game.Content, game.spriteBatch, Etat.Alive, game);
                 }
 
                 if (Interface.buttonWithIndexPressed(3)) 
                 {
-                    //3e tour
+                    choosing = true;
+                    choice.name = "b";
+                    choice.attack = 50;
+                    choice.cooldown = 150;
+                    choice.range = 5 * 64;
+                    choice.cout = 80;
+                    choice2 = game.Content.Load<Texture2D>("Sprites\\tower\\tour2");
+                    todraw = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout, Vector2.Zero, Point.Zero, choice.range, game.Content, game.spriteBatch, Etat.Alive, game);
                 }
                 if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(5) && gold >= price_upB) 
                 {
@@ -644,7 +678,7 @@ namespace Buttons
                             }
                         }
                     }
-                    else
+                    else if (!choosing)
                     {
                         Point p = new Point(mouse.X, mouse.Y);
                         int x = (int)((mouse.X + Camera.Location.X) / (64 * game.widthFactor));
@@ -693,9 +727,12 @@ namespace Buttons
                     Interface.Update();
                 }
 
-                timer++;
+                if (multiState == null)
+                {
+                    timer++;
+                    timerwave++;
+                }
                 timerInc++;
-                timerwave++;
             }
             Interface.texts[0].textValue = Strings.stringForKey("Gold") + " : " + gold;
             Interface.texts[1].textValue = Strings.stringForKey("Income") + " : " + income;
@@ -771,9 +808,11 @@ namespace Buttons
             }
             if (choosing)
             {
-                game.spriteBatch.Draw(choice2, new Rectangle(oldMouse.X - 18, oldMouse.Y - 56, 32, 64), new Color(255, 255, 255, 200));
-                game.spriteBatch.Draw(range, new Rectangle(oldMouse.X - (int)choice.range, oldMouse.Y - (int)choice.range / 2, (int)choice.range * 2, (int)choice.range), new Color(255, 255, 255, 200));
+                game.spriteBatch.Draw(choice2, new Rectangle(oldMouse.X - 18, oldMouse.Y - 56, 32, 64), new Color(255, 255, 255, 150));
+                game.spriteBatch.Draw(range, new Rectangle(oldMouse.X - (int)choice.range, oldMouse.Y - (int)choice.range / 2, (int)choice.range * 2, (int)choice.range), new Color(255, 255, 255, 100));
             }
+            else if (todraw != null)
+                game.spriteBatch.Draw(range, new Rectangle((int)todraw.Center.X - (int)choice.range, (int)todraw.Center.Y - (int)choice.range / 2, (int)choice.range * 2, (int)choice.range), new Color(255, 255, 255, 100));
 
             if (Life > 0 && !win)
             {
@@ -785,7 +824,11 @@ namespace Buttons
                 {
                     Interface.Draw();
                 }
-                game.spriteBatch.Draw(game.Content.Load<Texture2D>("whit"), new Rectangle(Interface.buttons[0].left + 2, Interface.buttons[0].bottom + 3, (int)((float)timer / 1800 * 36), 3), Color.Blue);
+                if (multiState == null)
+                {
+                    game.spriteBatch.Draw(game.Content.Load<Texture2D>("Sprites\\virus\\lifebar"), new Rectangle(Interface.buttons[0].left, Interface.buttons[0].bottom + 1, 40, 8), new Rectangle(112, 0, 16, 4), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0);
+                    game.spriteBatch.Draw(game.Content.Load<Texture2D>("whit"), new Rectangle(Interface.buttons[0].left + 2, Interface.buttons[0].bottom + 3, (int)((float)timer / 1800 * 36), 3), Color.Blue);
+                }
             }
             else if (Life <= 0)
             {

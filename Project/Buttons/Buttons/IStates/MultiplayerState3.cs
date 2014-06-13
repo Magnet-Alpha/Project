@@ -204,7 +204,8 @@ namespace Buttons
                                     break;
                                 case "VirusCall":
                                     // virus call to be handled
-                                    gameState.addVirus();
+                                    x = im.ReadInt32();
+                                    gameState.addVirus(x);
                                     Console.WriteLine("Virus called");
                                     break;
                                 case "GameOver":

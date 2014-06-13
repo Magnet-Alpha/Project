@@ -49,7 +49,6 @@ namespace Buttons
             this.Center = new Vector2(this.Position.X + 16, this.Position.Y + 56);
             imgs.Add(content.Load<Texture2D>("Sprites\\tower\\tour2"));
             imgs.Add(content.Load<Texture2D>("Sprites\\tower\\tourattack2"));
-            imgs.Add(content.Load<Texture2D>("TestSprites\\test dead 1" + this.Name));
             this.exist = true;
             this.Hitbox = new Rectangle((int)position.X, (int)position.Y, 32, 64);
             this.cout = cout;
