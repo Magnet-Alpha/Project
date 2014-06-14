@@ -98,7 +98,7 @@ namespace Buttons
         {
             NetOutgoingMessage msg = client.CreateMessage();
             string str = "#" + evt.ToString();
-            if (evt == Event.LifeChanged)
+            if (evt == Event.LifeChanged || evt == Event.VirusCall)
             {
                 str += x;
             }
@@ -202,10 +202,19 @@ namespace Buttons
                                     // tower sold at (x,y) to be handled
                                     Console.WriteLine("Tower sold at " + x + "," + y);
                                     break;
-                                case "VirusCall":
+                                case "VirusCall1":
                                     // virus call to be handled
-                                    x = im.ReadInt32();
-                                    gameState.addVirus(x);
+                                    gameState.addVirus(1);
+                                    Console.WriteLine("Virus called");
+                                    break;
+                                case "VirusCall2":
+                                    // virus call to be handled
+                                    gameState.addVirus(2);
+                                    Console.WriteLine("Virus called");
+                                    break;
+                                case "VirusCall3":
+                                    // virus call to be handled
+                                    gameState.addVirus(3);
                                     Console.WriteLine("Virus called");
                                     break;
                                 case "GameOver":
