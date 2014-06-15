@@ -178,7 +178,7 @@ namespace Buttons
         void readHighScores()
         {
             scores = new List<HighScore>();
-            string file = "scores.txt";
+            string file = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\You'll Catch A Virus\\scores.txt";
             StreamReader reader = new StreamReader(file);
             while (!reader.EndOfStream)
             {
@@ -238,8 +238,10 @@ namespace Buttons
             string musicV = "musicVolume = \"" + musicVolume + "\"";
             string effectV = "soundEffectVolume = \"" + soundEffectVolume + "\"";
             string lang = "language = \"" + language.ToString() + "\"";
-
-            System.IO.File.WriteAllLines(@"preferences.txt", new string[] { fs, musicV, effectV, lang });
+            string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            Console.WriteLine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\You'll Catch A Virus\\preferences.txt";
+            System.IO.File.WriteAllLines(path, new string[] { fs, musicV, effectV, lang });
 
         }
 
@@ -255,13 +257,15 @@ namespace Buttons
 
         public void saveHighScores()
         {
-            StreamWriter writer = new StreamWriter("scores.txt");
-            foreach (HighScore highScore in scores)
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\You'll Catch A Virus\\scores.txt";
+            string[] lines = new string[scores.Count];
+            for (int i = 0; i < scores.Count; i++)
             {
+                HighScore highScore = scores[i];
                 string line = highScore.name + " " + highScore.score;
-                writer.WriteLine(line);
+                lines[i] = line;
             }
-            writer.Close();
+            System.IO.File.WriteAllLines(path, lines);
         }
 
 
