@@ -209,7 +209,7 @@ namespace Buttons
             texturetow3 = game.Content.Load<Texture2D>("drainblue");
             virus2img = game.Content.Load<Texture2D>("virusBlue");
             Texture2D virus3img;
-            virus3img = game.Content.Load<Texture2D>("virusBlue");
+            virus3img = game.Content.Load<Texture2D>("virusVert");
             Texture2D upimg;
             upimg = game.Content.Load<Texture2D>("upgrade2");
             Texture2D upTimg;
@@ -224,7 +224,7 @@ namespace Buttons
             backmenu = new ImageButton(game.spriteBatch, menu, new Rectangle(firstvir.left, game.height - menu.Height, game.width / 30, game.width / 30), game);
             B_upgrade = new ImageButton(game.spriteBatch, upimg, new Rectangle(firstvir.left, backmenu.top - 120, game.width / 30, game.width / 30), game);
             secondvir = new ImageButton(game.spriteBatch, virus2img, new Rectangle(game.width - 800 / 12 + 12, firstvir.bottom + game.width / 60, game.width / 30, game.width / 30), game);
-            thirdvir = new ImageButton(game.spriteBatch, virus2img, new Rectangle(game.width - 800 / 12 + 12, secondvir.bottom + game.width / 60, game.width / 30, game.width / 30), game);
+            thirdvir = new ImageButton(game.spriteBatch, virus3img, new Rectangle(game.width - 800 / 12 + 12, secondvir.bottom + game.width / 60, game.width / 30, game.width / 30), game);
             
             sell = new ImageButton(game.spriteBatch, sellimg, new Rectangle(game.width / 2, game.height - 55, game.width / 30, game.width / 30), game);
             T_upgrade = new ImageButton(game.spriteBatch, upTimg, new Rectangle(sell.right + 10, game.height - 60, game.width / 30, game.width / 30), game);
