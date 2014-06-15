@@ -304,6 +304,8 @@ namespace Buttons
             Wave.level = 0;
             Base.level = 1;
             Base.life = 10;
+            Base.ba = game.Content.Load<Texture2D>("base");
+            Base.position = new Vector2(13 * 64 - (int)Camera.Location.X, 3 * 32 + 16 - (int)Camera.Location.Y);
             range = game.Content.Load<Texture2D>("Sprites\\tower\\range");
         }
 
@@ -477,6 +479,10 @@ namespace Buttons
                     //mettre les instructions pur l'amelioration
                     todraw.Upgrade();
                     gold -= todraw.cout;
+                    choice.attack = todraw.Attack;
+                    choice.cooldown = todraw.basecooldown;
+                    choice.cout = todraw.cout;
+                    choice.range = todraw.Range;
                     
                 }
 
@@ -622,6 +628,7 @@ namespace Buttons
                     t.Stating(virus);                                                               //Detecting viruses
                     t.Attacking(ref projs);
                 }
+                Base.fuckingcamera(difL);
                 difL = new Vector2(0, 0);
 
 
@@ -806,6 +813,8 @@ namespace Buttons
                 }
                 x++;
             }
+            if (life > 0)
+                Base.Draw(game.spriteBatch);
             if (choosing)
             {
                 game.spriteBatch.Draw(choice2, new Rectangle(oldMouse.X - 18, oldMouse.Y - 56, 32, 64), new Color(255, 255, 255, 150));

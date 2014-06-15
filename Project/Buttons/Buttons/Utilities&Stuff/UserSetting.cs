@@ -163,15 +163,16 @@ namespace Buttons
             try
             {
 
-                soundEffectVolume = (float)Convert.ToDouble(volume);
+                musicVolume = (float)Convert.ToDouble(volume);
             }
             catch
             {
 
-                soundEffectVolume = (float)Convert.ToDouble(volume.Replace(".", ","));
+                musicVolume = (float)Convert.ToDouble(volume.Replace(".", ","));
 
             }
             reader.Close();
+            Console.WriteLine(musicVolume);
         }
 
         void readHighScores()

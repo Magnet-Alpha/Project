@@ -60,6 +60,18 @@ namespace Buttons
     {
         public static int level;
         public static int life;
+        public static Texture2D ba;
+        public static Vector2 position;
+
+        public static void fuckingcamera(Vector2 L)
+        {
+            position = position - L;
+        }
+
+        public static void Draw(CustomSpriteBatch sb)
+        {
+            sb.Draw(ba, new Rectangle((int)position.X, (int)position.Y, 128, 64), Color.White);
+        }
 
         public static void Upgrade()
         {
