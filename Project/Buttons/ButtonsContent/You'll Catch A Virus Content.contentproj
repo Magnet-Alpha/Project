@@ -249,8 +249,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sprites\tower\tour2.png">
-      <Name>tour2</Name>
+    <Compile Include="sprites\tower\tour2a.png">
+      <Name>tour2a</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -285,8 +285,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sprites\tower\tourattack2.png">
-      <Name>tourattack2</Name>
+    <Compile Include="sprites\tower\tourattack2a.png">
+      <Name>tourattack2a</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -422,6 +422,34 @@
   <ItemGroup>
     <Compile Include="virusVert.png">
       <Name>virusVert</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="sprites\tower\tourattack2b.png">
+      <Name>tourattack2b</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="sprites\tower\tour2b.png">
+      <Name>tour2b</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="sprites\tower\tour2c.png">
+      <Name>tour2c</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="sprites\tower\tourattack2c.png">
+      <Name>tourattack2c</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

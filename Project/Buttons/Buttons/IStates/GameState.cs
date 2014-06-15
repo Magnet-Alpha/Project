@@ -427,12 +427,12 @@ namespace Buttons
                 if (Interface.buttonWithIndexPressed(1))
                 {
                     choosing = true;
-                    choice.name = "b";
+                    choice.name = "a";
                     choice.attack = 10;
                     choice.cooldown = 30;
                     choice.range = 3*64;
                     choice.cout = 20;
-                    choice2 = game.Content.Load<Texture2D>("Sprites\\tower\\tour2");
+                    choice2 = game.Content.Load<Texture2D>("Sprites\\tower\\tour2a");
                     todraw = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout, Vector2.Zero, Point.Zero, choice.range, game.Content, game.spriteBatch, Etat.Alive, game);
                 }
 
@@ -444,19 +444,19 @@ namespace Buttons
                     choice.cooldown = 60;
                     choice.range = 4 * 64;
                     choice.cout = 40;
-                    choice2 = game.Content.Load<Texture2D>("Sprites\\tower\\tour2");
+                    choice2 = game.Content.Load<Texture2D>("Sprites\\tower\\tour2b");
                     todraw = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout, Vector2.Zero, Point.Zero, choice.range, game.Content, game.spriteBatch, Etat.Alive, game);
                 }
 
                 if (Interface.buttonWithIndexPressed(3)) 
                 {
                     choosing = true;
-                    choice.name = "b";
+                    choice.name = "c";
                     choice.attack = 50;
                     choice.cooldown = 150;
                     choice.range = 5 * 64;
                     choice.cout = 80;
-                    choice2 = game.Content.Load<Texture2D>("Sprites\\tower\\tour2");
+                    choice2 = game.Content.Load<Texture2D>("Sprites\\tower\\tour2c");
                     todraw = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout, Vector2.Zero, Point.Zero, choice.range, game.Content, game.spriteBatch, Etat.Alive, game);
                 }
                 if (oldMouse.LeftButton == ButtonState.Released && Interface.buttonWithIndexPressed(5) && gold >= price_upB) 
