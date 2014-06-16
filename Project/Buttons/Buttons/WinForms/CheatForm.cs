@@ -38,6 +38,7 @@ namespace Buttons
                 {
                     T.Upgrade();
                 }
+                label1.Text = "All towers have been upgraded";
                 return;
             }
 

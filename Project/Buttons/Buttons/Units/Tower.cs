@@ -112,12 +112,15 @@ namespace Buttons
 
         public void Upgrade()
         {
-            this.level++;
-            this.Range = this.BRange * (float)(this.level + 3) / 4;
-            this.Attack = (int)(this.BAttack * (float)(this.level + 1) / 2);
-            this.basecooldown = (int)(this.BCooldown / (float)(this.level + 19) * 20);
-            this.cout = (int)(this.BCost * (float)(this.level + 3) / 4);
-            this.p2 = Math.Pow(Range, 2);
+            if (this.level < 3)
+            {
+                this.level++;
+                this.Range = this.BRange * (float)(this.level + 3) / 4;
+                this.Attack = (int)(this.BAttack * (float)(this.level + 1) / 2);
+                this.basecooldown = (int)(this.BCooldown / (float)(this.level + 19) * 20);
+                this.cout = (int)(this.BCost * (float)(this.level + 3) / 4);
+                this.p2 = Math.Pow(Range, 2);
+            }
         }
         public override void StateDrawing(float w, float h)
         {

@@ -1,0 +1,4 @@
+fullScreen = "false"
+musicVolume = "0,4"
+soundEffectVolume = "0.4"
+language = "English"

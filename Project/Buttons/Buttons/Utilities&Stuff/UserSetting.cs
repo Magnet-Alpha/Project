@@ -94,7 +94,8 @@ namespace Buttons
 
         void readFullScreen()
         {
-            StreamReader reader = new StreamReader("preferences.txt");
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\You'll Catch A Virus\\preferences.txt";
+            StreamReader reader = new StreamReader(path);
             string preferences;
             do
             {
@@ -111,7 +112,8 @@ namespace Buttons
         }
         void readLanguage()
         {
-            StreamReader reader = new StreamReader("preferences.txt");
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\You'll Catch A Virus\\preferences.txt";
+            StreamReader reader = new StreamReader(path);
             string preferences;
             do
             {
@@ -140,7 +142,8 @@ namespace Buttons
         }
         void readMusicVolume()
         {
-            StreamReader reader = new StreamReader("preferences.txt");
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\You'll Catch A Virus\\preferences.txt";
+            StreamReader reader = new StreamReader(path);
             string preferences;
             do
             {
@@ -198,7 +201,8 @@ namespace Buttons
 
         void readSoundEffectVolume()
         {
-            StreamReader reader = new StreamReader("preferences.txt");
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\You'll Catch A Virus\\preferences.txt";
+            StreamReader reader = new StreamReader(path);
             string preferences = "";
             do
             {
@@ -262,7 +266,7 @@ namespace Buttons
             for (int i = 0; i < scores.Count; i++)
             {
                 HighScore highScore = scores[i];
-                string line = highScore.name + " " + highScore.score;
+                string line = highScore.name.Replace(" ","") + " " + highScore.score;
                 lines[i] = line;
             }
             System.IO.File.WriteAllLines(path, lines);

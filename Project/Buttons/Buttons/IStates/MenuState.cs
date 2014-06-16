@@ -147,8 +147,18 @@ namespace Buttons
             }
 
             if (mainMenu.buttonWithIndexPressed(5)) // High scores
-                highScoresFrom.ShowScores();
-
+            {
+                try
+                {
+                    highScoresFrom.ShowScores();
+                }
+                catch
+                {
+                    highScoresFrom.Close();
+                    highScoresFrom = new HighScores(game);
+                    highScoresFrom.ShowScores();
+                }
+            }
             test.NewPosition(new Vector2(game.widthFactor, game.heightFactor));
             int life = 0;
             test.Turn(keypoints, ref life);

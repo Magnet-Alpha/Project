@@ -171,7 +171,7 @@ namespace Buttons
             goldText.location = new Vector2(game.width / 15, game.height - 110);
             goldText.font = font;
 
-            income = 10;
+            income = 0;
             incomeText.textValue = Strings.stringForKey("Income") + " : " + income;
             incomeText.location = new Vector2(game.width / 15, game.height - 80);
             incomeText.font = font;
@@ -203,9 +203,7 @@ namespace Buttons
             Texture2D textureimg;
             textureimg = game.Content.Load<Texture2D>("W3");
             textureimg2 = game.Content.Load<Texture2D>("DrainYellow");
-            
             texturetow2 = game.Content.Load<Texture2D>("draingreen");
-       
             texturetow3 = game.Content.Load<Texture2D>("drainblue");
             virus2img = game.Content.Load<Texture2D>("virusBlue");
             Texture2D virus3img;
@@ -235,7 +233,7 @@ namespace Buttons
                 secondtow = new ImageButton(game.spriteBatch, texturetow2, new Rectangle(game.width - 800 / 12 + 12, firsttow.bottom + game.width / 60, game.width / 30, game.width / 30), game);
                 thirdtow = new ImageButton(game.spriteBatch, texturetow3, new Rectangle(game.width - 800 / 12 + 12, secondtow.bottom + game.width / 60, game.width / 30, game.width / 30), game);
                 Interface = new InterfaceInGame(new ImageButton[] { firstvir, firsttow, secondtow, thirdtow, backmenu, B_upgrade }, game, new Text[] { goldText, incomeText, LifeText }, background, game.spriteBatch);
-                InterfaceInfo = new InterfaceInGame(new ImageButton[] { firstvir, firsttow, secondtow, thirdtow, backmenu, B_upgrade, sell, T_upgrade }, game, new Text[] { goldText, incomeText, LifeText, attackText, cooldownText, coutText, rangeText }, background, game.spriteBatch);
+                InterfaceInfo = new InterfaceInGame(new ImageButton[] { firstvir, firsttow, secondtow, thirdtow, backmenu, B_upgrade, sell, T_upgrade }, game, new Text[] { goldText, incomeText, LifeText, attackText, cooldownText, coutText, rangeText}, background, game.spriteBatch);
             }
             else 
             {
@@ -243,7 +241,7 @@ namespace Buttons
                 secondtow = new ImageButton(game.spriteBatch, texturetow2, new Rectangle(game.width - 800 / 12 + 12, firsttow.bottom + game.width / 60, game.width / 30, game.width / 30), game);
                 thirdtow = new ImageButton(game.spriteBatch, texturetow3, new Rectangle(game.width - 800 / 12 + 12, secondtow.bottom + game.width / 60, game.width / 30, game.width / 30), game);
                 Interface = new InterfaceInGame(new ImageButton[] { firstvir, firsttow, secondtow, thirdtow, backmenu, B_upgrade, secondvir, thirdvir }, game, new Text[] { goldText, incomeText, LifeText }, background, game.spriteBatch);
-                InterfaceInfo = new InterfaceInGame(new ImageButton[] { firstvir, firsttow, secondtow, thirdtow, backmenu, B_upgrade, sell, T_upgrade, secondvir, thirdvir }, game, new Text[] { goldText, incomeText, LifeText, attackText, cooldownText, coutText, rangeText }, background, game.spriteBatch);
+                InterfaceInfo = new InterfaceInGame(new ImageButton[] { firstvir, firsttow, secondtow, thirdtow, backmenu, B_upgrade, sell, T_upgrade, secondvir, thirdvir }, game, new Text[] { goldText, incomeText, LifeText, attackText, cooldownText, coutText, rangeText}, background, game.spriteBatch);
             }
             Interface.menuOn = true;
             InterfaceInfo.menuOn = false;
@@ -432,6 +430,7 @@ namespace Buttons
                     choice.cooldown = 30;
                     choice.range = 3*64;
                     choice.cout = 20;
+                    choice.level = 1;
                     choice2 = game.Content.Load<Texture2D>("Sprites\\tower\\tour2a");
                     todraw = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout, Vector2.Zero, Point.Zero, choice.range, game.Content, game.spriteBatch, Etat.Alive, game);
                 }
@@ -444,6 +443,7 @@ namespace Buttons
                     choice.cooldown = 60;
                     choice.range = 4 * 64;
                     choice.cout = 40;
+                    choice.level = 1;
                     choice2 = game.Content.Load<Texture2D>("Sprites\\tower\\tour2b");
                     todraw = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout, Vector2.Zero, Point.Zero, choice.range, game.Content, game.spriteBatch, Etat.Alive, game);
                 }
@@ -456,6 +456,7 @@ namespace Buttons
                     choice.cooldown = 150;
                     choice.range = 5 * 64;
                     choice.cout = 80;
+                    choice.level = 1;
                     choice2 = game.Content.Load<Texture2D>("Sprites\\tower\\tour2c");
                     todraw = new Tower(choice.name, choice.attack, choice.attack, choice.cooldown, choice.cout, Vector2.Zero, Point.Zero, choice.range, game.Content, game.spriteBatch, Etat.Alive, game);
                 }
@@ -477,12 +478,13 @@ namespace Buttons
                 if (oldMouse.LeftButton == ButtonState.Released && InterfaceInfo.buttonWithIndexPressed(7) && gold >= todraw.cout && todraw.level < 3) //Mettre gold >= au prix de l'amelioration
                 {
                     //mettre les instructions pur l'amelioration
-                    todraw.Upgrade();
                     gold -= todraw.cout;
+                    todraw.Upgrade();
                     choice.attack = todraw.Attack;
                     choice.cooldown = todraw.basecooldown;
                     choice.cout = todraw.cout;
                     choice.range = todraw.Range;
+                    choice.level = todraw.level;
                     
                 }
 
@@ -703,6 +705,7 @@ namespace Buttons
                                     choice.cooldown = todraw.basecooldown;
                                     choice.cout = todraw.cout;
                                     choice.range = todraw.Range;
+                                    choice.level = todraw.level;
                                     zy = y - 1;
                                     zx = x + 1;
                                 }
@@ -766,8 +769,18 @@ namespace Buttons
                         break;
                     }
                 }
-                if(!open)
-                    cheatForm.ShowDialog();
+                if (!open)
+                {
+                    try
+                    {
+                        cheatForm.ShowDialog();
+                    }
+                    catch
+                    {
+                        cheatForm = new CheatForm(this);
+                        cheatForm.ShowDialog();
+                    }
+                }
                 
             }
 
@@ -857,8 +870,12 @@ namespace Buttons
                 if (life > 0 && !win)
                     game.spriteBatch.DrawString(font, Strings.stringForKey("Opponent")+ " : " + multiState.life, new Vector2(game.width / 15 + (font.MeasureString(Strings.stringForKey("Gold") + " : " + gold).X + 10), game.height - 110), Color.White);
             }
-            if (life > 0 && !win)            
+            if (life > 0 && !win)
+            {
                 game.spriteBatch.DrawString(font, "Base : " + Base.level, new Vector2(game.width / 15 + (font.MeasureString(Strings.stringForKey("Income") + " : " + income).X + 10), game.height - 80), Color.White);
+                if(InterfaceInfo.MenuOn)
+                    game.spriteBatch.DrawString(font, Strings.stringForKey("Level") + " : " + choice.level + "/3", new Vector2(game.width / 2 + ((font.MeasureString(Strings.stringForKey("Range") + " : " + choice.range).X) + (font.MeasureString(Strings.stringForKey("Cout") + " : " + choice.cout).X)) - 20, game.height - 85), Color.White);
+            }
             //---------------------------------------------------------------------------------------
 
         }

@@ -39,5 +39,6 @@ namespace Buttons
         public int cooldown;
         public double range;
         public int cout;
+        public int level;
     }
  }
